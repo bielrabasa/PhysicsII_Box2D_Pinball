@@ -91,7 +91,7 @@ update_status ModuleSceneIntro::Update()
 	//IMPULS BOLA
 	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 	{
-		ballPushForce += 1;
+		ballPushForce += 2;
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_UP)
 	{
@@ -100,6 +100,8 @@ update_status ModuleSceneIntro::Update()
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN) {
+		//BORRAR BODY, netejar llista, crear bola
+		circles.getLast()->data->body->GetWorld()->DestroyBody(circles.getLast()->data->body);
 		circles.clear();
 		circles.add(App->physics->CreateCircle(290, ballY, 10));
 	}
