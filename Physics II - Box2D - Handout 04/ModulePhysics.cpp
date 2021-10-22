@@ -54,52 +54,73 @@ bool ModulePhysics::Start()
 	fixture.shape = &shape;
 	big_ball->CreateFixture(&fixture);
 
-	int mapaHitBox[62] = {
-		300, 592,
-		301, 158,
-		240, 95,
-		162, 79,
-		75, 94,
-		44, 250,
-		40, 251,
-		37, 249,
-		68, 99,
-		32, 131,
-		8, 247,
-		8, 343,
-		35, 428,
-		8, 499,
-		8, 593,
-		97, 650,
-		161, 650,
-		256, 593,
-		257, 367,
-		233, 438,
-		229, 439,
-		226, 435,
-		256, 348,
-		243, 270,
-		245, 267,
-		250, 267,
-		257, 241,
-		256, 166,
-		260, 164,
-		263, 165,
-		263, 591
+	int mapaHitBox[92] = {
+		300, 591,
+		301, 165,
+		300, 159,
+		297, 155,
+		244, 99,
+		240, 96,
+		235, 94,
+		170, 80,
+		163, 79,
+		156, 80,
+		81, 93,
+		76, 95,
+		74, 100,
+		45, 245,
+		43, 249,
+		39, 249,
+		38, 245,
+		67, 99,
+		32, 129,
+		9, 239,
+		8, 245,
+		8, 340,
+		10, 350,
+		36, 428,
+		8, 494,
+		7, 500,
+		8, 591,
+		10, 595,
+		98, 650,
+		181, 650,
+		271, 594,
+		273, 590,
+		274, 367,
+		251, 437,
+		248, 440,
+		244, 439,
+		243, 435,
+		272, 354,
+		273, 349,
+		273, 344,
+		260, 269,
+		273, 177,
+		274, 172,
+		277, 172,
+		279, 177,
+		280, 590
 	};
-	App->scene_intro->mapa.add(App->physics->CreateChain2(0, 0, mapaHitBox, 62));
+	App->scene_intro->mapa.add(App->physics->CreateChain2(0, 0, mapaHitBox, 92));
 
-	int salida_inferior1[16] = {
-		229, 564,
-		165, 600,
-		165, 604,
-		168, 606,
-		235, 568,
-		235, 482,
-		232, 480,
-		229, 482
+	int salida_inferior1[28] = {
+		182, 599,
+		181, 602,
+		183, 606,
+		187, 606,
+		248, 572,
+		252, 569,
+		253, 565,
+		252, 484,
+		251, 481,
+		248, 481,
+		246, 484,
+		247, 560,
+		246, 563,
+		243, 566
 	};
-	App->scene_intro->mapa.add(App->physics->CreateChain2(0, 0, salida_inferior1, 16));
+	App->scene_intro->mapa.add(App->physics->CreateChain2(0, 0, salida_inferior1, 28));
 	
 	int salida_inferior2[16] = {
 		32, 479,
@@ -113,16 +134,18 @@ bool ModulePhysics::Start()
 	};
 	App->scene_intro->mapa.add(App->physics->CreateChain2(0, 0, salida_inferior2, 16));
 
-	int triangulo_inferior1[14] = {
-		205, 552,
-		207, 547,
-		205, 484,
-		199, 487,
-		172, 564,
-		173, 567,
-		177, 567
+	int triangulo_inferior1[18] = {
+		221, 553,
+		223, 551,
+		224, 548,
+		223, 486,
+		220, 484,
+		216, 485,
+		188, 563,
+		189, 566,
+		192, 567
 	};
-	App->scene_intro->mapa.add(App->physics->CreateChain2(0, 0, triangulo_inferior1, 14));
+	App->scene_intro->mapa.add(App->physics->CreateChain2(0, 0, triangulo_inferior1, 18));
 
 	int triangulo_inferior2[14] = {
 		95, 562,
@@ -145,17 +168,23 @@ bool ModulePhysics::Start()
 	};
 	App->scene_intro->mapa.add(App->physics->CreateChain2(0, 0, triangulo_superior, 12));
 
-	int tubo_lateral[16] = {
-		231, 341,
-		215, 271,
-		211, 270,
-		208, 273,
-		224, 341,
-		182, 418,
-		183, 422,
-		187, 423
+	int tubo_lateral[28] = {
+		247, 346,
+		248, 341,
+		247, 336,
+		232, 273,
+		230, 270,
+		226, 271,
+		225, 275,
+		240, 335,
+		241, 340,
+		240, 345,
+		199, 418,
+		199, 422,
+		202, 424,
+		205, 423
 	};
-	App->scene_intro->mapa.add(App->physics->CreateChain2(0, 0, tubo_lateral, 16));
+	App->scene_intro->mapa.add(App->physics->CreateChain2(0, 0, tubo_lateral, 28));
 
 	return true;
 }
