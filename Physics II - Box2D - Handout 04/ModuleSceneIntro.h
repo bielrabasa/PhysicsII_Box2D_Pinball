@@ -48,6 +48,10 @@ public:
 	PhysBody* sensor4_2;
 	PhysBody* sensor4_3;
 
+	PhysBody* bigCirclesSensor[BIGCIRCLENUMBER];
+
+
+
 	PhysBody* bigCircles[BIGCIRCLENUMBER];
 	PhysBody* smallCircles[SMALLCIRCLENUMBER];
 

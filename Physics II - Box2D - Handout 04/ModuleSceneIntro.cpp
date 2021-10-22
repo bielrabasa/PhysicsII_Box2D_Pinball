@@ -57,6 +57,10 @@ bool ModuleSceneIntro::Start()
 	bigCircles[1] = App->physics->CreateCircle2(210, 175, 23);
 	bigCircles[2] = App->physics->CreateCircle2(135, 250, 23);
 
+	bigCirclesSensor[0] = App->physics->CreateCircleSensor(120, 150, 45);
+	bigCirclesSensor[1] = App->physics->CreateCircleSensor(210, 175, 45);
+	bigCirclesSensor[2] = App->physics->CreateCircleSensor(135, 250, 45);
+
 	smallCircles[0] = App->physics->CreateCircle2(160, 300, 4);
 	smallCircles[1] = App->physics->CreateCircle2(125, 310, 4);
 	smallCircles[2] = App->physics->CreateCircle2(190, 320, 4);
@@ -67,6 +71,8 @@ bool ModuleSceneIntro::Start()
 	smallCircles[7] = App->physics->CreateCircle2(110, 380, 4);
 	smallCircles[8] = App->physics->CreateCircle2(120, 415, 4);
 	smallCircles[9] = App->physics->CreateCircle2(155, 430, 4);
+
+	circles.getLast()->data->body->SetBullet(true);
 
 	return ret;
 }
@@ -82,6 +88,7 @@ bool ModuleSceneIntro::CleanUp()
 // Update: draw background
 update_status ModuleSceneIntro::Update()
 {
+
 	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
 		ray_on = !ray_on;
@@ -195,7 +202,18 @@ update_status ModuleSceneIntro::Update()
 		circles.getLast()->data->body->ApplyForceToCenter(circles.getLast()->data->body->GetLinearVelocity(), true); //CANVIAR
 		//b2Vec2(0, -10)
 	}
-
+	//Big circles sensor
+	
+		/*if (bigCirclesSensor[0]->Contains(ball.x, ball.y)) {
+			circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(0, -30), true);
+		}
+		if (bigCirclesSensor[1]->Contains(ball.x, ball.y)) {
+			circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(0, -30), true);
+		}
+		if (bigCirclesSensor[2]->Contains(ball.x, ball.y)) {
+			circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(0, -30), true);
+		}*/
+	
 
 	//Big Circles
 	for (int i = 0; i < BIGCIRCLENUMBER; i++) {
@@ -227,9 +245,18 @@ update_status ModuleSceneIntro::Update()
 	while(c != NULL)
 	{
 		int x, y;
-		c->data->GetPosition(x, y);
-		if(c->data->Contains(App->input->GetMouseX(), App->input->GetMouseY()))
-			App->renderer->Blit(circle, x, y, NULL, 1.0f, c->data->GetRotation());
+
+		/*if (ray_on) {
+			int hit = c->data->RayCast(ray.x, ray.y, mouse.x, mouse.y, normal.x, normal.y);
+			if (hit >= 0)
+			{
+				ray_hit = hit;
+				if (ray_hit) {
+					circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(0, -10), true);
+				}
+			}
+		}*/
+
 		c = c->next;
 	}
 
@@ -239,7 +266,7 @@ update_status ModuleSceneIntro::Update()
 	{
 		int x, y;
 		c->data->GetPosition(x, y);
-		App->renderer->Blit(box, x, y, NULL, 1.0f, c->data->GetRotation());
+		//App->renderer->Blit(box, x, y, NULL, 1.0f, c->data->GetRotation());
 		if(ray_on)
 		{
 			int hit = c->data->RayCast(ray.x, ray.y, mouse.x, mouse.y, normal.x, normal.y);
@@ -272,6 +299,8 @@ update_status ModuleSceneIntro::Update()
 			App->renderer->DrawLine(ray.x + destination.x, ray.y + destination.y, ray.x + destination.x + normal.x * 25.0f, ray.y + destination.y + normal.y * 25.0f, 100, 255, 100);
 	}
 
+
+
 	return UPDATE_CONTINUE;
 }
 
@@ -280,6 +309,20 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	int x, y;
 
 	App->audio->PlayFx(bonus_fx);
+
+
+	/*if (bigCirclesSensor[0]->Contains(ball.x, ball.y)) {
+		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(0, -30), true);
+	}
+	if (bigCirclesSensor[1]->Contains(ball.x, ball.y)) {
+		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(0, -30), true);
+	}
+	if (bigCirclesSensor[2]->Contains(ball.x, ball.y)) {
+		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(0, -30), true);
+	}*/
+	
+	
+	//circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(0, -10), true);
 
 	/*
 	if(bodyA)
