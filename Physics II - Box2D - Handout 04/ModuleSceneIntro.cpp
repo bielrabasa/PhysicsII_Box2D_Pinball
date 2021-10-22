@@ -46,6 +46,9 @@ bool ModuleSceneIntro::Start()
 	//Rectangle que empeny la bola
 	//App->physics->CreateRectangle(283, 590, 30, 10);
 
+	sensor1 = App->physics->CreateRectangleSensor(130, 640, 60, 20);
+	sensor2 = App->physics->CreateRectangleSensor(282, 573, 38, 40);
+
 	App->physics->CreateCircle2(120, 150, 23);
 	App->physics->CreateCircle2(210, 175, 23);
 	App->physics->CreateCircle2(135, 250, 23);
@@ -89,7 +92,7 @@ update_status ModuleSceneIntro::Update()
 	}
 
 	//IMPULS BOLA
-	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+	/*if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 	{
 		ballPushForce += 2;
 	}
@@ -97,7 +100,7 @@ update_status ModuleSceneIntro::Update()
 	{
 		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(0, -ballPushForce), true);
 		ballPushForce = 0;
-	}
+	}*/
 
 	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN) {
 		//BORRAR BODY, netejar llista, crear bola
@@ -150,6 +153,29 @@ update_status ModuleSceneIntro::Update()
 		};
 
 		ricks.add(App->physics->CreateChain(App->input->GetMouseX(), App->input->GetMouseY(), rick_head, 64));
+	}
+
+	
+	
+	circles.getLast()->data->GetPosition(ball.x, ball.y);
+	if (sensor1->Contains(ball.x,ball.y)) {
+		LOG("uwu");
+		circles.getLast()->data->body->GetWorld()->DestroyBody(circles.getLast()->data->body);
+		circles.clear();
+		circles.add(App->physics->CreateCircle(290, ballY, 7));
+		circles.getLast()->data->listener = this;
+	}
+	if (sensor2->Contains(ball.x, ball.y)) {
+		LOG("uwu");
+		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+		{
+			ballPushForce += 2;
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_UP)
+		{
+			circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(0, -ballPushForce), true);
+			ballPushForce = 0;
+		}
 	}
 
 	// Prepare for raycast ------------------------------------------------------

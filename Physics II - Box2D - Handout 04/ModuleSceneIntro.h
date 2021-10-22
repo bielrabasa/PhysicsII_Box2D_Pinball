@@ -38,5 +38,13 @@ public:
 	p2Point<int> ray;
 	bool ray_on;
 
+	PhysBody* sensor1;
+	PhysBody* sensor2;
+
+	struct Ball {
+		int x, y;
+	};
+	Ball ball;
+
 	int ballY = 550;
 };
