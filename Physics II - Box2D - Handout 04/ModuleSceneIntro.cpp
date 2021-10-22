@@ -38,7 +38,7 @@ bool ModuleSceneIntro::Start()
 
 	//sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT, SCREEN_WIDTH, 50);
 
-	circles.add(App->physics->CreateCircle(290, ballY, 10));
+	circles.add(App->physics->CreateCircle(290, ballY, 7));
 	circles.getLast()->data->listener = this;
 
 	//App->physics->CreateRectangle(283, 590, 30, 10);
