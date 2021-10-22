@@ -46,23 +46,27 @@ bool ModuleSceneIntro::Start()
 	//Rectangle que empeny la bola
 	//App->physics->CreateRectangle(283, 590, 30, 10);
 
-	sensor1 = App->physics->CreateRectangleSensor(130, 640, 60, 20);
-	sensor2 = App->physics->CreateRectangleSensor(282, 573, 38, 40);
+	sensor1 = App->physics->CreateRectangleSensor(140, 640, 85, 20);
+	sensor2 = App->physics->CreateRectangleSensor(290, 573, 20, 40);
+	sensor3 = App->physics->CreateRectangleSensor(45, 130, 30, 30);
+	sensor4_1 = App->physics->CreateRectangleSensor(252, 300, 30, 60);
+	sensor4_2 = App->physics->CreateRectangleSensor(260, 350, 30, 45);
+	sensor4_3 = App->physics->CreateRectangleSensor(240, 400, 30, 50);
 
-	App->physics->CreateCircle2(120, 150, 23);
-	App->physics->CreateCircle2(210, 175, 23);
-	App->physics->CreateCircle2(135, 250, 23);
+	bigCircles[0] = App->physics->CreateCircle2(120, 150, 23);
+	bigCircles[1] = App->physics->CreateCircle2(210, 175, 23);
+	bigCircles[2] = App->physics->CreateCircle2(135, 250, 23);
 
-	App->physics->CreateCircle2(160, 300, 4);
-	App->physics->CreateCircle2(125, 310, 4);
-	App->physics->CreateCircle2(190, 320, 4);
-	App->physics->CreateCircle2(165, 345, 4);
-	App->physics->CreateCircle2(130, 350, 4);
-	App->physics->CreateCircle2(170, 380, 4);
-	App->physics->CreateCircle2(140, 390, 4);
-	App->physics->CreateCircle2(110, 380, 4);
-	App->physics->CreateCircle2(120, 415, 4);
-	App->physics->CreateCircle2(155, 430, 4);
+	smallCircles[0] = App->physics->CreateCircle2(160, 300, 4);
+	smallCircles[1] = App->physics->CreateCircle2(125, 310, 4);
+	smallCircles[2] = App->physics->CreateCircle2(190, 320, 4);
+	smallCircles[3] = App->physics->CreateCircle2(165, 345, 4);
+	smallCircles[4] = App->physics->CreateCircle2(130, 350, 4);
+	smallCircles[5] = App->physics->CreateCircle2(170, 380, 4);
+	smallCircles[6] = App->physics->CreateCircle2(140, 390, 4);
+	smallCircles[7] = App->physics->CreateCircle2(110, 380, 4);
+	smallCircles[8] = App->physics->CreateCircle2(120, 415, 4);
+	smallCircles[9] = App->physics->CreateCircle2(155, 430, 4);
 
 	return ret;
 }
@@ -87,7 +91,7 @@ update_status ModuleSceneIntro::Update()
 
 	if(App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 	{
-		circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 10));
+		circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 7));
 		circles.getLast()->data->listener = this;
 	}
 
@@ -106,7 +110,7 @@ update_status ModuleSceneIntro::Update()
 		//BORRAR BODY, netejar llista, crear bola
 		circles.getLast()->data->body->GetWorld()->DestroyBody(circles.getLast()->data->body);
 		circles.clear();
-		circles.add(App->physics->CreateCircle(290, ballY, 10));
+		circles.add(App->physics->CreateCircle(290, ballY, 7));
 	}
 
 	if(App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
@@ -156,8 +160,9 @@ update_status ModuleSceneIntro::Update()
 	}
 
 	
-	
 	circles.getLast()->data->GetPosition(ball.x, ball.y);
+
+	//reiniciar la bola sensor
 	if (sensor1->Contains(ball.x,ball.y)) {
 		LOG("uwu");
 		circles.getLast()->data->body->GetWorld()->DestroyBody(circles.getLast()->data->body);
@@ -165,6 +170,8 @@ update_status ModuleSceneIntro::Update()
 		circles.add(App->physics->CreateCircle(290, ballY, 7));
 		circles.getLast()->data->listener = this;
 	}
+
+	//sensor inicial bola
 	if (sensor2->Contains(ball.x, ball.y)) {
 		LOG("uwu");
 		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
@@ -177,6 +184,33 @@ update_status ModuleSceneIntro::Update()
 			ballPushForce = 0;
 		}
 	}
+
+	//sensor dalt-esquerra
+	if (sensor3->Contains(ball.x, ball.y)) {
+
+	}
+
+	//sensor accelerador dreta
+	if ((sensor4_1->Contains(ball.x, ball.y)) || (sensor4_2->Contains(ball.x, ball.y)) || (sensor4_3->Contains(ball.x, ball.y))) {
+		circles.getLast()->data->body->ApplyForceToCenter(circles.getLast()->data->body->GetLinearVelocity(), true); //CANVIAR
+		//b2Vec2(0, -10)
+	}
+
+
+	//Big Circles
+	for (int i = 0; i < BIGCIRCLENUMBER; i++) {
+		if (bigCircles[i]->body->GetContactList() != NULL) {
+			//circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(0, -10), true);
+		}
+	}
+	//Small Circles
+	for (int i = 0; i < SMALLCIRCLENUMBER; i++) {
+		if (smallCircles[i]->body->GetContactList() != NULL) {
+			//circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(0, -10), true);
+		}
+	}
+
+
 
 	// Prepare for raycast ------------------------------------------------------
 	

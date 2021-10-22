@@ -5,6 +5,9 @@
 #include "Globals.h"
 #include "Box2D/Box2D/Box2D.h"
 
+#define SMALLCIRCLENUMBER 10
+#define BIGCIRCLENUMBER 3
+
 class PhysBody;
 
 class ModuleSceneIntro : public Module
@@ -40,6 +43,13 @@ public:
 
 	PhysBody* sensor1;
 	PhysBody* sensor2;
+	PhysBody* sensor3;
+	PhysBody* sensor4_1;
+	PhysBody* sensor4_2;
+	PhysBody* sensor4_3;
+
+	PhysBody* bigCircles[BIGCIRCLENUMBER];
+	PhysBody* smallCircles[SMALLCIRCLENUMBER];
 
 	struct Ball {
 		int x, y;
