@@ -251,8 +251,6 @@ PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height)
 	pbody->height = height * 0.5f;
 
 
-	body.position.y = bodyY;
-
 	return pbody;
 }
 

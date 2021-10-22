@@ -41,7 +41,10 @@ bool ModuleSceneIntro::Start()
 	circles.add(App->physics->CreateCircle(290, ballY, 10));
 	circles.getLast()->data->listener = this;
 
-	App->physics->CreateRectangle(283, 590, 30, 10);
+	//App->physics->CreateRectangle(283, 590, 30, 10);
+
+	//Rectangle que empeny la bola
+	//App->physics->CreateRectangle(283, 590, 30, 10);
 
 	App->physics->CreateCircle2(120, 150, 23);
 	App->physics->CreateCircle2(210, 175, 23);
@@ -85,15 +88,20 @@ update_status ModuleSceneIntro::Update()
 		circles.getLast()->data->listener = this;
 	}
 
+	//IMPULS BOLA
 	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 	{
-		App->physics->bodyY = 300;
-		impulso++;
+		ballPushForce += 1;
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_UP)
 	{
-		//circles.getFirst()->data->GetPosition();
-		impulso = 0;
+		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(0, -ballPushForce), true);
+		ballPushForce = 0;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN) {
+		circles.clear();
+		circles.add(App->physics->CreateCircle(290, ballY, 10));
 	}
 
 	if(App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)

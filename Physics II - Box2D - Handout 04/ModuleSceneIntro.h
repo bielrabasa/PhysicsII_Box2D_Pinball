@@ -29,6 +29,8 @@ public:
 	PhysBody* sensor;
 	bool sensed;
 
+	int ballPushForce = 0;
+
 	SDL_Texture* circle;
 	SDL_Texture* box;
 	SDL_Texture* rick;
@@ -37,6 +39,4 @@ public:
 	bool ray_on;
 
 	int ballY = 550;
-
-	int impulso = 0;
 };
