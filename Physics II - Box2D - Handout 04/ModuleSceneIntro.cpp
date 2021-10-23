@@ -48,6 +48,7 @@ bool ModuleSceneIntro::Start()
 
 	sensor1 = App->physics->CreateRectangleSensor(140, 640, 85, 20);
 	sensor2 = App->physics->CreateRectangleSensor(290, 573, 20, 40);
+	//sensor3 = App->physics->CreateRectangleSensor(290, 330, 30, 30);
 	sensor3 = App->physics->CreateRectangleSensor(45, 130, 30, 30);
 	sensor4_1 = App->physics->CreateRectangleSensor(252, 300, 30, 60);
 	sensor4_2 = App->physics->CreateRectangleSensor(260, 350, 30, 45);
@@ -74,17 +75,20 @@ bool ModuleSceneIntro::Start()
 
 	circles.getLast()->data->body->SetBullet(true);
 
-	//joint per la palanca esquerra
-/*	palanca = App->physics->CreatePalanca(110, 600, 40, 10);
-	jointPalanca = App->physics->CreateSuportPalanca(100, 600, 10, 10);
 
+
+	//joint per la palanca esquerra
+	palanca = App->physics->CreatePalanca(115, 600, 40, 10);
+	jointPalanca = App->physics->CreateSuportPalanca(105, 600, 10, 10);
 
 	rjd1.Initialize(jointPalanca->body, palanca->body, jointPalanca->body->GetWorldCenter());
+	//rjd1.Initialize(jointPalanca->body, palanca->body, b2Vec2 (50, 50));
+
 	rjd1.maxMotorTorque = 500.0f;
 	rjd1.motorSpeed = 5;
 	rjd1.enableMotor = false;
 
-	//joint.GetAnchorA();*/
+	//joint.GetAnchorA();
 
 	return ret;
 }
@@ -193,7 +197,7 @@ update_status ModuleSceneIntro::Update()
 
 	//reiniciar la bola sensor
 	if (sensor1->Contains(ball.x,ball.y)) {
-		LOG("uwu");
+		//LOG("uwu");
 		circles.getLast()->data->body->GetWorld()->DestroyBody(circles.getLast()->data->body);
 		circles.clear();
 		circles.add(App->physics->CreateCircle(290, ballY, 7));
@@ -202,7 +206,7 @@ update_status ModuleSceneIntro::Update()
 
 	//sensor inicial bola
 	if (sensor2->Contains(ball.x, ball.y)) {
-		LOG("uwu");
+		//LOG("uwu");
 		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 		{
 			ballPushForce += 2;
@@ -216,7 +220,10 @@ update_status ModuleSceneIntro::Update()
 
 	//sensor dalt-esquerra
 	if (sensor3->Contains(ball.x, ball.y)) {
-
+		score += 5;
+		//LOG("%d",score);
+		//circles.getLast()->data->body->ApplyForceToCenter(circles.getLast()->data->body->SetLinearVelocity(-circles.getLast()->data->body->GetLinearVelocity()), true); //CANVIAR
+		circles.getLast()->data->body->ApplyForceToCenter(-3*circles.getLast()->data->body->GetLinearVelocity(), true); //CANVIAR
 	}
 
 	//sensor accelerador dreta

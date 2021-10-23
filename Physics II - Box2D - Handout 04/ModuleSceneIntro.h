@@ -49,8 +49,8 @@ public:
 	PhysBody* sensor4_3;
 
 	//joint
-/*	b2RevoluteJointDef rjd1;
-	b2RevoluteJoint joint;*/
+	b2RevoluteJointDef rjd1;
+	//b2RevoluteJoint joint;
 
 
 	PhysBody* palanca;
@@ -62,6 +62,8 @@ public:
 
 	PhysBody* bigCircles[BIGCIRCLENUMBER];
 	PhysBody* smallCircles[SMALLCIRCLENUMBER];
+
+	int score = 0;
 
 	struct Ball {
 		int x, y;
