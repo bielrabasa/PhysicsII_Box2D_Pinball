@@ -58,9 +58,9 @@ bool ModuleSceneIntro::Start()
 	bigCircles[1] = App->physics->CreateCircle2(210, 175, 23);
 	bigCircles[2] = App->physics->CreateCircle2(135, 250, 23);
 
-	bigCirclesSensor[0] = App->physics->CreateCircleSensor(120, 150, 45);
-	bigCirclesSensor[1] = App->physics->CreateCircleSensor(210, 175, 45);
-	bigCirclesSensor[2] = App->physics->CreateCircleSensor(135, 250, 45);
+	bigCirclesSensor[0] = App->physics->CreateCircleSensor(120, 150, 35);
+	bigCirclesSensor[1] = App->physics->CreateCircleSensor(210, 175, 35);
+	bigCirclesSensor[2] = App->physics->CreateCircleSensor(135, 250, 35);
 
 	smallCircles[0] = App->physics->CreateCircle2(160, 300, 4);
 	smallCircles[1] = App->physics->CreateCircle2(125, 310, 4);
@@ -233,15 +233,19 @@ update_status ModuleSceneIntro::Update()
 	}
 	//Big circles sensor
 	
-		/*if (bigCirclesSensor[0]->Contains(ball.x, ball.y)) {
-			circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(0, -30), true);
+		if (bigCirclesSensor[0]->Contains(ball.x, ball.y)) {
+			//circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(0, -30), true);
+			circles.getLast()->data->body->ApplyForceToCenter(-30 * circles.getLast()->data->body->GetLinearVelocity(), true); //CANVIAR
+
 		}
 		if (bigCirclesSensor[1]->Contains(ball.x, ball.y)) {
-			circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(0, -30), true);
+			circles.getLast()->data->body->ApplyForceToCenter(-30 * circles.getLast()->data->body->GetLinearVelocity(), true); //CANVIAR
+			//circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(0, -30), true);
 		}
 		if (bigCirclesSensor[2]->Contains(ball.x, ball.y)) {
-			circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(0, -30), true);
-		}*/
+			circles.getLast()->data->body->ApplyForceToCenter(-30 * circles.getLast()->data->body->GetLinearVelocity(), true); //CANVIAR
+			//circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(0, -30), true);
+		}
 	
 
 	//Big Circles
