@@ -74,13 +74,9 @@ bool ModuleSceneIntro::Start()
 	smallCircles[9] = App->physics->CreateCircle2(155, 430, 4);
 
 	circles.getLast()->data->body->SetBullet(true);
+	
 
-
-
-	//joint per la palanca esquerra
-	palanca = App->physics->CreatePalanca(115, 600, 40, 10);
-	jointPalanca = App->physics->CreateSuportPalanca(105, 600, 10, 10);
-
+	/*
 	rjd1.Initialize(jointPalanca->body, palanca->body, jointPalanca->body->GetWorldCenter());
 	//rjd1.Initialize(jointPalanca->body, palanca->body, b2Vec2 (50, 50));
 
@@ -89,7 +85,7 @@ bool ModuleSceneIntro::Start()
 	rjd1.enableMotor = false;
 
 	//joint.GetAnchorA();
-
+	*/
 	return ret;
 }
 
@@ -114,19 +110,25 @@ update_status ModuleSceneIntro::Update()
 
 	if(App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 	{
+		circles.getLast()->data->body->GetWorld()->DestroyBody(circles.getLast()->data->body);
+		circles.clear();
 		circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 7));
 		circles.getLast()->data->listener = this;
 	}
 
 
 	//move palanca
-	/*if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
 	{
-
-		rjd1.enableMotor = true;
+		App->physics->palanca->body->ApplyForce(b2Vec2(0, -20), b2Vec2(5, 0), true);
 	}
-	else if (App->input->GetKey(SDL_SCANCODE_F) == KEY_UP)
-		rjd1.enableMotor = false;*/
+
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
+	{
+		//App->physics->palanca->body->ApplyForce(b2Vec2(0, -20), b2Vec2(5, 0), true);
+	}
+	
+		
 
 	//IMPULS BOLA
 	/*if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
@@ -231,8 +233,10 @@ update_status ModuleSceneIntro::Update()
 		circles.getLast()->data->body->ApplyForceToCenter(circles.getLast()->data->body->GetLinearVelocity(), true); //CANVIAR
 		//b2Vec2(0, -10)
 	}
-	//Big circles sensor
 	
+	
+	//Big circles sensor
+	/*
 		if (bigCirclesSensor[0]->Contains(ball.x, ball.y)) {
 			//circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(0, -30), true);
 			circles.getLast()->data->body->ApplyForceToCenter(-30 * circles.getLast()->data->body->GetLinearVelocity(), true); //CANVIAR
@@ -246,7 +250,7 @@ update_status ModuleSceneIntro::Update()
 			circles.getLast()->data->body->ApplyForceToCenter(-30 * circles.getLast()->data->body->GetLinearVelocity(), true); //CANVIAR
 			//circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(0, -30), true);
 		}
-	
+	*/
 
 	//Big Circles
 	for (int i = 0; i < BIGCIRCLENUMBER; i++) {

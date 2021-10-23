@@ -186,6 +186,34 @@ bool ModulePhysics::Start()
 	};
 	App->scene_intro->mapa.add(App->physics->CreateChain2(0, 0, tubo_lateral, 28));
 
+
+	//JOINT
+	//joint per la palanca esquerra
+	palanca = App->physics->CreatePalanca(115, 600, 40, 10);
+
+	jointPalanca = App->physics->CreateSuportPalanca(105, 600, 10, 10);
+
+	b2RevoluteJointDef revDev;
+	revDev.bodyA = jointPalanca->body;
+	revDev.bodyB = palanca->body;
+	revDev.collideConnected = false;
+	revDev.localAnchorB = b2Vec2(-0.4, 0);
+	revDev.localAnchorA = b2Vec2(0, 0);
+	
+	revDev.enableLimit = true;
+	revDev.lowerAngle = -30 * DEGTORAD;
+	revDev.upperAngle = 0 * DEGTORAD;
+	/*
+	revDev.enableMotor = false;
+	revDev.maxMotorTorque = 5;
+	revDev.motorSpeed = -200 * DEGTORAD;
+	*/
+
+	//world->CreateJoint(&revDev);
+	ljpalanca = (b2RevoluteJoint*)world->CreateJoint(&revDev);
+
+
+
 	return true;
 }
 
@@ -295,7 +323,7 @@ PhysBody* ModulePhysics::CreatePalanca(int x, int y, int width, int height)
 
 	b2FixtureDef fixture;
 	fixture.shape = &box;
-	//fixture.density = 1.0f;
+	fixture.density = 1.0f;
 
 	b->CreateFixture(&fixture);
 

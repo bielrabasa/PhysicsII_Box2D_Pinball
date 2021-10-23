@@ -56,6 +56,9 @@ public:
 	// b2ContactListener ---
 	void BeginContact(b2Contact* contact);
 
+	b2RevoluteJoint* ljpalanca;
+	PhysBody* palanca;
+	PhysBody* jointPalanca;
 
 private:
 
