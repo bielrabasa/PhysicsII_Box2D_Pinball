@@ -47,6 +47,7 @@ public:
 	PhysBody* sensor4_1;
 	PhysBody* sensor4_2;
 	PhysBody* sensor4_3;
+	PhysBody* sensor5;
 
 	//joint
 	//b2RevoluteJointDef rjd1;

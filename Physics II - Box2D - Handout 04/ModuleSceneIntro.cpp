@@ -41,18 +41,16 @@ bool ModuleSceneIntro::Start()
 	circles.add(App->physics->CreateCircle(290, ballY, 7));
 	circles.getLast()->data->listener = this;
 	circles.getLast()->data->body->SetBullet(true);
-	//App->physics->CreateRectangle(283, 590, 30, 10);
 
-	//Rectangle que empeny la bola
-	//App->physics->CreateRectangle(283, 590, 30, 10);
+	sensor1 = App->physics->CreateRectangleSensor(140, 640, 85, 20, 0);
+	sensor2 = App->physics->CreateRectangleSensor(290, 573, 20, 40, 0);
 
-	sensor1 = App->physics->CreateRectangleSensor(140, 640, 85, 20);
-	sensor2 = App->physics->CreateRectangleSensor(290, 573, 20, 40);
-	//sensor3 = App->physics->CreateRectangleSensor(290, 330, 30, 30);
-	sensor3 = App->physics->CreateRectangleSensor(45, 130, 30, 30);
-	sensor4_1 = App->physics->CreateRectangleSensor(252, 300, 30, 60);
-	sensor4_2 = App->physics->CreateRectangleSensor(260, 350, 30, 45);
-	sensor4_3 = App->physics->CreateRectangleSensor(240, 400, 30, 50);
+	sensor3 = App->physics->CreateRectangleSensor(45, 130, 30, 30, 0);
+	sensor4_1 = App->physics->CreateRectangleSensor(252, 300, 30, 60, 0);
+	sensor4_2 = App->physics->CreateRectangleSensor(260, 350, 30, 45, 0);
+	sensor4_3 = App->physics->CreateRectangleSensor(240, 400, 30, 50, 0);
+
+	sensor5 = App->physics->CreateRectangleSensor(50, 400, 100, 20, 20);
 
 	bigCircles[0] = App->physics->CreateCircle2(120, 150, 23);
 	bigCircles[1] = App->physics->CreateCircle2(210, 175, 23);
@@ -103,7 +101,6 @@ update_status ModuleSceneIntro::Update()
 		circles.getLast()->data->listener = this;
 		circles.getLast()->data->body->SetBullet(true);
 	}
-
 
 	//move palanca esquerra
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
@@ -213,15 +210,18 @@ update_status ModuleSceneIntro::Update()
 	//sensor dalt-esquerra
 	if (sensor3->Contains(ball.x, ball.y)) {
 		score += 5;
-		//LOG("%d",score);
-		//circles.getLast()->data->body->ApplyForceToCenter(circles.getLast()->data->body->SetLinearVelocity(-circles.getLast()->data->body->GetLinearVelocity()), true); //CANVIAR
-		circles.getLast()->data->body->ApplyForceToCenter(-3*circles.getLast()->data->body->GetLinearVelocity(), true); //CANVIAR
+		//circles.getLast()->data->body->ApplyForceToCenter(-2*circles.getLast()->data->body->GetLinearVelocity(), true); //CANVIAR
+		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(0, 50), true);
 	}
 
 	//sensor accelerador dreta
 	if ((sensor4_1->Contains(ball.x, ball.y)) || (sensor4_2->Contains(ball.x, ball.y)) || (sensor4_3->Contains(ball.x, ball.y))) {
-		circles.getLast()->data->body->ApplyForceToCenter(circles.getLast()->data->body->GetLinearVelocity(), true); //CANVIAR
-		//b2Vec2(0, -10)
+		if (circles.getLast()->data->body->GetLinearVelocity().y > 0) {
+			circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(0, -15), true);
+		}
+		else {
+			circles.getLast()->data->body->ApplyForceToCenter(circles.getLast()->data->body->GetLinearVelocity(), true);
+		}
 	}
 	
 	

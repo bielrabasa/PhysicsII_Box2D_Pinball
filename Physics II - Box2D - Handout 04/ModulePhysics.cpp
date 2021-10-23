@@ -392,12 +392,12 @@ PhysBody* ModulePhysics::CreateSuportPalanca(int x, int y, int width, int height
 	return pbody;
 }
 
-PhysBody* ModulePhysics::CreateRectangleSensor(int x, int y, int width, int height)
+PhysBody* ModulePhysics::CreateRectangleSensor(int x, int y, int width, int height, float rotation)
 {
 	b2BodyDef body;
 	body.type = b2_staticBody;
 	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
-
+	body.angle = rotation;
 	b2Body* b = world->CreateBody(&body);
 
 	b2PolygonShape box;
