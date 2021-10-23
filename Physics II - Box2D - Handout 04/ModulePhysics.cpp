@@ -188,6 +188,25 @@ bool ModulePhysics::Start()
 	};
 	App->scene_intro->mapa.add(App->physics->CreateChain2(0, 0, tubo_lateral, 28));
 
+	int palanca_esquerra[12] = {
+		121, 618,
+		125, 618,
+		128, 616,
+		127, 613,
+		87, 596,
+		83, 602
+	};
+	App->scene_intro->mapa.add(App->physics->CreateChain2(0, 0, palanca_esquerra, 12));
+
+	int palanca_dreta[12] = {
+		196, 602,
+		192, 596,
+		153, 614,
+		151, 616,
+		152, 619,
+		155, 619
+	};
+	App->scene_intro->mapa.add(App->physics->CreateChain2(0, 0, palanca_dreta, 12));
 
 	//JOINT
 	//joint per la palanca esquerra
