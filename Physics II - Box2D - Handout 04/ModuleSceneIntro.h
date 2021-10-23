@@ -48,6 +48,10 @@ public:
 	PhysBody* sensor4_2;
 	PhysBody* sensor4_3;
 	PhysBody* sensor5;
+	PhysBody* sensor6;
+	PhysBody* sensor7;
+	PhysBody* sensor8;
+	PhysBody* sensor9;
 
 	//joint
 	//b2RevoluteJointDef rjd1;
