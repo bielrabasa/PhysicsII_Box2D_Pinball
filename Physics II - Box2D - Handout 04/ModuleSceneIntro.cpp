@@ -40,7 +40,7 @@ bool ModuleSceneIntro::Start()
 
 	circles.add(App->physics->CreateCircle(290, ballY, 7));
 	circles.getLast()->data->listener = this;
-
+	circles.getLast()->data->body->SetBullet(true);
 	//App->physics->CreateRectangle(283, 590, 30, 10);
 
 	//Rectangle que empeny la bola
@@ -72,20 +72,7 @@ bool ModuleSceneIntro::Start()
 	smallCircles[7] = App->physics->CreateCircle2(110, 380, 4);
 	smallCircles[8] = App->physics->CreateCircle2(120, 415, 4);
 	smallCircles[9] = App->physics->CreateCircle2(155, 430, 4);
-
-	circles.getLast()->data->body->SetBullet(true);
 	
-
-	/*
-	rjd1.Initialize(jointPalanca->body, palanca->body, jointPalanca->body->GetWorldCenter());
-	//rjd1.Initialize(jointPalanca->body, palanca->body, b2Vec2 (50, 50));
-
-	rjd1.maxMotorTorque = 500.0f;
-	rjd1.motorSpeed = 5;
-	rjd1.enableMotor = false;
-
-	//joint.GetAnchorA();
-	*/
 	return ret;
 }
 
@@ -114,38 +101,40 @@ update_status ModuleSceneIntro::Update()
 		circles.clear();
 		circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 7));
 		circles.getLast()->data->listener = this;
+		circles.getLast()->data->body->SetBullet(true);
 	}
 
 
-	//move palanca
+	//move palanca esquerra
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
 	{
-		App->physics->palanca->body->ApplyForce(b2Vec2(0, -20), b2Vec2(5, 0), true);
+		App->physics->palanca->body->ApplyForce(b2Vec2(0, -10), b2Vec2(10, 0), true);
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_UP) {
+		App->physics->palanca->body->ApplyForce(b2Vec2(0, 10), b2Vec2(10, 0), true);
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
+		App->physics->palanca->body->ApplyForce(b2Vec2(0, -1), b2Vec2(10, 0), true);
 	}
 
+	//move palanca dreta
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
 	{
-		//App->physics->palanca->body->ApplyForce(b2Vec2(0, -20), b2Vec2(5, 0), true);
+		App->physics->palanca2->body->ApplyForce(b2Vec2(0, -10), b2Vec2(-10, 0), true);
 	}
-	
-		
-
-	//IMPULS BOLA
-	/*if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-	{
-		ballPushForce += 2;
+	else if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_UP) {
+		App->physics->palanca2->body->ApplyForce(b2Vec2(0, 10), b2Vec2(-10, 0), true);
 	}
-	else if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_UP)
-	{
-		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(0, -ballPushForce), true);
-		ballPushForce = 0;
-	}*/
+	else if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
+		App->physics->palanca2->body->ApplyForce(b2Vec2(0, -1), b2Vec2(-10, 0), true);
+	}	
 
 	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN) {
 		//BORRAR BODY, netejar llista, crear bola
 		circles.getLast()->data->body->GetWorld()->DestroyBody(circles.getLast()->data->body);
 		circles.clear();
 		circles.add(App->physics->CreateCircle(290, ballY, 7));
+		circles.getLast()->data->body->SetBullet(true);
 	}
 
 	if(App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
@@ -204,6 +193,7 @@ update_status ModuleSceneIntro::Update()
 		circles.clear();
 		circles.add(App->physics->CreateCircle(290, ballY, 7));
 		circles.getLast()->data->listener = this;
+		circles.getLast()->data->body->SetBullet(true);
 	}
 
 	//sensor inicial bola

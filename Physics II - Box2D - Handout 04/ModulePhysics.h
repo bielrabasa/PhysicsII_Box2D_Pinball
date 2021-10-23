@@ -60,6 +60,11 @@ public:
 	PhysBody* palanca;
 	PhysBody* jointPalanca;
 
+	b2RevoluteJoint* ljpalanca2;
+	PhysBody* palanca2;
+	PhysBody* jointPalanca2;
+
+
 private:
 
 	bool debug;

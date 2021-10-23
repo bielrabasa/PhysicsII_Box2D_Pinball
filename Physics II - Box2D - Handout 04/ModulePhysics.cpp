@@ -196,7 +196,7 @@ bool ModulePhysics::Start()
 		87, 596,
 		83, 602
 	};
-	App->scene_intro->mapa.add(App->physics->CreateChain2(0, 0, palanca_esquerra, 12));
+	//App->scene_intro->mapa.add(App->physics->CreateChain(1, 0, palanca_esquerra, 12));
 
 	int palanca_dreta[12] = {
 		196, 602,
@@ -206,34 +206,42 @@ bool ModulePhysics::Start()
 		152, 619,
 		155, 619
 	};
-	App->scene_intro->mapa.add(App->physics->CreateChain2(0, 0, palanca_dreta, 12));
+	//App->scene_intro->mapa.add(App->physics->CreateChain(0, 0, palanca_dreta, 12));
 
 	//JOINT
 	//joint per la palanca esquerra
+	//palanca = App->physics->CreateChain(0, 0, palanca_esquerra, 12);
+
 	palanca = App->physics->CreatePalanca(100, 600, 40, 10);
-
 	jointPalanca = App->physics->CreateSuportPalanca(85, 600, 10, 10);
-
 	b2RevoluteJointDef revDev;
 	revDev.bodyA = jointPalanca->body;
 	revDev.bodyB = palanca->body;
 	revDev.collideConnected = false;
-	revDev.localAnchorB = b2Vec2(-0.4, 0);
+	revDev.localAnchorB = b2Vec2(-0.45, 0);
 	revDev.localAnchorA = b2Vec2(0, 0);
 	
 	revDev.enableLimit = true;
-	revDev.lowerAngle = -30 * DEGTORAD;
-	revDev.upperAngle = 0 * DEGTORAD;
-	/*
-	revDev.enableMotor = false;
-	revDev.maxMotorTorque = 5;
-	revDev.motorSpeed = -200 * DEGTORAD;
-	*/
+	revDev.lowerAngle = -25 * DEGTORAD;
+	revDev.upperAngle = 15 * DEGTORAD;
 
-	//world->CreateJoint(&revDev);
 	ljpalanca = (b2RevoluteJoint*)world->CreateJoint(&revDev);
+	
+	//palanca dreta
+	palanca2 = App->physics->CreatePalanca(200, 600, 40, 10);
+	jointPalanca2 = App->physics->CreateSuportPalanca(195, 600, 10, 10);
+	b2RevoluteJointDef revDev2;
+	revDev2.bodyA = jointPalanca2->body;
+	revDev2.bodyB = palanca2->body;
+	revDev2.collideConnected = false;
+	revDev2.localAnchorB = b2Vec2(0.45, 0);
+	revDev2.localAnchorA = b2Vec2(0, 0);
 
+	revDev2.enableLimit = true;
+	revDev2.lowerAngle = -15 * DEGTORAD;
+	revDev2.upperAngle = 25 * DEGTORAD;
 
+	ljpalanca2 = (b2RevoluteJoint*)world->CreateJoint(&revDev2);
 
 	return true;
 }
