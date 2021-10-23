@@ -104,11 +104,9 @@ bool ModulePhysics::Start()
 	};
 	App->scene_intro->mapa.add(App->physics->CreateChain2(0, 0, mapaHitBox, 92));
 
-	int salida_inferior1[28] = {
-		182, 599,
-		181, 602,
-		183, 606,
-		187, 606,
+	int salida_inferior1[24] = {
+		195, 594,
+		199, 599,
 		248, 572,
 		252, 569,
 		253, 565,
@@ -120,19 +118,24 @@ bool ModulePhysics::Start()
 		246, 563,
 		243, 566
 	};
-	App->scene_intro->mapa.add(App->physics->CreateChain2(0, 0, salida_inferior1, 28));
+	App->scene_intro->mapa.add(App->physics->CreateChain2(0, 0, salida_inferior1, 24));
 	
-	int salida_inferior2[16] = {
-		32, 479,
-		30, 567,
-		97, 603,
-		102, 603,
-		102, 598,
-		38, 562,
-		39, 481,
-		36, 477
+	int salida_inferior2[26] = {
+		34, 564,
+		34, 483,
+		35, 478,
+		44, 461,
+		42, 458,
+		38, 459,
+		29, 477,
+		28, 481,
+		26, 565,
+		27, 570,
+		32, 573,
+		79, 599,
+		84, 594
 	};
-	App->scene_intro->mapa.add(App->physics->CreateChain2(0, 0, salida_inferior2, 16));
+	App->scene_intro->mapa.add(App->physics->CreateChain2(0, 0, salida_inferior2, 26));
 
 	int triangulo_inferior1[18] = {
 		221, 553,
