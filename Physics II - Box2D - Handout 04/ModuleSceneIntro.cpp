@@ -74,6 +74,18 @@ bool ModuleSceneIntro::Start()
 
 	circles.getLast()->data->body->SetBullet(true);
 
+	//joint per la palanca esquerra
+/*	palanca = App->physics->CreatePalanca(110, 600, 40, 10);
+	jointPalanca = App->physics->CreateSuportPalanca(100, 600, 10, 10);
+
+
+	rjd1.Initialize(jointPalanca->body, palanca->body, jointPalanca->body->GetWorldCenter());
+	rjd1.maxMotorTorque = 500.0f;
+	rjd1.motorSpeed = 5;
+	rjd1.enableMotor = false;
+
+	//joint.GetAnchorA();*/
+
 	return ret;
 }
 
@@ -101,6 +113,16 @@ update_status ModuleSceneIntro::Update()
 		circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 7));
 		circles.getLast()->data->listener = this;
 	}
+
+
+	//move palanca
+	/*if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
+	{
+
+		rjd1.enableMotor = true;
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_F) == KEY_UP)
+		rjd1.enableMotor = false;*/
 
 	//IMPULS BOLA
 	/*if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)

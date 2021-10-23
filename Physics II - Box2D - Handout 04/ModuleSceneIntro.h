@@ -48,6 +48,14 @@ public:
 	PhysBody* sensor4_2;
 	PhysBody* sensor4_3;
 
+	//joint
+/*	b2RevoluteJointDef rjd1;
+	b2RevoluteJoint joint;*/
+
+
+	PhysBody* palanca;
+	PhysBody* jointPalanca;
+
 	PhysBody* bigCirclesSensor[BIGCIRCLENUMBER];
 
 
