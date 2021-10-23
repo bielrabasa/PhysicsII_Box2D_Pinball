@@ -192,9 +192,9 @@ bool ModulePhysics::Start()
 
 	//JOINT
 	//joint per la palanca esquerra
-	palanca = App->physics->CreatePalanca(115, 600, 40, 10);
+	palanca = App->physics->CreatePalanca(100, 600, 40, 10);
 
-	jointPalanca = App->physics->CreateSuportPalanca(105, 600, 10, 10);
+	jointPalanca = App->physics->CreateSuportPalanca(85, 600, 10, 10);
 
 	b2RevoluteJointDef revDev;
 	revDev.bodyA = jointPalanca->body;
