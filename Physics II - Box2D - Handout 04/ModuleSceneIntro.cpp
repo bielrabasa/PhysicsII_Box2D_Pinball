@@ -192,6 +192,9 @@ update_status ModuleSceneIntro::Update()
 	
 	circles.getLast()->data->GetPosition(ball.x, ball.y);
 
+	if (max_score >= score)
+		max_score = score;
+
 	//reiniciar la bola sensor
 	if (sensor1->Contains(ball.x,ball.y) && ball_count > 1) {
 		//LOG("uwu");

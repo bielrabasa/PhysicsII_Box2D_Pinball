@@ -63,6 +63,7 @@ public:
 	PhysBody* smallCircles[SMALLCIRCLENUMBER];
 
 	int score = 0;
+	int max_score = 0;
 
 	int ball_count = 3;
 
