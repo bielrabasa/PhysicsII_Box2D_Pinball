@@ -26,6 +26,7 @@ public:
 	p2List<PhysBody*> boxes;
 	p2List<PhysBody*> ricks;
 	p2List<PhysBody*> mapa;
+	p2List<PhysBody*> startL;
 	
 	b2World* world;
 	

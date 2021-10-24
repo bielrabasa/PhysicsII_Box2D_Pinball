@@ -33,7 +33,7 @@ bool ModuleSceneIntro::Start()
 
 	circle = App->textures->Load("pinball/wheel.png"); 
 	box = App->textures->Load("pinball/crate.png");
-	rick = App->textures->Load("pinball/rick_head.png");
+	rick = App->textures->Load("pinball/Start.png");
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 
 	//sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT, SCREEN_WIDTH, 50);
@@ -80,6 +80,15 @@ bool ModuleSceneIntro::Start()
 	smallCircles[8] = App->physics->CreateCircle2(120, 415, 4);
 	smallCircles[9] = App->physics->CreateCircle2(155, 430, 4);
 	
+
+	//Press R to start
+	int rick_head[6] = {
+	14, 36,
+	42, 40,
+	40, 0,
+	};
+	ricks.add(App->physics->CreateChain2(0, 0, rick_head, 6));
+
 	return ret;
 }
 
@@ -142,6 +151,9 @@ update_status ModuleSceneIntro::Update()
 		circles.add(App->physics->CreateCircle(290, ballY, 7));
 		circles.getLast()->data->listener = this;
 		circles.getLast()->data->body->SetBullet(true);
+		//Borra el PRESS R TO START
+		ricks.getLast()->data->body->GetWorld()->DestroyBody(ricks.getLast()->data->body);
+		ricks.clear();
 		ball_count = 3;
 	}
 
@@ -217,8 +229,14 @@ update_status ModuleSceneIntro::Update()
 		circles.add(App->physics->CreateCircle(890, ballY, 7));
 		circles.getLast()->data->listener = this;
 		circles.getLast()->data->body->SetBullet(true);
-
-
+		
+		//imprime por pantalla como reiniciar
+		int rick_head[6] = {
+		14, 36,
+		42, 40,
+		40, 0,
+		};
+		ricks.add(App->physics->CreateChain2(0, 0, rick_head, 6));
 	}
 
 	//sensor inicial bola
