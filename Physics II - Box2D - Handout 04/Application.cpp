@@ -11,8 +11,10 @@
 
 #include "Application.h"
 
+
 Application::Application()
 {
+
 	renderer = new ModuleRender(this);
 	window = new ModuleWindow(this);
 	textures = new ModuleTextures(this);

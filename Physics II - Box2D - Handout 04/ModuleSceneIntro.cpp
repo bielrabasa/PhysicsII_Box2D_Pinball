@@ -196,7 +196,8 @@ update_status ModuleSceneIntro::Update()
 		max_score = score;
 
 	//reiniciar la bola sensor
-	if (sensor1->Contains(ball.x,ball.y) && ball_count > 1) {
+	LOG("Ball cont: %d",ball_count)
+	if (sensor1->Contains(ball.x,ball.y) && ball_count >= 1) {//Limitador de bolas a 3
 		//LOG("uwu");
 		ball_count--;
 		score = 0;
@@ -205,6 +206,17 @@ update_status ModuleSceneIntro::Update()
 		circles.add(App->physics->CreateCircle(290, ballY, 7));
 		circles.getLast()->data->listener = this;
 		circles.getLast()->data->body->SetBullet(true);
+	}
+
+	//Cuando llega a esta a 0 el numero de pelotas restantes hace que no aparezcan mas pelotas en el mapa
+	if (sensor1->Contains(ball.x, ball.y) && ball_count <= 0) {
+		circles.getLast()->data->body->GetWorld()->DestroyBody(circles.getLast()->data->body);
+		circles.clear();
+		circles.add(App->physics->CreateCircle(890, ballY, 7));
+		circles.getLast()->data->listener = this;
+		circles.getLast()->data->body->SetBullet(true);
+
+
 	}
 
 	//sensor inicial bola
@@ -221,14 +233,15 @@ update_status ModuleSceneIntro::Update()
 		}
 	}
 
+	//sensor dalt-esquerra
+
 	if (sensorResetCont < 200) {
 		sensorResetCont++;
 	}
 	LOG("Numero sensor tempo %d", sensorResetCont);
-	//sensor dalt-esquerra
 	if (sensor3->Contains(ball.x, ball.y)) {
 		
-
+		//Codigo que para la pelota y la lanza despues de 1 segundo
 		
 		if (sensorResetCont >= 200) {
 			stopBall = true;
@@ -245,36 +258,37 @@ update_status ModuleSceneIntro::Update()
 			score += 5;
 			LOG("Score: %d", score);
 		}
-		//circles.getLast()->data->body->ApplyForceToCenter(-2*circles.getLast()->data->body->GetLinearVelocity(), true); //CANVIAR
+		//circles.getLast()->data->body->ApplyForceToCenter(-2*circles.getLast()->data->body->GetLinearVelocity(), true); //CANVIAT
 	}
 
 	if (sensor5->Contains(ball.x, ball.y)) {
 		LOG("%d", score)
-		score += 5;
+		score += 3;
 		//circles.getLast()->data->body->ApplyForceToCenter(-2*circles.getLast()->data->body->GetLinearVelocity(), true); //CANVIAR
 		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(40, -40), true);
 	}
 	if (sensor8->Contains(ball.x, ball.y)) {
 		LOG("%d", score);
-		score += 5;
+		score += 2;
 		//circles.getLast()->data->body->ApplyForceToCenter(-2*circles.getLast()->data->body->GetLinearVelocity(), true); //CANVIAR
 		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(30, -50), true);
 	}	
 	if (sensor7->Contains(ball.x, ball.y)) {
 		LOG("%d", score);
-		score += 5;
+		score += 2;
 		//circles.getLast()->data->body->ApplyForceToCenter(-2*circles.getLast()->data->body->GetLinearVelocity(), true); //CANVIAR
 		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(-30, -50), true);
 	}	
+
 	if (sensor6->Contains(ball.x, ball.y)) {
 		LOG("%d", score);
-		score += 5;
+		score += 3;
 		//circles.getLast()->data->body->ApplyForceToCenter(-2*circles.getLast()->data->body->GetLinearVelocity(), true); //CANVIAR
 		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(-40, -50), true);
 	}	
 	if (sensor9->Contains(ball.x, ball.y)) {
 		LOG("%d", score);
-		score += 5;
+		score += 3;
 		//circles.getLast()->data->body->ApplyForceToCenter(-2*circles.getLast()->data->body->GetLinearVelocity(), true); //CANVIAR
 		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(-50, -30), true);
 	}
