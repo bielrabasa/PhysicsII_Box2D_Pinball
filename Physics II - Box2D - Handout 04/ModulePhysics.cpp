@@ -54,7 +54,7 @@ bool ModulePhysics::Start()
 	fixture.shape = &shape;
 	big_ball->CreateFixture(&fixture);
 
-	int mapaHitBox[92] = {
+	int mapaHitBox[90] = {
 		300, 591,
 		301, 165,
 		300, 159,
@@ -87,11 +87,10 @@ bool ModulePhysics::Start()
 		181, 650,
 		271, 594,
 		273, 590,
-		274, 367,
-		251, 437,
-		248, 440,
-		244, 439,
-		243, 435,
+		273, 470,
+		271, 466,
+		246, 440,
+		244, 435,
 		272, 354,
 		273, 349,
 		273, 344,
@@ -102,7 +101,7 @@ bool ModulePhysics::Start()
 		279, 177,
 		280, 590
 	};
-	App->scene_intro->mapa.add(App->physics->CreateChain2(0, 0, mapaHitBox, 92));
+	App->scene_intro->mapa.add(App->physics->CreateChain2(0, 0, mapaHitBox, 90));
 
 	int salida_inferior1[24] = {
 		195, 594,
