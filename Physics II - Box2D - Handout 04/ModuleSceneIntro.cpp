@@ -219,36 +219,37 @@ update_status ModuleSceneIntro::Update()
 	//sensor dalt-esquerra
 	if (sensor3->Contains(ball.x, ball.y)) {
 		score += 5;
+		LOG("%d", score)
 		//circles.getLast()->data->body->ApplyForceToCenter(-2*circles.getLast()->data->body->GetLinearVelocity(), true); //CANVIAR
 		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(0, 50), true);
 	}
 
 	if (sensor5->Contains(ball.x, ball.y)) {
-		//LOG("%d", score);
+		LOG("%d", score)
 		score += 5;
 		//circles.getLast()->data->body->ApplyForceToCenter(-2*circles.getLast()->data->body->GetLinearVelocity(), true); //CANVIAR
 		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(40, -40), true);
 	}
 	if (sensor8->Contains(ball.x, ball.y)) {
-		//LOG("%d", score);
+		LOG("%d", score);
 		score += 5;
 		//circles.getLast()->data->body->ApplyForceToCenter(-2*circles.getLast()->data->body->GetLinearVelocity(), true); //CANVIAR
 		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(30, -50), true);
 	}	
 	if (sensor7->Contains(ball.x, ball.y)) {
-		//LOG("%d", score);
+		LOG("%d", score);
 		score += 5;
 		//circles.getLast()->data->body->ApplyForceToCenter(-2*circles.getLast()->data->body->GetLinearVelocity(), true); //CANVIAR
 		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(-30, -50), true);
 	}	
 	if (sensor6->Contains(ball.x, ball.y)) {
-		//LOG("%d", score);
+		LOG("%d", score);
 		score += 5;
 		//circles.getLast()->data->body->ApplyForceToCenter(-2*circles.getLast()->data->body->GetLinearVelocity(), true); //CANVIAR
 		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(-40, -50), true);
 	}	
 	if (sensor9->Contains(ball.x, ball.y)) {
-		//LOG("%d", score);
+		LOG("%d", score);
 		score += 5;
 		//circles.getLast()->data->body->ApplyForceToCenter(-2*circles.getLast()->data->body->GetLinearVelocity(), true); //CANVIAR
 		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(-50, -30), true);
