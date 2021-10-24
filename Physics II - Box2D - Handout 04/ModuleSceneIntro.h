@@ -64,6 +64,8 @@ public:
 
 	int score = 0;
 
+	int ball_count = 3;
+
 	struct Ball {
 		int x, y;
 	};

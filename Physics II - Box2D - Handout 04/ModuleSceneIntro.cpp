@@ -193,8 +193,10 @@ update_status ModuleSceneIntro::Update()
 	circles.getLast()->data->GetPosition(ball.x, ball.y);
 
 	//reiniciar la bola sensor
-	if (sensor1->Contains(ball.x,ball.y)) {
+	if (sensor1->Contains(ball.x,ball.y) && ball_count > 1) {
 		//LOG("uwu");
+		ball_count--;
+		score = 0;
 		circles.getLast()->data->body->GetWorld()->DestroyBody(circles.getLast()->data->body);
 		circles.clear();
 		circles.add(App->physics->CreateCircle(290, ballY, 7));
