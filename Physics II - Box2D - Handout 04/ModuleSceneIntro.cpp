@@ -38,7 +38,7 @@ bool ModuleSceneIntro::Start()
 
 	//sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT, SCREEN_WIDTH, 50);
 
-	circles.add(App->physics->CreateCircle(290, ballY, 7));
+	circles.add(App->physics->CreateCircle(890, ballY, 7));
 	circles.getLast()->data->listener = this;
 	circles.getLast()->data->body->SetBullet(true);
 
@@ -135,12 +135,14 @@ update_status ModuleSceneIntro::Update()
 		App->physics->palanca2->body->ApplyForce(b2Vec2(0, -1), b2Vec2(-10, 0), true);
 	}	
 
-	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN) {
+	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN && ball_count == 0) {
 		//BORRAR BODY, netejar llista, crear bola
 		circles.getLast()->data->body->GetWorld()->DestroyBody(circles.getLast()->data->body);
 		circles.clear();
 		circles.add(App->physics->CreateCircle(290, ballY, 7));
+		circles.getLast()->data->listener = this;
 		circles.getLast()->data->body->SetBullet(true);
+		ball_count = 3;
 	}
 
 	if(App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)

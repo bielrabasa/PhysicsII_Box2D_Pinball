@@ -71,7 +71,7 @@ public:
 	int score = 0;
 	int max_score = 0;
 
-	int ball_count = 3;
+	int ball_count = 0;
 
 	struct Ball {
 		int x, y;
