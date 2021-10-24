@@ -40,19 +40,26 @@ bool ModuleSceneIntro::Start()
 
 	circles.add(App->physics->CreateCircle(290, ballY, 7));
 	circles.getLast()->data->listener = this;
+	circles.getLast()->data->body->SetBullet(true);
 
-	//App->physics->CreateRectangle(283, 590, 30, 10);
+	sensor1 = App->physics->CreateRectangleSensor(140, 640, 85, 20, 0);
+	sensor2 = App->physics->CreateRectangleSensor(290, 573, 20, 40, 0);
 
-	//Rectangle que empeny la bola
-	//App->physics->CreateRectangle(283, 590, 30, 10);
+	sensor3 = App->physics->CreateRectangleSensor(45, 130, 30, 30, 0);
+	sensor4_1 = App->physics->CreateRectangleSensor(252, 300, 30, 60, 0);
+	sensor4_2 = App->physics->CreateRectangleSensor(260, 350, 30, 45, 0);
+	sensor4_3 = App->physics->CreateRectangleSensor(240, 400, 30, 50, 0);
 
-	sensor1 = App->physics->CreateRectangleSensor(140, 640, 85, 20);
-	sensor2 = App->physics->CreateRectangleSensor(290, 573, 20, 40);
-	//sensor3 = App->physics->CreateRectangleSensor(290, 330, 30, 30);
-	sensor3 = App->physics->CreateRectangleSensor(45, 130, 30, 30);
-	sensor4_1 = App->physics->CreateRectangleSensor(252, 300, 30, 60);
-	sensor4_2 = App->physics->CreateRectangleSensor(260, 350, 30, 45);
-	sensor4_3 = App->physics->CreateRectangleSensor(240, 400, 30, 50);
+	//fets
+	sensor5 = App->physics->CreateRectangleSensor(27, 404, 50, 10, 20.09);
+	sensor8 = App->physics->CreateRectangleSensor(80, 522, 80, 10, -1.9);
+
+	//fuym
+	sensor7 = App->physics->CreateRectangleSensor(190, 522, 80, 10, 1.9);
+	sensor6 = App->physics->CreateRectangleSensor(255, 228, 70, 10, 1.71);
+	sensor9 = App->physics->CreateRectangleSensor(210, 370, 50, 10, 2.1);
+
+
 
 	bigCircles[0] = App->physics->CreateCircle2(120, 150, 23);
 	bigCircles[1] = App->physics->CreateCircle2(210, 175, 23);
@@ -72,20 +79,7 @@ bool ModuleSceneIntro::Start()
 	smallCircles[7] = App->physics->CreateCircle2(110, 380, 4);
 	smallCircles[8] = App->physics->CreateCircle2(120, 415, 4);
 	smallCircles[9] = App->physics->CreateCircle2(155, 430, 4);
-
-	circles.getLast()->data->body->SetBullet(true);
 	
-
-	/*
-	rjd1.Initialize(jointPalanca->body, palanca->body, jointPalanca->body->GetWorldCenter());
-	//rjd1.Initialize(jointPalanca->body, palanca->body, b2Vec2 (50, 50));
-
-	rjd1.maxMotorTorque = 500.0f;
-	rjd1.motorSpeed = 5;
-	rjd1.enableMotor = false;
-
-	//joint.GetAnchorA();
-	*/
 	return ret;
 }
 
@@ -114,38 +108,39 @@ update_status ModuleSceneIntro::Update()
 		circles.clear();
 		circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 7));
 		circles.getLast()->data->listener = this;
+		circles.getLast()->data->body->SetBullet(true);
 	}
 
-
-	//move palanca
+	//move palanca esquerra
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
 	{
-		App->physics->palanca->body->ApplyForce(b2Vec2(0, -20), b2Vec2(5, 0), true);
+		App->physics->palanca->body->ApplyForce(b2Vec2(0, -10), b2Vec2(10, 0), true);
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_UP) {
+		App->physics->palanca->body->ApplyForce(b2Vec2(0, 10), b2Vec2(10, 0), true);
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
+		App->physics->palanca->body->ApplyForce(b2Vec2(0, -1), b2Vec2(10, 0), true);
 	}
 
+	//move palanca dreta
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
 	{
-		//App->physics->palanca->body->ApplyForce(b2Vec2(0, -20), b2Vec2(5, 0), true);
+		App->physics->palanca2->body->ApplyForce(b2Vec2(0, -10), b2Vec2(-10, 0), true);
 	}
-	
-		
-
-	//IMPULS BOLA
-	/*if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-	{
-		ballPushForce += 2;
+	else if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_UP) {
+		App->physics->palanca2->body->ApplyForce(b2Vec2(0, 10), b2Vec2(-10, 0), true);
 	}
-	else if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_UP)
-	{
-		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(0, -ballPushForce), true);
-		ballPushForce = 0;
-	}*/
+	else if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
+		App->physics->palanca2->body->ApplyForce(b2Vec2(0, -1), b2Vec2(-10, 0), true);
+	}	
 
 	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN) {
 		//BORRAR BODY, netejar llista, crear bola
 		circles.getLast()->data->body->GetWorld()->DestroyBody(circles.getLast()->data->body);
 		circles.clear();
 		circles.add(App->physics->CreateCircle(290, ballY, 7));
+		circles.getLast()->data->body->SetBullet(true);
 	}
 
 	if(App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
@@ -197,13 +192,19 @@ update_status ModuleSceneIntro::Update()
 	
 	circles.getLast()->data->GetPosition(ball.x, ball.y);
 
+	if (max_score >= score)
+		max_score = score;
+
 	//reiniciar la bola sensor
-	if (sensor1->Contains(ball.x,ball.y)) {
+	if (sensor1->Contains(ball.x,ball.y) && ball_count > 1) {
 		//LOG("uwu");
+		ball_count--;
+		score = 0;
 		circles.getLast()->data->body->GetWorld()->DestroyBody(circles.getLast()->data->body);
 		circles.clear();
 		circles.add(App->physics->CreateCircle(290, ballY, 7));
 		circles.getLast()->data->listener = this;
+		circles.getLast()->data->body->SetBullet(true);
 	}
 
 	//sensor inicial bola
@@ -223,15 +224,50 @@ update_status ModuleSceneIntro::Update()
 	//sensor dalt-esquerra
 	if (sensor3->Contains(ball.x, ball.y)) {
 		score += 5;
-		//LOG("%d",score);
-		//circles.getLast()->data->body->ApplyForceToCenter(circles.getLast()->data->body->SetLinearVelocity(-circles.getLast()->data->body->GetLinearVelocity()), true); //CANVIAR
-		circles.getLast()->data->body->ApplyForceToCenter(-3*circles.getLast()->data->body->GetLinearVelocity(), true); //CANVIAR
+		LOG("%d", score)
+		//circles.getLast()->data->body->ApplyForceToCenter(-2*circles.getLast()->data->body->GetLinearVelocity(), true); //CANVIAR
+		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(0, 50), true);
+	}
+
+	if (sensor5->Contains(ball.x, ball.y)) {
+		LOG("%d", score)
+		score += 5;
+		//circles.getLast()->data->body->ApplyForceToCenter(-2*circles.getLast()->data->body->GetLinearVelocity(), true); //CANVIAR
+		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(40, -40), true);
+	}
+	if (sensor8->Contains(ball.x, ball.y)) {
+		LOG("%d", score);
+		score += 5;
+		//circles.getLast()->data->body->ApplyForceToCenter(-2*circles.getLast()->data->body->GetLinearVelocity(), true); //CANVIAR
+		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(30, -50), true);
+	}	
+	if (sensor7->Contains(ball.x, ball.y)) {
+		LOG("%d", score);
+		score += 5;
+		//circles.getLast()->data->body->ApplyForceToCenter(-2*circles.getLast()->data->body->GetLinearVelocity(), true); //CANVIAR
+		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(-30, -50), true);
+	}	
+	if (sensor6->Contains(ball.x, ball.y)) {
+		LOG("%d", score);
+		score += 5;
+		//circles.getLast()->data->body->ApplyForceToCenter(-2*circles.getLast()->data->body->GetLinearVelocity(), true); //CANVIAR
+		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(-40, -50), true);
+	}	
+	if (sensor9->Contains(ball.x, ball.y)) {
+		LOG("%d", score);
+		score += 5;
+		//circles.getLast()->data->body->ApplyForceToCenter(-2*circles.getLast()->data->body->GetLinearVelocity(), true); //CANVIAR
+		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(-50, -30), true);
 	}
 
 	//sensor accelerador dreta
 	if ((sensor4_1->Contains(ball.x, ball.y)) || (sensor4_2->Contains(ball.x, ball.y)) || (sensor4_3->Contains(ball.x, ball.y))) {
-		circles.getLast()->data->body->ApplyForceToCenter(circles.getLast()->data->body->GetLinearVelocity(), true); //CANVIAR
-		//b2Vec2(0, -10)
+		if (circles.getLast()->data->body->GetLinearVelocity().y > 0) {
+			circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(0, -15), true);
+		}
+		else {
+			circles.getLast()->data->body->ApplyForceToCenter(circles.getLast()->data->body->GetLinearVelocity(), true);
+		}
 	}
 	
 	

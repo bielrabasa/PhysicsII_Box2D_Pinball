@@ -104,11 +104,9 @@ bool ModulePhysics::Start()
 	};
 	App->scene_intro->mapa.add(App->physics->CreateChain2(0, 0, mapaHitBox, 92));
 
-	int salida_inferior1[28] = {
-		182, 599,
-		181, 602,
-		183, 606,
-		187, 606,
+	int salida_inferior1[24] = {
+		195, 594,
+		199, 599,
 		248, 572,
 		252, 569,
 		253, 565,
@@ -120,19 +118,23 @@ bool ModulePhysics::Start()
 		246, 563,
 		243, 566
 	};
-	App->scene_intro->mapa.add(App->physics->CreateChain2(0, 0, salida_inferior1, 28));
+	App->scene_intro->mapa.add(App->physics->CreateChain2(0, 0, salida_inferior1, 24));
 	
-	int salida_inferior2[16] = {
-		32, 479,
-		30, 567,
-		97, 603,
-		102, 603,
-		102, 598,
-		38, 562,
-		39, 481,
-		36, 477
+	int salida_inferior2[24] = {
+		34, 564,
+		34, 483,
+		36, 477,
+		42, 465,
+		39, 464,
+		36, 467,
+		29, 491,
+		26, 565,
+		27, 570,
+		32, 573,
+		79, 599,
+		84, 594
 	};
-	App->scene_intro->mapa.add(App->physics->CreateChain2(0, 0, salida_inferior2, 16));
+	App->scene_intro->mapa.add(App->physics->CreateChain2(0, 0, salida_inferior2, 24));
 
 	int triangulo_inferior1[18] = {
 		221, 553,
@@ -186,33 +188,60 @@ bool ModulePhysics::Start()
 	};
 	App->scene_intro->mapa.add(App->physics->CreateChain2(0, 0, tubo_lateral, 28));
 
+	int palanca_esquerra[12] = {
+		121, 618,
+		125, 618,
+		128, 616,
+		127, 613,
+		87, 596,
+		83, 602
+	};
+	//App->scene_intro->mapa.add(App->physics->CreateChain(1, 0, palanca_esquerra, 12));
+
+	int palanca_dreta[12] = {
+		196, 602,
+		192, 596,
+		153, 614,
+		151, 616,
+		152, 619,
+		155, 619
+	};
+	//App->scene_intro->mapa.add(App->physics->CreateChain(0, 0, palanca_dreta, 12));
 
 	//JOINT
 	//joint per la palanca esquerra
-	palanca = App->physics->CreatePalanca(115, 600, 40, 10);
+	//palanca = App->physics->CreateChain(0, 0, palanca_esquerra, 12);
 
-	jointPalanca = App->physics->CreateSuportPalanca(105, 600, 10, 10);
-
+	palanca = App->physics->CreatePalanca(100, 600, 40, 10);
+	jointPalanca = App->physics->CreateSuportPalanca(85, 600, 10, 10);
 	b2RevoluteJointDef revDev;
 	revDev.bodyA = jointPalanca->body;
 	revDev.bodyB = palanca->body;
 	revDev.collideConnected = false;
-	revDev.localAnchorB = b2Vec2(-0.4, 0);
+	revDev.localAnchorB = b2Vec2(-0.45, 0);
 	revDev.localAnchorA = b2Vec2(0, 0);
 	
 	revDev.enableLimit = true;
-	revDev.lowerAngle = -30 * DEGTORAD;
-	revDev.upperAngle = 0 * DEGTORAD;
-	/*
-	revDev.enableMotor = false;
-	revDev.maxMotorTorque = 5;
-	revDev.motorSpeed = -200 * DEGTORAD;
-	*/
+	revDev.lowerAngle = -25 * DEGTORAD;
+	revDev.upperAngle = 15 * DEGTORAD;
 
-	//world->CreateJoint(&revDev);
 	ljpalanca = (b2RevoluteJoint*)world->CreateJoint(&revDev);
+	
+	//palanca dreta
+	palanca2 = App->physics->CreatePalanca(200, 600, 40, 10);
+	jointPalanca2 = App->physics->CreateSuportPalanca(195, 600, 10, 10);
+	b2RevoluteJointDef revDev2;
+	revDev2.bodyA = jointPalanca2->body;
+	revDev2.bodyB = palanca2->body;
+	revDev2.collideConnected = false;
+	revDev2.localAnchorB = b2Vec2(0.45, 0);
+	revDev2.localAnchorA = b2Vec2(0, 0);
 
+	revDev2.enableLimit = true;
+	revDev2.lowerAngle = -15 * DEGTORAD;
+	revDev2.upperAngle = 25 * DEGTORAD;
 
+	ljpalanca2 = (b2RevoluteJoint*)world->CreateJoint(&revDev2);
 
 	return true;
 }
@@ -363,12 +392,12 @@ PhysBody* ModulePhysics::CreateSuportPalanca(int x, int y, int width, int height
 	return pbody;
 }
 
-PhysBody* ModulePhysics::CreateRectangleSensor(int x, int y, int width, int height)
+PhysBody* ModulePhysics::CreateRectangleSensor(int x, int y, int width, int height, float rotation)
 {
 	b2BodyDef body;
 	body.type = b2_staticBody;
 	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
-
+	body.angle = rotation;
 	b2Body* b = world->CreateBody(&body);
 
 	b2PolygonShape box;

@@ -48,7 +48,7 @@ public:
 	PhysBody* CreateRectangle(int x, int y, int width, int height);
 	PhysBody* CreatePalanca(int x, int y, int width, int height);
 	PhysBody* CreateSuportPalanca(int x, int y, int width, int height);
-	PhysBody* CreateRectangleSensor(int x, int y, int width, int height);
+	PhysBody* CreateRectangleSensor(int x, int y, int width, int height, float rotation);
 	PhysBody* CreateChain(int x, int y, int* points, int size);
 	PhysBody* CreateChain2(int x, int y, int* points, int size);
 	PhysBody* CreateCircleSensor(int x, int y, int radius);
@@ -59,6 +59,11 @@ public:
 	b2RevoluteJoint* ljpalanca;
 	PhysBody* palanca;
 	PhysBody* jointPalanca;
+
+	b2RevoluteJoint* ljpalanca2;
+	PhysBody* palanca2;
+	PhysBody* jointPalanca2;
+
 
 private:
 

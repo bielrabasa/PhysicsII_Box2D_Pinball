@@ -47,6 +47,11 @@ public:
 	PhysBody* sensor4_1;
 	PhysBody* sensor4_2;
 	PhysBody* sensor4_3;
+	PhysBody* sensor5;
+	PhysBody* sensor6;
+	PhysBody* sensor7;
+	PhysBody* sensor8;
+	PhysBody* sensor9;
 
 	//joint
 	//b2RevoluteJointDef rjd1;
@@ -58,6 +63,9 @@ public:
 	PhysBody* smallCircles[SMALLCIRCLENUMBER];
 
 	int score = 0;
+	int max_score = 0;
+
+	int ball_count = 3;
 
 	struct Ball {
 		int x, y;
