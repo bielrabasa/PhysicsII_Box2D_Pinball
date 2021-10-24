@@ -221,12 +221,31 @@ update_status ModuleSceneIntro::Update()
 		}
 	}
 
+	if (sensorResetCont < 200) {
+		sensorResetCont++;
+	}
+	LOG("Numero sensor tempo %d", sensorResetCont);
 	//sensor dalt-esquerra
 	if (sensor3->Contains(ball.x, ball.y)) {
-		score += 5;
-		LOG("%d", score)
+		
+
+		
+		if (sensorResetCont >= 200) {
+			stopBall = true;
+			sensorResetCont = 0;
+		}
+		if (stopBall) {
+			circles.getLast()->data->body->SetLinearVelocity(stopVelocityBall);
+			stopBallCont++;
+		}
+		if (stopBallCont == 60) {
+			circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(0, 50), true);
+			stopBallCont = 0;
+			stopBall = false;
+			score += 5;
+			LOG("Score: %d", score);
+		}
 		//circles.getLast()->data->body->ApplyForceToCenter(-2*circles.getLast()->data->body->GetLinearVelocity(), true); //CANVIAR
-		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(0, 50), true);
 	}
 
 	if (sensor5->Contains(ball.x, ball.y)) {

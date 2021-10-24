@@ -62,6 +62,12 @@ public:
 	PhysBody* bigCircles[BIGCIRCLENUMBER];
 	PhysBody* smallCircles[SMALLCIRCLENUMBER];
 
+	bool stopBall = false;
+	b2Vec2 stopVelocityBall = { 0,-0.12f };//-0.12 es la velocidad y que detiene la pelota 
+	int stopBallCont = 0;
+
+	int sensorResetCont = 300;
+
 	int score = 0;
 	int max_score = 0;
 
