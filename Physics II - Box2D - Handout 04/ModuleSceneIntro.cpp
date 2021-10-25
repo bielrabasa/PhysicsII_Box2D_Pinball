@@ -30,9 +30,10 @@ bool ModuleSceneIntro::Start()
 	bool ret = true;
 
 	App->renderer->camera.x = App->renderer->camera.y = 0;
+	
+	circle = App->textures->Load("pinball/rick_head.png");
 
-	circle = App->textures->Load("pinball/wheel.png"); 
-	box = App->textures->Load("pinball/crate.png");
+	box = App->textures->Load("pinball/Maqueta2.png");
 	rick = App->textures->Load("pinball/Start.png");
 	rick2 = App->textures->Load("pinball/lose.png");
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
@@ -42,6 +43,8 @@ bool ModuleSceneIntro::Start()
 	circles.add(App->physics->CreateCircle(890, ballY, 7));
 	circles.getLast()->data->listener = this;
 	circles.getLast()->data->body->SetBullet(true);
+
+	//boxes.add(App->physics->CreateRectangle(50, 25, 100, 50));
 
 	sensor1 = App->physics->CreateRectangleSensor(140, 640, 85, 20, 0);
 	sensor2 = App->physics->CreateRectangleSensor(290, 573, 20, 40, 0);
@@ -384,6 +387,8 @@ update_status ModuleSceneIntro::Update()
 			}
 		}*/
 
+		c->data->GetPosition(x, y);
+		App->renderer->Blit(circle, x, y, NULL, 1.0f, c->data->GetRotation());
 		c = c->next;
 	}
 
