@@ -463,37 +463,20 @@ update_status ModuleSceneIntro::Update()
 
 void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
-	int x, y;
-
+	//Colisió boles grans
 	if (bodyA == circles.getLast()->data && (bodyB == bigCirclesSensor[0] || bodyB == bigCirclesSensor[1] || bodyB == bigCirclesSensor[2])) {
 		App->audio->PlayFx(circulos_fx);
-		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(0, -30), true);
+		int x, y, xs = 0, ys = 0;
+		for (int i = 0; i < 3; i++) {
+			if (bodyB == bigCirclesSensor[i]) {
+				bigCirclesSensor[i]->GetPosition(xs, ys);
+				break;
+			}
+		}
+		circles.getLast()->data->GetPosition(x, y);
+		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(x - xs, y - ys), true);
 	}
+
 	if(bodyA == circles.getLast()->data && (bodyB == sensor5 || bodyB == sensor6 || bodyB == sensor7 || bodyB == sensor8 || bodyB == sensor9))
 		App->audio->PlayFx(sables_fx);
-
-	/*if (bigCirclesSensor[0]->Contains(ball.x, ball.y)) {
-	}
-	if (bigCirclesSensor[1]->Contains(ball.x, ball.y)) {
-		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(0, -30), true);
-	}
-	if (bigCirclesSensor[2]->Contains(ball.x, ball.y)) {
-		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(0, -30), true);
-	}*/
-	
-	
-	//circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(0, -10), true);
-
-	/*
-	if(bodyA)
-	{
-		bodyA->GetPosition(x, y);
-		App->renderer->DrawCircle(x, y, 50, 100, 100, 100);
-	}
-
-	if(bodyB)
-	{
-		bodyB->GetPosition(x, y);
-		App->renderer->DrawCircle(x, y, 50, 100, 100, 100);
-	}*/
 }
