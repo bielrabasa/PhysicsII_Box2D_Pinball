@@ -77,6 +77,10 @@ public:
 
 	int ball_count = 0;
 
+	bool BC1 = false;
+	bool BC2 = false;
+	bool BC3 = false;
+
 	struct Ball {
 		int x, y;
 	};

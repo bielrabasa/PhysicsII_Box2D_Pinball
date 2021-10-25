@@ -228,7 +228,7 @@ update_status ModuleSceneIntro::Update()
 		max_score = score;
 
 	//reiniciar la bola sensor
-	LOG("Ball cont: %d",ball_count)
+	//LOG("Ball cont: %d",ball_count)
 	if (sensor1->Contains(ball.x,ball.y) && ball_count >= 1) {//Limitador de bolas a 3
 		//LOG("uwu");
 		ball_count--;
@@ -276,7 +276,7 @@ update_status ModuleSceneIntro::Update()
 	if (sensorResetCont < 200) {
 		sensorResetCont++;
 	}
-	LOG("Numero sensor tempo %d", sensorResetCont);
+	//LOG("Numero sensor tempo %d", sensorResetCont);
 	if (sensor3->Contains(ball.x, ball.y)) {
 		
 		//Codigo que para la pelota y la lanza despues de 1 segundo
@@ -294,38 +294,38 @@ update_status ModuleSceneIntro::Update()
 			stopBallCont = 0;
 			stopBall = false;
 			score += 5;
-			LOG("Score: %d", score);
+			//LOG("Score: %d", score);
 		}
 		//circles.getLast()->data->body->ApplyForceToCenter(-2*circles.getLast()->data->body->GetLinearVelocity(), true); //CANVIAT
 	}
 
 	if (sensor5->Contains(ball.x, ball.y)) {
-		LOG("%d", score)
+		//LOG("%d", score)
 		score += 3;
 		//circles.getLast()->data->body->ApplyForceToCenter(-2*circles.getLast()->data->body->GetLinearVelocity(), true); //CANVIAR
 		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(40, -40), true);
 	}
 	if (sensor8->Contains(ball.x, ball.y)) {
-		LOG("%d", score);
+		//LOG("%d", score);
 		score += 2;
 		//circles.getLast()->data->body->ApplyForceToCenter(-2*circles.getLast()->data->body->GetLinearVelocity(), true); //CANVIAR
 		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(30, -50), true);
 	}	
 	if (sensor7->Contains(ball.x, ball.y)) {
-		LOG("%d", score);
+		//LOG("%d", score);
 		score += 2;
 		//circles.getLast()->data->body->ApplyForceToCenter(-2*circles.getLast()->data->body->GetLinearVelocity(), true); //CANVIAR
 		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(-30, -50), true);
 	}	
 
 	if (sensor6->Contains(ball.x, ball.y)) {
-		LOG("%d", score);
+		//LOG("%d", score);
 		score += 3;
 		//circles.getLast()->data->body->ApplyForceToCenter(-2*circles.getLast()->data->body->GetLinearVelocity(), true); //CANVIAR
 		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(-40, -50), true);
 	}	
 	if (sensor9->Contains(ball.x, ball.y)) {
-		LOG("%d", score);
+		//LOG("%d", score);
 		score += 3;
 		//circles.getLast()->data->body->ApplyForceToCenter(-2*circles.getLast()->data->body->GetLinearVelocity(), true); //CANVIAR
 		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(-50, -30), true);
@@ -372,6 +372,13 @@ update_status ModuleSceneIntro::Update()
 		}
 	}
 
+	if (BC1 && BC2 && BC3) {
+		score += 50;
+		ball_count++;
+		BC1 = false;
+		BC2 = false;
+		BC3 = false;
+	}
 
 
 	// Prepare for raycast ------------------------------------------------------
@@ -477,6 +484,15 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(x - xs, y - ys), true);
 		//circles.getLast()->data->body->ApplyForceToCenter(circles.getLast()->data->body->GetLinearVelocity(), true);
 	}
+
+	if (bodyA == circles.getLast()->data && bodyB == bigCirclesSensor[0])
+		BC1 = true;
+
+	if (bodyA == circles.getLast()->data && bodyB == bigCirclesSensor[1])
+		BC2 = true;
+
+	if (bodyA == circles.getLast()->data && bodyB == bigCirclesSensor[2])
+		BC3 = true;
 
 	if(bodyA == circles.getLast()->data && (bodyB == sensor5 || bodyB == sensor6 || bodyB == sensor7 || bodyB == sensor8 || bodyB == sensor9))
 		App->audio->PlayFx(sables_fx);
