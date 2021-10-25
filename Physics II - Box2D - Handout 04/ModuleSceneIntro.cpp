@@ -31,7 +31,7 @@ bool ModuleSceneIntro::Start()
 
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 	
-	circle = App->textures->Load("pinball/rick_head.png");
+	circle = App->textures->Load("pinball/wheel.png");
 
 	box = App->textures->Load("pinball/Maqueta2.png");
 	rick = App->textures->Load("pinball/Start.png");
@@ -44,7 +44,7 @@ bool ModuleSceneIntro::Start()
 	circles.getLast()->data->listener = this;
 	circles.getLast()->data->body->SetBullet(true);
 
-	//boxes.add(App->physics->CreateRectangle(50, 25, 100, 50));
+	boxes.add(App->physics->CreateRectangle(50, 25, 100, 50));
 
 	sensor1 = App->physics->CreateRectangleSensor(140, 640, 85, 20, 0);
 	sensor2 = App->physics->CreateRectangleSensor(290, 573, 20, 40, 0);
@@ -160,6 +160,18 @@ update_status ModuleSceneIntro::Update()
 		ricks.clear();
 		ball_count = 3;
 	}
+
+	/*if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN && ball_count == 0)
+	{
+		boxes.getFirst()->data->body->GetWorld()->DestroyBody(boxes.getFirst()->data->body);
+		boxes.clear();
+		int rick_head[6] = {
+			14, 36,
+			42, 40,
+			40, 0,
+		};
+		ricks.add(App->physics->CreateChain2(0, 0, rick_head, 6));
+	}*/
 
 	if(App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
 	{
@@ -370,9 +382,26 @@ update_status ModuleSceneIntro::Update()
 	fVector normal(0.0f, 0.0f);
 
 	// All draw functions ------------------------------------------------------
-	p2List_item<PhysBody*>* c = circles.getFirst();
+	p2List_item<PhysBody*>* c = boxes.getFirst();
 
-	while(c != NULL)
+	while (c != NULL)
+	{
+		int x, y;
+		c->data->GetPosition(x, y);
+		App->renderer->Blit(box, x, y, NULL, 1.0f, c->data->GetRotation());
+		/*if(ray_on)
+		{
+			int hit = c->data->RayCast(ray.x, ray.y, mouse.x, mouse.y, normal.x, normal.y);
+			if(hit >= 0)
+				ray_hit = hit;
+		}*/
+		c = c->next;
+	}
+
+	c = circles.getFirst();
+
+
+	while (c != NULL)
 	{
 		int x, y;
 
@@ -389,22 +418,6 @@ update_status ModuleSceneIntro::Update()
 
 		c->data->GetPosition(x, y);
 		App->renderer->Blit(circle, x, y, NULL, 1.0f, c->data->GetRotation());
-		c = c->next;
-	}
-
-	c = boxes.getFirst();
-
-	while(c != NULL)
-	{
-		int x, y;
-		c->data->GetPosition(x, y);
-		App->renderer->Blit(box, x, y, NULL, 1.0f, c->data->GetRotation());
-		/*if(ray_on)
-		{
-			int hit = c->data->RayCast(ray.x, ray.y, mouse.x, mouse.y, normal.x, normal.y);
-			if(hit >= 0)
-				ray_hit = hit;
-		}*/
 		c = c->next;
 	}
 
@@ -450,6 +463,7 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
 	int x, y;
 
+	if (bodyA == circles.getLast()->data && (bodyB == bigCircles[0] || bodyB == bigCircles[1] || bodyB == bigCircles[2]))
 	App->audio->PlayFx(bonus_fx);
 
 
