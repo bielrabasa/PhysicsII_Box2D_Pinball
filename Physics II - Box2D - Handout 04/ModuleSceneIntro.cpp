@@ -31,7 +31,7 @@ bool ModuleSceneIntro::Start()
 
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 	
-	circle = App->textures->Load("pinball/wheel.png");
+	circle = App->textures->Load("pinball/ball.png");
 
 	box = App->textures->Load("pinball/Maqueta2.png");
 	rick = App->textures->Load("pinball/Start.png");
@@ -71,9 +71,9 @@ bool ModuleSceneIntro::Start()
 	bigCircles[1] = App->physics->CreateCircle2(220, 173, 22);
 	bigCircles[2] = App->physics->CreateCircle2(146, 249, 22);
 
-	bigCirclesSensor[0] = App->physics->CreateCircleSensor(123, 145, 24);
-	bigCirclesSensor[1] = App->physics->CreateCircleSensor(220, 173, 24);
-	bigCirclesSensor[2] = App->physics->CreateCircleSensor(145, 249, 24);
+	bigCirclesSensor[0] = App->physics->CreateCircleSensor(123, 145, 27);
+	bigCirclesSensor[1] = App->physics->CreateCircleSensor(220, 173, 27);
+	bigCirclesSensor[2] = App->physics->CreateCircleSensor(145, 249, 27);
 
 	smallCircles[0] = App->physics->CreateCircle2(155, 292, 4);
 	smallCircles[1] = App->physics->CreateCircle2(113, 305, 4);
@@ -419,7 +419,7 @@ update_status ModuleSceneIntro::Update()
 		}*/
 
 		c->data->GetPosition(x, y);
-		App->renderer->Blit(circle, x, y, NULL, 1.0f, c->data->GetRotation());
+		App->renderer->Blit(circle, x, y);
 		c = c->next;
 	}
 
@@ -475,6 +475,7 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		}
 		circles.getLast()->data->GetPosition(x, y);
 		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(x - xs, y - ys), true);
+		//circles.getLast()->data->body->ApplyForceToCenter(circles.getLast()->data->body->GetLinearVelocity(), true);
 	}
 
 	if(bodyA == circles.getLast()->data && (bodyB == sensor5 || bodyB == sensor6 || bodyB == sensor7 || bodyB == sensor8 || bodyB == sensor9))
