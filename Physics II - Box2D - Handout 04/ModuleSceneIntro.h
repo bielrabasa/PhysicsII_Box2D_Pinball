@@ -7,6 +7,7 @@
 
 #define SMALLCIRCLENUMBER 10
 #define BIGCIRCLENUMBER 3
+#define SMALLGCIRCLENUMBER 10
 
 class PhysBody;
 
@@ -60,6 +61,8 @@ public:
 	//joint
 	//b2RevoluteJointDef rjd1;
 	PhysBody* bigCirclesSensor[BIGCIRCLENUMBER];
+
+	PhysBody* SmallCirclesSensor[SMALLGCIRCLENUMBER];
 
 
 

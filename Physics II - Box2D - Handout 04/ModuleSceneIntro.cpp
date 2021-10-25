@@ -65,8 +65,6 @@ bool ModuleSceneIntro::Start()
 	sensor6 = App->physics->CreateRectangleSensor(255, 228, 70, 10, 1.71);
 	sensor9 = App->physics->CreateRectangleSensor(210, 370, 50, 10, 2.1);
 
-
-
 	bigCircles[0] = App->physics->CreateCircle2(123, 145, 22);
 	bigCircles[1] = App->physics->CreateCircle2(220, 173, 22);
 	bigCircles[2] = App->physics->CreateCircle2(146, 249, 22);
@@ -74,6 +72,17 @@ bool ModuleSceneIntro::Start()
 	bigCirclesSensor[0] = App->physics->CreateCircleSensor(123, 145, 27);
 	bigCirclesSensor[1] = App->physics->CreateCircleSensor(220, 173, 27);
 	bigCirclesSensor[2] = App->physics->CreateCircleSensor(145, 249, 27);
+
+	SmallCirclesSensor[0] = App->physics->CreateCircleSensor(155, 292, 7);
+	SmallCirclesSensor[1] = App->physics->CreateCircleSensor(113, 305, 7);
+	SmallCirclesSensor[2] = App->physics->CreateCircleSensor(195, 303, 7);
+	SmallCirclesSensor[3] = App->physics->CreateCircleSensor(165, 334, 7);
+	SmallCirclesSensor[4] = App->physics->CreateCircleSensor(123, 363, 7);
+	SmallCirclesSensor[5] = App->physics->CreateCircleSensor(183, 377, 7);
+	SmallCirclesSensor[6] = App->physics->CreateCircleSensor(144, 390, 7);
+	SmallCirclesSensor[7] = App->physics->CreateCircleSensor(100, 396, 7);
+	SmallCirclesSensor[8] = App->physics->CreateCircleSensor(112, 429, 7);
+	SmallCirclesSensor[9] = App->physics->CreateCircleSensor(161, 431, 7);
 
 	smallCircles[0] = App->physics->CreateCircle2(155, 292, 4);
 	smallCircles[1] = App->physics->CreateCircle2(113, 305, 4);
@@ -165,8 +174,8 @@ update_status ModuleSceneIntro::Update()
 
 	if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN && ball_count == 0)
 	{
-		boxes.getFirst()->data->body->GetWorld()->DestroyBody(boxes.getFirst()->data->body);
-		boxes.clear();
+		boxes.getLast()->data->body->GetWorld()->DestroyBody(boxes.getLast()->data->body);
+		boxes.clear(); 
 		int rick_head[6] = {
 			14, 36,
 			42, 40,
