@@ -45,6 +45,7 @@ bool ModuleSceneIntro::Start()
 	circles.getLast()->data->body->SetBullet(true);
 
 	boxes.add(App->physics->CreateRectangle(50, 25, 100, 50));
+	//App->renderer->Blit(box, 50, 25, (310, 660));
 
 	sensor1 = App->physics->CreateRectangleSensor(140, 640, 85, 20, 0);
 	sensor2 = App->physics->CreateRectangleSensor(290, 573, 20, 40, 0);
@@ -69,9 +70,9 @@ bool ModuleSceneIntro::Start()
 	bigCircles[1] = App->physics->CreateCircle2(210, 175, 23);
 	bigCircles[2] = App->physics->CreateCircle2(135, 250, 23);
 
-	bigCirclesSensor[0] = App->physics->CreateCircleSensor(120, 150, 35);
-	bigCirclesSensor[1] = App->physics->CreateCircleSensor(210, 175, 35);
-	bigCirclesSensor[2] = App->physics->CreateCircleSensor(135, 250, 35);
+	bigCirclesSensor[0] = App->physics->CreateCircleSensor(120, 150, 25);
+	bigCirclesSensor[1] = App->physics->CreateCircleSensor(210, 175, 25);
+	bigCirclesSensor[2] = App->physics->CreateCircleSensor(135, 250, 25);
 
 	smallCircles[0] = App->physics->CreateCircle2(160, 300, 4);
 	smallCircles[1] = App->physics->CreateCircle2(125, 310, 4);
@@ -161,7 +162,7 @@ update_status ModuleSceneIntro::Update()
 		ball_count = 3;
 	}
 
-	/*if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN && ball_count == 0)
+	if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN && ball_count == 0)
 	{
 		boxes.getFirst()->data->body->GetWorld()->DestroyBody(boxes.getFirst()->data->body);
 		boxes.clear();
@@ -171,7 +172,7 @@ update_status ModuleSceneIntro::Update()
 			40, 0,
 		};
 		ricks.add(App->physics->CreateChain2(0, 0, rick_head, 6));
-	}*/
+	}
 
 	if(App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
 	{
@@ -463,12 +464,13 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
 	int x, y;
 
-	if (bodyA == circles.getLast()->data && (bodyB == bigCircles[0] || bodyB == bigCircles[1] || bodyB == bigCircles[2]))
-	App->audio->PlayFx(bonus_fx);
+	if (bodyA == circles.getLast()->data && (bodyB == bigCirclesSensor[0] || bodyB == bigCirclesSensor[1] || bodyB == bigCirclesSensor[2])) {
+		App->audio->PlayFx(bonus_fx);
+		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(0, -30), true);
+	}
 
 
 	/*if (bigCirclesSensor[0]->Contains(ball.x, ball.y)) {
-		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(0, -30), true);
 	}
 	if (bigCirclesSensor[1]->Contains(ball.x, ball.y)) {
 		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(0, -30), true);
