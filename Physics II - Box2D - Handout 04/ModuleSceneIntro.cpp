@@ -34,6 +34,7 @@ bool ModuleSceneIntro::Start()
 	circle = App->textures->Load("pinball/wheel.png"); 
 	box = App->textures->Load("pinball/crate.png");
 	rick = App->textures->Load("pinball/Start.png");
+	rick2 = App->textures->Load("pinball/lose.png");
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 
 	//sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT, SCREEN_WIDTH, 50);
@@ -236,7 +237,7 @@ update_status ModuleSceneIntro::Update()
 		42, 40,
 		40, 0,
 		};
-		ricks.add(App->physics->CreateChain2(0, 0, rick_head, 6));
+		ricks2.add(App->physics->CreateChain2(0, 0, rick_head, 6));
 	}
 
 	//sensor inicial bola
@@ -392,13 +393,13 @@ update_status ModuleSceneIntro::Update()
 	{
 		int x, y;
 		c->data->GetPosition(x, y);
-		//App->renderer->Blit(box, x, y, NULL, 1.0f, c->data->GetRotation());
-		if(ray_on)
+		App->renderer->Blit(box, x, y, NULL, 1.0f, c->data->GetRotation());
+		/*if(ray_on)
 		{
 			int hit = c->data->RayCast(ray.x, ray.y, mouse.x, mouse.y, normal.x, normal.y);
 			if(hit >= 0)
 				ray_hit = hit;
-		}
+		}*/
 		c = c->next;
 	}
 
@@ -409,6 +410,16 @@ update_status ModuleSceneIntro::Update()
 		int x, y;
 		c->data->GetPosition(x, y);
 		App->renderer->Blit(rick, x, y, NULL, 1.0f, c->data->GetRotation());
+		c = c->next;
+	}
+
+	c = ricks2.getFirst();
+
+	while(c != NULL)
+	{
+		int x, y;
+		c->data->GetPosition(x, y);
+		App->renderer->Blit(rick2, x, y, NULL, 1.0f, c->data->GetRotation());
 		c = c->next;
 	}
 

@@ -25,6 +25,7 @@ public:
 	p2List<PhysBody*> circles;
 	p2List<PhysBody*> boxes;
 	p2List<PhysBody*> ricks;
+	p2List<PhysBody*> ricks2;
 	p2List<PhysBody*> mapa;
 	p2List<PhysBody*> startL;
 	
@@ -38,6 +39,7 @@ public:
 	SDL_Texture* circle;
 	SDL_Texture* box;
 	SDL_Texture* rick;
+	SDL_Texture* rick2;
 	uint bonus_fx;
 	p2Point<int> ray;
 	bool ray_on;
