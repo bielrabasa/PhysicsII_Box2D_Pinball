@@ -36,7 +36,8 @@ bool ModuleSceneIntro::Start()
 	box = App->textures->Load("pinball/Maqueta2.png");
 	rick = App->textures->Load("pinball/Start.png");
 	rick2 = App->textures->Load("pinball/lose.png");
-	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
+	circulos_fx = App->audio->LoadFx("pinball/minicercles.wav");
+	sables_fx = App->audio->LoadFx("pinball/sable.wav");
 
 	//sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT, SCREEN_WIDTH, 50);
 
@@ -57,7 +58,7 @@ bool ModuleSceneIntro::Start()
 
 	//fets
 	sensor5 = App->physics->CreateRectangleSensor(27, 404, 50, 10, 20.09);
-	sensor8 = App->physics->CreateRectangleSensor(80, 522, 80, 10, -1.9);
+	sensor8 = App->physics->CreateRectangleSensor(78, 524, 80, 10, -1.9);
 
 	//fuym
 	sensor7 = App->physics->CreateRectangleSensor(190, 522, 80, 10, 1.9);
@@ -66,24 +67,24 @@ bool ModuleSceneIntro::Start()
 
 
 
-	bigCircles[0] = App->physics->CreateCircle2(120, 150, 23);
-	bigCircles[1] = App->physics->CreateCircle2(210, 175, 23);
-	bigCircles[2] = App->physics->CreateCircle2(135, 250, 23);
+	bigCircles[0] = App->physics->CreateCircle2(123, 145, 22);
+	bigCircles[1] = App->physics->CreateCircle2(220, 173, 22);
+	bigCircles[2] = App->physics->CreateCircle2(146, 249, 22);
 
-	bigCirclesSensor[0] = App->physics->CreateCircleSensor(120, 150, 25);
-	bigCirclesSensor[1] = App->physics->CreateCircleSensor(210, 175, 25);
-	bigCirclesSensor[2] = App->physics->CreateCircleSensor(135, 250, 25);
+	bigCirclesSensor[0] = App->physics->CreateCircleSensor(123, 145, 24);
+	bigCirclesSensor[1] = App->physics->CreateCircleSensor(220, 173, 24);
+	bigCirclesSensor[2] = App->physics->CreateCircleSensor(145, 249, 24);
 
-	smallCircles[0] = App->physics->CreateCircle2(160, 300, 4);
-	smallCircles[1] = App->physics->CreateCircle2(125, 310, 4);
-	smallCircles[2] = App->physics->CreateCircle2(190, 320, 4);
-	smallCircles[3] = App->physics->CreateCircle2(165, 345, 4);
-	smallCircles[4] = App->physics->CreateCircle2(130, 350, 4);
-	smallCircles[5] = App->physics->CreateCircle2(170, 380, 4);
-	smallCircles[6] = App->physics->CreateCircle2(140, 390, 4);
-	smallCircles[7] = App->physics->CreateCircle2(110, 380, 4);
-	smallCircles[8] = App->physics->CreateCircle2(120, 415, 4);
-	smallCircles[9] = App->physics->CreateCircle2(155, 430, 4);
+	smallCircles[0] = App->physics->CreateCircle2(155, 292, 4);
+	smallCircles[1] = App->physics->CreateCircle2(113, 305, 4);
+	smallCircles[2] = App->physics->CreateCircle2(195, 303, 4);
+	smallCircles[3] = App->physics->CreateCircle2(165, 334, 4);
+	smallCircles[4] = App->physics->CreateCircle2(123, 363, 4);
+	smallCircles[5] = App->physics->CreateCircle2(183, 377, 4);
+	smallCircles[6] = App->physics->CreateCircle2(144, 390, 4);
+	smallCircles[7] = App->physics->CreateCircle2(100, 396, 4);
+	smallCircles[8] = App->physics->CreateCircle2(112, 429, 4);
+	smallCircles[9] = App->physics->CreateCircle2(161, 431, 4);
 	
 
 	//Press R to start
@@ -465,10 +466,11 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	int x, y;
 
 	if (bodyA == circles.getLast()->data && (bodyB == bigCirclesSensor[0] || bodyB == bigCirclesSensor[1] || bodyB == bigCirclesSensor[2])) {
-		App->audio->PlayFx(bonus_fx);
+		App->audio->PlayFx(circulos_fx);
 		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(0, -30), true);
 	}
-
+	if(bodyA == circles.getLast()->data && (bodyB == sensor5 || bodyB == sensor6 || bodyB == sensor7 || bodyB == sensor8 || bodyB == sensor9))
+		App->audio->PlayFx(sables_fx);
 
 	/*if (bigCirclesSensor[0]->Contains(ball.x, ball.y)) {
 	}

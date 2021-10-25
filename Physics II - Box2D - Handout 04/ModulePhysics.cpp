@@ -149,13 +149,13 @@ bool ModulePhysics::Start()
 	App->scene_intro->mapa.add(App->physics->CreateChain2(0, 0, triangulo_inferior1, 18));
 
 	int triangulo_inferior2[14] = {
-		95, 562,
-		68, 483,
-		64, 482,
-		61, 484,
-		60, 548,
-		62, 551,
-		93, 566
+		91, 564,
+		64, 485,
+		60, 484,
+		57, 486,
+		56, 550,
+		58, 553,
+		89, 568
 	};
 	App->scene_intro->mapa.add(App->physics->CreateChain2(0, 0, triangulo_inferior2, 14));
 	

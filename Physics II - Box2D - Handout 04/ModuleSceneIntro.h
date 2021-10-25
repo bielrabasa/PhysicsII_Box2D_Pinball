@@ -40,7 +40,8 @@ public:
 	SDL_Texture* box;
 	SDL_Texture* rick;
 	SDL_Texture* rick2;
-	uint bonus_fx;
+	uint circulos_fx;
+	uint sables_fx;
 	p2Point<int> ray;
 	bool ray_on;
 
