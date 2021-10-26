@@ -159,7 +159,7 @@ update_status ModuleSceneIntro::Update()
 		App->physics->palanca2->body->ApplyForce(b2Vec2(0, -1), b2Vec2(-10, 0), true);
 	}	
 
-	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN && ball_count == 0) {
+	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN && ball_count == 0 && !lose) {
 		//BORRAR BODY, netejar llista, crear bola
 		circles.getLast()->data->body->GetWorld()->DestroyBody(circles.getLast()->data->body);
 		circles.clear();
@@ -172,16 +172,17 @@ update_status ModuleSceneIntro::Update()
 		ball_count = 3;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN && ball_count == 0)
+	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN && lose == true)
 	{
-		boxes.getLast()->data->body->GetWorld()->DestroyBody(boxes.getLast()->data->body);
-		boxes.clear(); 
+		ricks2.getLast()->data->body->GetWorld()->DestroyBody(ricks2.getLast()->data->body);
+		ricks2.clear();
 		int rick_head[6] = {
 			14, 36,
 			42, 40,
 			40, 0,
 		};
 		ricks.add(App->physics->CreateChain2(0, 0, rick_head, 6));
+		lose = false;
 	}
 
 	if(App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
@@ -264,6 +265,7 @@ update_status ModuleSceneIntro::Update()
 		40, 0,
 		};
 		ricks2.add(App->physics->CreateChain2(0, 0, rick_head, 6));
+		lose = true;
 	}
 
 	//sensor inicial bola
