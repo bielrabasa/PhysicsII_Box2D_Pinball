@@ -21,6 +21,7 @@ public:
 	update_status Update();
 	bool CleanUp();
 	void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
+	void FontDraw(int score, int n, int posX, int posY, int separacio, float scale);
 
 public:
 	p2List<PhysBody*> circles;
@@ -82,8 +83,6 @@ public:
 
 	int score = 0;
 	int max_score = 0;
-	int scoreCopia = 0;
-	int scoreArray[4];
 	int posicioFont = 110;
 	int posicioFontY = 20;
 
