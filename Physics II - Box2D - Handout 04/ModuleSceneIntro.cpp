@@ -39,8 +39,12 @@ bool ModuleSceneIntro::Start()
 	palaD = App->textures->Load("pinball/palasFinalDreta.png");
 	palaE = App->textures->Load("pinball/palasFinalEsquerra.png");
 	nombres = App->textures->Load("pinball/numeros.png");
+	
 	circulos_fx = App->audio->LoadFx("pinball/minicercles.wav");
 	sables_fx = App->audio->LoadFx("pinball/sable.wav");
+	start_fx = App->audio->LoadFx("pinball/start.wav");
+	bolafora_fx = App->audio->LoadFx("pinball/bolafora.wav");
+	xoc1_fx = App->audio->LoadFx("pinball/xoc1.wav");
 
 	//sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT, SCREEN_WIDTH, 50);
 
@@ -165,6 +169,9 @@ update_status ModuleSceneIntro::Update()
 		circles.add(App->physics->CreateCircle(290, ballY, 7));
 		circles.getLast()->data->listener = this;
 		circles.getLast()->data->body->SetBullet(true);
+		
+		//
+		App->audio->PlayFx(start_fx);
 		//Borra el PRESS R TO START
 		start = false;
 		score = 0;
@@ -191,6 +198,8 @@ update_status ModuleSceneIntro::Update()
 		BC1 = false;
 		BC2 = false;
 		BC3 = false;
+		
+		App->audio->PlayFx(bolafora_fx);
 	}
 
 	//Cuando llega a esta a 0 el numero de pelotas restantes hace que no aparezcan mas pelotas en el mapa
@@ -302,10 +311,12 @@ update_status ModuleSceneIntro::Update()
 			circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(0, -10), true);
 		}
 	}
+	*/
 	//Small Circles
+	/*
 	for (int i = 0; i < SMALLCIRCLENUMBER; i++) {
 		if (smallCircles[i]->body->GetContactList() != NULL) {
-			//circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(0, -10), true);
+			App->audio->PlayFx(xoc1_fx);
 		}
 	}*/
 

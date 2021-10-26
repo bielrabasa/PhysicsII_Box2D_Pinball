@@ -49,6 +49,9 @@ public:
 	SDL_Texture* nombres;
 	uint circulos_fx;
 	uint sables_fx;
+	uint start_fx;
+	uint bolafora_fx;
+	uint xoc1_fx;
 	p2Point<int> ray;
 	bool ray_on;
 
