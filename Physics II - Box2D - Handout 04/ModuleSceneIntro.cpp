@@ -245,24 +245,24 @@ update_status ModuleSceneIntro::Update()
 
 	if (sensor5->Contains(ball.x, ball.y)) {
 		score += 3;
-		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(40, -40), true);
+		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(30, -20), true);
 	}
 	if (sensor8->Contains(ball.x, ball.y)) {
 		score += 2;
-		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(30, -50), true);
+		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(15, -5), true);
 	}	
 	if (sensor7->Contains(ball.x, ball.y)) {
 		score += 2;
-		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(-30, -50), true);
+		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(-15, -5), true);
 	}	
 
 	if (sensor6->Contains(ball.x, ball.y)) {
 		score += 3;
-		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(-40, -50), true);
+		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(-20, -10), true);
 	}	
 	if (sensor9->Contains(ball.x, ball.y)) {
 		score += 3;
-		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(-50, -30), true);
+		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(-20, -10), true);
 	}
 
 	//sensor accelerador dreta
