@@ -206,12 +206,14 @@ update_status ModuleSceneIntro::Update()
 	if (sensor2->Contains(ball.x, ball.y)) {
 		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 		{
-			ballPushForce += 2;
+			if (ballPushForce < 100) { //max 100 de potència
+				ballPushForce += 1;
+			}
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_UP)
 		{
 			circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(0, -ballPushForce), true);
-			ballPushForce = 0;
+			ballPushForce = 30; //min 30 de potència
 		}
 	}
 
@@ -249,11 +251,11 @@ update_status ModuleSceneIntro::Update()
 	}
 	if (sensor8->Contains(ball.x, ball.y)) {
 		score += 2;
-		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(15, -5), true);
+		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(20, -15), true);
 	}	
 	if (sensor7->Contains(ball.x, ball.y)) {
 		score += 2;
-		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(-15, -5), true);
+		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(-20, -15), true);
 	}	
 
 	if (sensor6->Contains(ball.x, ball.y)) {
