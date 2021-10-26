@@ -40,11 +40,12 @@ public:
 	int ballPushForce = 0;
 
 	SDL_Texture* circle;
-	SDL_Texture* box;
-	SDL_Texture* rick;
-	SDL_Texture* rick2;
+	SDL_Texture* fonsSprite;
+	SDL_Texture* startSprite;
+	SDL_Texture* finishSprite;
 	SDL_Texture* palaD;
 	SDL_Texture* palaE;
+	SDL_Texture* nombres;
 	uint circulos_fx;
 	uint sables_fx;
 	p2Point<int> ray;
@@ -81,10 +82,21 @@ public:
 
 	int score = 0;
 	int max_score = 0;
+	int scoreCopia = 0;
+	int scoreArray[4];
+	int posicioFont = 110;
+	int posicioFontY = 20;
+
+	int posicioVidesX = 260;
+	int posicioVidesY = 30;
 
 	int ball_count = 0;
 
 	bool lose = false;
+	bool start = true;
+
+	bool dretaPala = false;
+	bool esquerraPala = false;
 
 	bool BC1 = false;
 	bool BC2 = false;

@@ -15,7 +15,7 @@
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
-	circle = box = rick = rick2 = palaD = palaE = NULL;
+	circle = NULL;
 	ray_on = false;
 	sensed = false;
 }
@@ -33,11 +33,12 @@ bool ModuleSceneIntro::Start()
 	
 	circle = App->textures->Load("pinball/ball.png");
 
-	box = App->textures->Load("pinball/Maqueta2.png");
-	rick = App->textures->Load("pinball/Start.png");
-	rick2 = App->textures->Load("pinball/lose.png");
+	fonsSprite = App->textures->Load("pinball/Maqueta2.png");
+	startSprite = App->textures->Load("pinball/Start.png");
+	finishSprite = App->textures->Load("pinball/lose.png");
 	palaD = App->textures->Load("pinball/palasFinalDreta.png");
 	palaE = App->textures->Load("pinball/palasFinalEsquerra.png");
+	nombres = App->textures->Load("pinball/numeros.png");
 	circulos_fx = App->audio->LoadFx("pinball/minicercles.wav");
 	sables_fx = App->audio->LoadFx("pinball/sable.wav");
 
@@ -47,7 +48,6 @@ bool ModuleSceneIntro::Start()
 	circles.getLast()->data->listener = this;
 	circles.getLast()->data->body->SetBullet(true);
 
-	boxes.add(App->physics->CreateRectangle(50, 25, 100, 50));
 	//App->renderer->Blit(box, 50, 25, (310, 660));
 
 	sensor1 = App->physics->CreateRectangleSensor(140, 640, 85, 20, 0);
@@ -97,14 +97,7 @@ bool ModuleSceneIntro::Start()
 	smallCircles[8] = App->physics->CreateCircle2(112, 429, 4);
 	smallCircles[9] = App->physics->CreateCircle2(161, 431, 4);
 	
-
-	//Press R to start
-	int rick_head[6] = {
-	14, 36,
-	42, 40,
-	40, 0,
-	};
-	ricks.add(App->physics->CreateChain2(0, 0, rick_head, 6));
+	start = true;
 
 	return ret;
 }
@@ -144,9 +137,11 @@ update_status ModuleSceneIntro::Update()
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_UP) {
 		App->physics->palanca->body->ApplyForce(b2Vec2(0, 10), b2Vec2(10, 0), true);
+		esquerraPala = false;
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
 		App->physics->palanca->body->ApplyForce(b2Vec2(0, -1), b2Vec2(10, 0), true);
+		esquerraPala = true;
 	}
 
 	//move palanca dreta
@@ -156,9 +151,11 @@ update_status ModuleSceneIntro::Update()
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_UP) {
 		App->physics->palanca2->body->ApplyForce(b2Vec2(0, 10), b2Vec2(-10, 0), true);
+		dretaPala = false;
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
 		App->physics->palanca2->body->ApplyForce(b2Vec2(0, -1), b2Vec2(-10, 0), true);
+		dretaPala = true;
 	}	
 
 	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN && ball_count == 0 && !lose) {
@@ -169,71 +166,16 @@ update_status ModuleSceneIntro::Update()
 		circles.getLast()->data->listener = this;
 		circles.getLast()->data->body->SetBullet(true);
 		//Borra el PRESS R TO START
-		ricks.getLast()->data->body->GetWorld()->DestroyBody(ricks.getLast()->data->body);
-		ricks.clear();
+		start = false;
 		ball_count = 3;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN && lose == true)
 	{
-		ricks2.getLast()->data->body->GetWorld()->DestroyBody(ricks2.getLast()->data->body);
-		ricks2.clear();
-		int rick_head[6] = {
-			14, 36,
-			42, 40,
-			40, 0,
-		};
-		ricks.add(App->physics->CreateChain2(0, 0, rick_head, 6));
 		lose = false;
+		start = true;
 	}
 
-	if(App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
-	{
-		boxes.add(App->physics->CreateRectangle(App->input->GetMouseX(), App->input->GetMouseY(), 100, 50));
-	}
-
-	if(App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
-	{
-		// Pivot 0, 0
-		int rick_head[64] = {
-			14, 36,
-			42, 40,
-			40, 0,
-			75, 30,
-			88, 4,
-			94, 39,
-			111, 36,
-			104, 58,
-			107, 62,
-			117, 67,
-			109, 73,
-			110, 85,
-			106, 91,
-			109, 99,
-			103, 104,
-			100, 115,
-			106, 121,
-			103, 125,
-			98, 126,
-			95, 137,
-			83, 147,
-			67, 147,
-			53, 140,
-			46, 132,
-			34, 136,
-			38, 126,
-			23, 123,
-			30, 114,
-			10, 102,
-			29, 90,
-			0, 75,
-			30, 62
-		};
-
-		ricks.add(App->physics->CreateChain(App->input->GetMouseX(), App->input->GetMouseY(), rick_head, 64));
-	}
-
-	
 	circles.getLast()->data->GetPosition(ball.x, ball.y);
 
 	if (max_score >= score)
@@ -260,19 +202,11 @@ update_status ModuleSceneIntro::Update()
 		circles.getLast()->data->listener = this;
 		circles.getLast()->data->body->SetBullet(true);
 		
-		//imprime por pantalla como reiniciar
-		int rick_head[6] = {
-		14, 36,
-		42, 40,
-		40, 0,
-		};
-		ricks2.add(App->physics->CreateChain2(0, 0, rick_head, 6));
 		lose = true;
 	}
 
 	//sensor inicial bola
 	if (sensor2->Contains(ball.x, ball.y)) {
-		//LOG("uwu");
 		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 		{
 			ballPushForce += 2;
@@ -313,34 +247,24 @@ update_status ModuleSceneIntro::Update()
 	}
 
 	if (sensor5->Contains(ball.x, ball.y)) {
-		//LOG("%d", score)
 		score += 3;
-		//circles.getLast()->data->body->ApplyForceToCenter(-2*circles.getLast()->data->body->GetLinearVelocity(), true); //CANVIAR
 		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(40, -40), true);
 	}
 	if (sensor8->Contains(ball.x, ball.y)) {
-		//LOG("%d", score);
 		score += 2;
-		//circles.getLast()->data->body->ApplyForceToCenter(-2*circles.getLast()->data->body->GetLinearVelocity(), true); //CANVIAR
 		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(30, -50), true);
 	}	
 	if (sensor7->Contains(ball.x, ball.y)) {
-		//LOG("%d", score);
 		score += 2;
-		//circles.getLast()->data->body->ApplyForceToCenter(-2*circles.getLast()->data->body->GetLinearVelocity(), true); //CANVIAR
 		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(-30, -50), true);
 	}	
 
 	if (sensor6->Contains(ball.x, ball.y)) {
-		//LOG("%d", score);
 		score += 3;
-		//circles.getLast()->data->body->ApplyForceToCenter(-2*circles.getLast()->data->body->GetLinearVelocity(), true); //CANVIAR
 		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(-40, -50), true);
 	}	
 	if (sensor9->Contains(ball.x, ball.y)) {
-		//LOG("%d", score);
 		score += 3;
-		//circles.getLast()->data->body->ApplyForceToCenter(-2*circles.getLast()->data->body->GetLinearVelocity(), true); //CANVIAR
 		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(-50, -30), true);
 	}
 
@@ -404,84 +328,131 @@ update_status ModuleSceneIntro::Update()
 	fVector normal(0.0f, 0.0f);
 
 	// All draw functions ------------------------------------------------------
-	p2List_item<PhysBody*>* c = boxes.getFirst();
+	
+	//Imprimir Fons
+	App->renderer->Blit(fonsSprite, 0, 0);
 
-	while (c != NULL)
-	{
-		int x, y;
-		c->data->GetPosition(x, y);
-		App->renderer->Blit(box, x, y, NULL, 1.0f, c->data->GetRotation());
-		/*if(ray_on)
-		{
-			int hit = c->data->RayCast(ray.x, ray.y, mouse.x, mouse.y, normal.x, normal.y);
-			if(hit >= 0)
-				ray_hit = hit;
-		}*/
-		c = c->next;
+	//Imprimir pales
+	if (esquerraPala) {
+		App->renderer->Blit(palaE, 80, 580, NULL, 0.25, -30);
+	}
+	else {
+		App->renderer->Blit(palaE, 80, 597, NULL, 0.25, 12);
 	}
 
-	c = circles.getFirst();
+	if (dretaPala) {
+		App->renderer->Blit(palaD, 150, 580, NULL, 0.25, 30);
+	}
+	else {
+		App->renderer->Blit(palaD, 150, 597, NULL, 0.25, -12);
+	}
 
-
-	while (c != NULL)
-	{
+	//Imprimir les boles i FONT
+	if (!lose && !start) {
 		int x, y;
-
-		/*if (ray_on) {
-			int hit = c->data->RayCast(ray.x, ray.y, mouse.x, mouse.y, normal.x, normal.y);
-			if (hit >= 0)
-			{
-				ray_hit = hit;
-				if (ray_hit) {
-					circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(0, -10), true);
-				}
-			}
-		}*/
-
-		c->data->GetPosition(x, y);
+		circles.getFirst()->data->GetPosition(x, y);
 		App->renderer->Blit(circle, x, y);
-		c = c->next;
-	}
 
-	c = ricks.getFirst();
+		scoreCopia = score;
+		for (int j = 0; j < 4; ++j) {
+			scoreArray[j] = scoreCopia % 10;
+			scoreCopia /= 10;
+		}
 
-	while(c != NULL)
-	{
-		int x, y;
-		c->data->GetPosition(x, y);
-		App->renderer->Blit(rick, x, y, NULL, 1.0f, c->data->GetRotation());
-		c = c->next;
-	}
-
-	c = ricks2.getFirst();
-
-	while(c != NULL)
-	{
-		int x, y;
-		c->data->GetPosition(x, y);
-		App->renderer->Blit(rick2, x, y, NULL, 1.0f, c->data->GetRotation());
-		c = c->next;
-	}
-
-	c->next->data = App->physics->palanca2;
-
-	while(c != NULL)
-	{
-		int x, y;
-		c->data->GetPosition(x, y);
-		App->renderer->Blit(palaD, x, y, NULL, 1.0f, c->data->GetRotation());
-		c = c->next;
-	}
+		SDL_Rect rect0 = { 259, 65, 33, 40 };
+		SDL_Rect rect1 = { 25, 11, 20, 38 };
+		SDL_Rect rect2 = { 80, 10, 29, 40 };
+		SDL_Rect rect3 = { 141, 10, 30, 40 };
+		SDL_Rect rect4 = { 200, 11, 31, 38 };
+		SDL_Rect rect5 = { 261, 10, 29, 40 };
+		SDL_Rect rect6 = { 19, 65, 32, 40 };
+		SDL_Rect rect7 = { 82, 65, 26, 40 };
+		SDL_Rect rect8 = { 140, 65, 31, 40 };
+		SDL_Rect rect9 = { 199, 65, 32, 40 };
 		
-	c = palasE.getFirst();
+		for (int k = 0; k < 4; ++k) {
 
-	while(c != NULL)
-	{
-		int x, y;
-		c->data->GetPosition(x, y);
-		App->renderer->Blit(palaE, x, y, NULL, 1.0f, c->data->GetRotation());
-		c = c->next;
+			switch (scoreArray[k]) {
+			case 0:
+				App->renderer->Blit(nombres, posicioFont, posicioFontY, &rect0);
+				break;
+			case 1:
+				App->renderer->Blit(nombres, posicioFont, posicioFontY, &rect1);
+				break;
+			case 2:
+				App->renderer->Blit(nombres, posicioFont, posicioFontY, &rect2);
+				break;
+			case 3:
+				App->renderer->Blit(nombres, posicioFont, posicioFontY, &rect3);
+				break;
+			case 4:
+				App->renderer->Blit(nombres, posicioFont, posicioFontY, &rect4);
+				break;
+			case 5:
+				App->renderer->Blit(nombres, posicioFont, posicioFontY, &rect5);
+				break;
+			case 6:
+				App->renderer->Blit(nombres, posicioFont, posicioFontY, &rect6);
+				break;
+			case 7:
+				App->renderer->Blit(nombres, posicioFont, posicioFontY, &rect7);
+				break;
+			case 8:
+				App->renderer->Blit(nombres, posicioFont, posicioFontY, &rect8);
+				break;
+			case 9:
+				App->renderer->Blit(nombres, posicioFont, posicioFontY, &rect9);
+				break;
+			}
+
+			posicioFont -= 30; //Separació entre nombres
+		}
+		posicioFont = 110; //Posició del primer element de la dreta
+
+		//VIDES
+		switch (ball_count) {
+		case 0:
+			App->renderer->Blit(nombres, posicioVidesX, posicioVidesY, &rect0, 0.6);
+			break;
+		case 1:
+			App->renderer->Blit(nombres, posicioVidesX, posicioVidesY, &rect1, 0.6);
+			break;
+		case 2:
+			App->renderer->Blit(nombres, posicioVidesX, posicioVidesY, &rect2, 0.6);
+			break;
+		case 3:
+			App->renderer->Blit(nombres, posicioVidesX, posicioVidesY, &rect3, 0.6);
+			break;
+		case 4:
+			App->renderer->Blit(nombres, posicioVidesX, posicioVidesY, &rect4, 0.6);
+			break;
+		case 5:
+			App->renderer->Blit(nombres, posicioVidesX, posicioVidesY, &rect5, 0.6);
+			break;
+		case 6:
+			App->renderer->Blit(nombres, posicioVidesX, posicioVidesY, &rect6, 0.6);
+			break;
+		case 7:
+			App->renderer->Blit(nombres, posicioVidesX, posicioVidesY, &rect7, 0.6);
+			break;
+		case 8:
+			App->renderer->Blit(nombres, posicioVidesX, posicioVidesY, &rect8, 0.6);
+			break;
+		case 9:
+			App->renderer->Blit(nombres, posicioVidesX, posicioVidesY, &rect9, 0.6);
+			break;
+		}
 	}
+
+
+	//IMPRIMIR LOSE WIN
+	if (start) {
+		App->renderer->Blit(startSprite, 0, 0);
+	}
+	if (lose) {
+		App->renderer->Blit(finishSprite, 0, 0);
+	}
+
 
 	// ray -----------------
 	if(ray_on == true)
