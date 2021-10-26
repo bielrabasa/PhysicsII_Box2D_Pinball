@@ -175,6 +175,7 @@ update_status ModuleSceneIntro::Update()
 	{
 		lose = false;
 		start = true;
+		prev_score = score;
 	}
 
 	circles.getLast()->data->GetPosition(ball.x, ball.y);
