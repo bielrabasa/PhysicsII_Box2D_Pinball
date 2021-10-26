@@ -39,8 +39,12 @@ bool ModuleSceneIntro::Start()
 	palaD = App->textures->Load("pinball/palasFinalDreta.png");
 	palaE = App->textures->Load("pinball/palasFinalEsquerra.png");
 	nombres = App->textures->Load("pinball/numeros.png");
+	
 	circulos_fx = App->audio->LoadFx("pinball/minicercles.wav");
 	sables_fx = App->audio->LoadFx("pinball/sable.wav");
+	start_fx = App->audio->LoadFx("pinball/start.wav");
+	bolafora_fx = App->audio->LoadFx("pinball/bolafora.wav");
+	xoc1_fx = App->audio->LoadFx("pinball/xoc1.wav");
 
 	//sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT, SCREEN_WIDTH, 50);
 
@@ -165,6 +169,9 @@ update_status ModuleSceneIntro::Update()
 		circles.add(App->physics->CreateCircle(290, ballY, 7));
 		circles.getLast()->data->listener = this;
 		circles.getLast()->data->body->SetBullet(true);
+		
+		//
+		App->audio->PlayFx(start_fx);
 		//Borra el PRESS R TO START
 		start = false;
 		score = 0;
@@ -175,20 +182,24 @@ update_status ModuleSceneIntro::Update()
 	{
 		lose = false;
 		start = true;
+		prev_score = score;
 	}
 
 	circles.getLast()->data->GetPosition(ball.x, ball.y);
 
 	//reiniciar la bola sensor
-	//LOG("Ball cont: %d",ball_count)
 	if (sensor1->Contains(ball.x,ball.y) && ball_count >= 1) {//Limitador de bolas a 3
-		//LOG("uwu");
 		ball_count--;
 		circles.getLast()->data->body->GetWorld()->DestroyBody(circles.getLast()->data->body);
 		circles.clear();
 		circles.add(App->physics->CreateCircle(290, ballY, 7));
 		circles.getLast()->data->listener = this;
 		circles.getLast()->data->body->SetBullet(true);
+		BC1 = false;
+		BC2 = false;
+		BC3 = false;
+		
+		App->audio->PlayFx(bolafora_fx);
 	}
 
 	//Cuando llega a esta a 0 el numero de pelotas restantes hace que no aparezcan mas pelotas en el mapa
@@ -206,12 +217,14 @@ update_status ModuleSceneIntro::Update()
 	if (sensor2->Contains(ball.x, ball.y)) {
 		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 		{
-			ballPushForce += 2;
+			if (ballPushForce < 100) { //max 100 de potència
+				ballPushForce += 1;
+			}
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_UP)
 		{
 			circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(0, -ballPushForce), true);
-			ballPushForce = 0;
+			ballPushForce = 30; //min 30 de potència
 		}
 	}
 
@@ -220,7 +233,7 @@ update_status ModuleSceneIntro::Update()
 	if (sensorResetCont < 200) {
 		sensorResetCont++;
 	}
-	//LOG("Numero sensor tempo %d", sensorResetCont);
+
 	if (sensor3->Contains(ball.x, ball.y)) {
 		
 		//Codigo que para la pelota y la lanza despues de 1 segundo
@@ -237,32 +250,31 @@ update_status ModuleSceneIntro::Update()
 			circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(0, 50), true);
 			stopBallCont = 0;
 			stopBall = false;
-			score += 5;
-			//LOG("Score: %d", score);
+			score += 17;
 		}
 		//circles.getLast()->data->body->ApplyForceToCenter(-2*circles.getLast()->data->body->GetLinearVelocity(), true); //CANVIAT
 	}
 
 	if (sensor5->Contains(ball.x, ball.y)) {
-		score += 3;
-		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(40, -40), true);
+		score += 8;
+		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(30, -20), true);
 	}
 	if (sensor8->Contains(ball.x, ball.y)) {
-		score += 2;
-		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(30, -50), true);
+		score += 5;
+		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(20, -15), true);
 	}	
 	if (sensor7->Contains(ball.x, ball.y)) {
-		score += 2;
-		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(-30, -50), true);
+		score += 5;
+		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(-20, -15), true);
 	}	
 
 	if (sensor6->Contains(ball.x, ball.y)) {
-		score += 3;
-		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(-40, -50), true);
+		score += 11;
+		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(-20, -10), true);
 	}	
 	if (sensor9->Contains(ball.x, ball.y)) {
-		score += 3;
-		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(-50, -30), true);
+		score += 7;
+		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(-20, -10), true);
 	}
 
 	//sensor accelerador dreta
@@ -274,8 +286,7 @@ update_status ModuleSceneIntro::Update()
 			circles.getLast()->data->body->ApplyForceToCenter(circles.getLast()->data->body->GetLinearVelocity(), true);
 		}
 	}
-	
-	
+
 	//Big circles sensor
 	/*
 		if (bigCirclesSensor[0]->Contains(ball.x, ball.y)) {
@@ -294,20 +305,23 @@ update_status ModuleSceneIntro::Update()
 	*/
 
 	//Big Circles
+	/*
 	for (int i = 0; i < BIGCIRCLENUMBER; i++) {
 		if (bigCircles[i]->body->GetContactList() != NULL) {
-			//circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(0, -10), true);
+			circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(0, -10), true);
 		}
 	}
+	*/
 	//Small Circles
+	/*
 	for (int i = 0; i < SMALLCIRCLENUMBER; i++) {
 		if (smallCircles[i]->body->GetContactList() != NULL) {
-			//circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(0, -10), true);
+			App->audio->PlayFx(xoc1_fx);
 		}
-	}
+	}*/
 
 	if (BC1 && BC2 && BC3) {
-		score += 50;
+		score += 69;
 		ball_count++;
 		BC1 = false;
 		BC2 = false;
@@ -350,95 +364,11 @@ update_status ModuleSceneIntro::Update()
 		circles.getFirst()->data->GetPosition(x, y);
 		App->renderer->Blit(circle, x, y);
 
-		scoreCopia = score;
-		for (int j = 0; j < 4; ++j) {
-			scoreArray[j] = scoreCopia % 10;
-			scoreCopia /= 10;
-		}
-
-		SDL_Rect rect0 = { 259, 65, 33, 40 };
-		SDL_Rect rect1 = { 25, 11, 20, 38 };
-		SDL_Rect rect2 = { 80, 10, 29, 40 };
-		SDL_Rect rect3 = { 141, 10, 30, 40 };
-		SDL_Rect rect4 = { 200, 11, 31, 38 };
-		SDL_Rect rect5 = { 261, 10, 29, 40 };
-		SDL_Rect rect6 = { 19, 65, 32, 40 };
-		SDL_Rect rect7 = { 82, 65, 26, 40 };
-		SDL_Rect rect8 = { 140, 65, 31, 40 };
-		SDL_Rect rect9 = { 199, 65, 32, 40 };
+		//Imprimir Score
+		FontDraw(score, 4, posicioFont, posicioFontY, 30, 1);
 		
-		for (int k = 0; k < 4; ++k) {
-
-			switch (scoreArray[k]) {
-			case 0:
-				App->renderer->Blit(nombres, posicioFont, posicioFontY, &rect0);
-				break;
-			case 1:
-				App->renderer->Blit(nombres, posicioFont, posicioFontY, &rect1);
-				break;
-			case 2:
-				App->renderer->Blit(nombres, posicioFont, posicioFontY, &rect2);
-				break;
-			case 3:
-				App->renderer->Blit(nombres, posicioFont, posicioFontY, &rect3);
-				break;
-			case 4:
-				App->renderer->Blit(nombres, posicioFont, posicioFontY, &rect4);
-				break;
-			case 5:
-				App->renderer->Blit(nombres, posicioFont, posicioFontY, &rect5);
-				break;
-			case 6:
-				App->renderer->Blit(nombres, posicioFont, posicioFontY, &rect6);
-				break;
-			case 7:
-				App->renderer->Blit(nombres, posicioFont, posicioFontY, &rect7);
-				break;
-			case 8:
-				App->renderer->Blit(nombres, posicioFont, posicioFontY, &rect8);
-				break;
-			case 9:
-				App->renderer->Blit(nombres, posicioFont, posicioFontY, &rect9);
-				break;
-			}
-
-			posicioFont -= 30; //Separació entre nombres
-		}
-		posicioFont = 110; //Posició del primer element de la dreta
-
-		//VIDES
-		switch (ball_count) {
-		case 0:
-			App->renderer->Blit(nombres, posicioVidesX, posicioVidesY, &rect0, 0.6);
-			break;
-		case 1:
-			App->renderer->Blit(nombres, posicioVidesX, posicioVidesY, &rect1, 0.6);
-			break;
-		case 2:
-			App->renderer->Blit(nombres, posicioVidesX, posicioVidesY, &rect2, 0.6);
-			break;
-		case 3:
-			App->renderer->Blit(nombres, posicioVidesX, posicioVidesY, &rect3, 0.6);
-			break;
-		case 4:
-			App->renderer->Blit(nombres, posicioVidesX, posicioVidesY, &rect4, 0.6);
-			break;
-		case 5:
-			App->renderer->Blit(nombres, posicioVidesX, posicioVidesY, &rect5, 0.6);
-			break;
-		case 6:
-			App->renderer->Blit(nombres, posicioVidesX, posicioVidesY, &rect6, 0.6);
-			break;
-		case 7:
-			App->renderer->Blit(nombres, posicioVidesX, posicioVidesY, &rect7, 0.6);
-			break;
-		case 8:
-			App->renderer->Blit(nombres, posicioVidesX, posicioVidesY, &rect8, 0.6);
-			break;
-		case 9:
-			App->renderer->Blit(nombres, posicioVidesX, posicioVidesY, &rect9, 0.6);
-			break;
-		}
+		//Imprimir Vides
+		FontDraw(ball_count, 1, posicioVidesX, posicioVidesY, 0, 0.6);
 	}
 
 
@@ -451,6 +381,9 @@ update_status ModuleSceneIntro::Update()
 			max_score = score;
 		}
 		App->renderer->Blit(finishSprite, 0, 0);
+		FontDraw(score, 4, 185, 200, 30, 1);
+		FontDraw(max_score, 4, 185, 600, 30, 1);
+		FontDraw(prev_score, 4, 185, 400, 30, 1);
 	}
 
 
@@ -500,4 +433,106 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 
 	if(bodyA == circles.getLast()->data && (bodyB == sensor5 || bodyB == sensor6 || bodyB == sensor7 || bodyB == sensor8 || bodyB == sensor9))
 		App->audio->PlayFx(sables_fx);
+
+	//small circles 
+	if (bodyA == circles.getLast()->data && bodyB == SmallCirclesSensor[0]) {
+		score += 1;
+		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(-7, -3), true);
+	}
+	if (bodyA == circles.getLast()->data && bodyB == SmallCirclesSensor[1]) {
+		score += 1;
+		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(-7, -3), true);
+	}
+	if (bodyA == circles.getLast()->data && bodyB == SmallCirclesSensor[2]) {
+		score += 1;
+		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(-7, -3), true);
+	}
+	if (bodyA == circles.getLast()->data && bodyB == SmallCirclesSensor[3]) {
+		score += 1;
+		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(-7, -3), true);
+	}
+	if (bodyA == circles.getLast()->data && bodyB == SmallCirclesSensor[4]) {
+		score += 1;
+		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(-7, -3), true);
+	}
+	if (bodyA == circles.getLast()->data && bodyB == SmallCirclesSensor[5]) {
+		score += 1;
+		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(-7, -3), true);
+	}
+	if (bodyA == circles.getLast()->data && bodyB == SmallCirclesSensor[6]) {
+		score += 1;
+		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(-7, -3), true);
+	}
+	if (bodyA == circles.getLast()->data && bodyB == SmallCirclesSensor[7]) {
+		score += 1;
+		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(-7, -3), true);
+	}
+	if (bodyA == circles.getLast()->data && bodyB == SmallCirclesSensor[8]) {
+		score += 1;
+		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(-7, -3), true);
+	}
+	if (bodyA == circles.getLast()->data && bodyB == SmallCirclesSensor[9]) {
+		score += 1;
+		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(-7, -3), true);
+	}
+}
+
+void ModuleSceneIntro::FontDraw(int score, int n, int posX, int posY, int separacio, float scale) {
+	int initialPosX = posX;
+	int scoreCopia = score;
+	int scoreArray[4];
+	for (int j = 0; j < n; ++j) {
+		scoreArray[j] = scoreCopia % 10;
+		scoreCopia /= 10;
+	}
+
+	SDL_Rect rect0 = { 259, 65, 33, 40 };
+	SDL_Rect rect1 = { 25, 11, 20, 38 };
+	SDL_Rect rect2 = { 80, 10, 29, 40 };
+	SDL_Rect rect3 = { 141, 10, 30, 40 };
+	SDL_Rect rect4 = { 200, 11, 31, 38 };
+	SDL_Rect rect5 = { 261, 10, 29, 40 };
+	SDL_Rect rect6 = { 19, 65, 32, 40 };
+	SDL_Rect rect7 = { 82, 65, 26, 40 };
+	SDL_Rect rect8 = { 140, 65, 31, 40 };
+	SDL_Rect rect9 = { 199, 65, 32, 40 };
+
+	for (int k = 0; k < n; ++k) {
+
+		switch (scoreArray[k]) {
+		case 0:
+			App->renderer->Blit(nombres, posX, posY, &rect0, scale);
+			break;
+		case 1:
+			App->renderer->Blit(nombres, posX, posY, &rect1, scale);
+			break;
+		case 2:
+			App->renderer->Blit(nombres, posX, posY, &rect2, scale);
+			break;
+		case 3:
+			App->renderer->Blit(nombres, posX, posY, &rect3, scale);
+			break;
+		case 4:
+			App->renderer->Blit(nombres, posX, posY, &rect4, scale);
+			break;
+		case 5:
+			App->renderer->Blit(nombres, posX, posY, &rect5, scale);
+			break;
+		case 6:
+			App->renderer->Blit(nombres, posX, posY, &rect6, scale);
+			break;
+		case 7:
+			App->renderer->Blit(nombres, posX, posY, &rect7, scale);
+			break;
+		case 8:
+			App->renderer->Blit(nombres, posX, posY, &rect8, scale);
+			break;
+		case 9:
+			App->renderer->Blit(nombres, posX, posY, &rect9, scale);
+			break;
+		}
+
+		posX -= separacio; //Separació entre nombres
+	}
+	posX = initialPosX; //Posició del primer element de la dreta
 }
