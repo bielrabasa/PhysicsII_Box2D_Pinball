@@ -167,6 +167,7 @@ update_status ModuleSceneIntro::Update()
 		circles.getLast()->data->body->SetBullet(true);
 		//Borra el PRESS R TO START
 		start = false;
+		score = 0;
 		ball_count = 3;
 	}
 
@@ -178,15 +179,11 @@ update_status ModuleSceneIntro::Update()
 
 	circles.getLast()->data->GetPosition(ball.x, ball.y);
 
-	if (max_score >= score)
-		max_score = score;
-
 	//reiniciar la bola sensor
 	//LOG("Ball cont: %d",ball_count)
 	if (sensor1->Contains(ball.x,ball.y) && ball_count >= 1) {//Limitador de bolas a 3
 		//LOG("uwu");
 		ball_count--;
-		score = 0;
 		circles.getLast()->data->body->GetWorld()->DestroyBody(circles.getLast()->data->body);
 		circles.clear();
 		circles.add(App->physics->CreateCircle(290, ballY, 7));
@@ -450,6 +447,9 @@ update_status ModuleSceneIntro::Update()
 		App->renderer->Blit(startSprite, 0, 0);
 	}
 	if (lose) {
+		if (max_score < score) {
+			max_score = score;
+		}
 		App->renderer->Blit(finishSprite, 0, 0);
 	}
 
