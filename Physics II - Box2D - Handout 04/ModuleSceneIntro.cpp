@@ -243,31 +243,31 @@ update_status ModuleSceneIntro::Update()
 			circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(0, 50), true);
 			stopBallCont = 0;
 			stopBall = false;
-			score += 5;
+			score += 17;
 			//LOG("Score: %d", score);
 		}
 		//circles.getLast()->data->body->ApplyForceToCenter(-2*circles.getLast()->data->body->GetLinearVelocity(), true); //CANVIAT
 	}
 
 	if (sensor5->Contains(ball.x, ball.y)) {
-		score += 3;
+		score += 8;
 		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(30, -20), true);
 	}
 	if (sensor8->Contains(ball.x, ball.y)) {
-		score += 2;
+		score += 5;
 		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(20, -15), true);
 	}	
 	if (sensor7->Contains(ball.x, ball.y)) {
-		score += 2;
+		score += 5;
 		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(-20, -15), true);
 	}	
 
 	if (sensor6->Contains(ball.x, ball.y)) {
-		score += 3;
+		score += 11;
 		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(-20, -10), true);
 	}	
 	if (sensor9->Contains(ball.x, ball.y)) {
-		score += 3;
+		score += 7;
 		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(-20, -10), true);
 	}
 
@@ -280,8 +280,7 @@ update_status ModuleSceneIntro::Update()
 			circles.getLast()->data->body->ApplyForceToCenter(circles.getLast()->data->body->GetLinearVelocity(), true);
 		}
 	}
-	
-	
+
 	//Big circles sensor
 	/*
 		if (bigCirclesSensor[0]->Contains(ball.x, ball.y)) {
@@ -314,7 +313,7 @@ update_status ModuleSceneIntro::Update()
 	}*/
 
 	if (BC1 && BC2 && BC3) {
-		score += 50;
+		score += 69;
 		ball_count++;
 		BC1 = false;
 		BC2 = false;
@@ -426,6 +425,48 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 
 	if(bodyA == circles.getLast()->data && (bodyB == sensor5 || bodyB == sensor6 || bodyB == sensor7 || bodyB == sensor8 || bodyB == sensor9))
 		App->audio->PlayFx(sables_fx);
+
+	//small circles 
+	if (bodyA == circles.getLast()->data && bodyB == SmallCirclesSensor[0]) {
+		score += 1;
+		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(-7, -3), true);
+	}
+	if (bodyA == circles.getLast()->data && bodyB == SmallCirclesSensor[1]) {
+		score += 1;
+		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(-7, -3), true);
+	}
+	if (bodyA == circles.getLast()->data && bodyB == SmallCirclesSensor[2]) {
+		score += 1;
+		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(-7, -3), true);
+	}
+	if (bodyA == circles.getLast()->data && bodyB == SmallCirclesSensor[3]) {
+		score += 1;
+		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(-7, -3), true);
+	}
+	if (bodyA == circles.getLast()->data && bodyB == SmallCirclesSensor[4]) {
+		score += 1;
+		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(-7, -3), true);
+	}
+	if (bodyA == circles.getLast()->data && bodyB == SmallCirclesSensor[5]) {
+		score += 1;
+		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(-7, -3), true);
+	}
+	if (bodyA == circles.getLast()->data && bodyB == SmallCirclesSensor[6]) {
+		score += 1;
+		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(-7, -3), true);
+	}
+	if (bodyA == circles.getLast()->data && bodyB == SmallCirclesSensor[7]) {
+		score += 1;
+		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(-7, -3), true);
+	}
+	if (bodyA == circles.getLast()->data && bodyB == SmallCirclesSensor[8]) {
+		score += 1;
+		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(-7, -3), true);
+	}
+	if (bodyA == circles.getLast()->data && bodyB == SmallCirclesSensor[9]) {
+		score += 1;
+		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(-7, -3), true);
+	}
 }
 
 void ModuleSceneIntro::FontDraw(int score, int n, int posX, int posY, int separacio, float scale) {
