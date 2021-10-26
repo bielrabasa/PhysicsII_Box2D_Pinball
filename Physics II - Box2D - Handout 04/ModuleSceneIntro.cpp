@@ -299,9 +299,10 @@ update_status ModuleSceneIntro::Update()
 	*/
 
 	//Big Circles
+	/*
 	for (int i = 0; i < BIGCIRCLENUMBER; i++) {
 		if (bigCircles[i]->body->GetContactList() != NULL) {
-			//circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(0, -10), true);
+			circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(0, -10), true);
 		}
 	}
 	//Small Circles
@@ -309,7 +310,7 @@ update_status ModuleSceneIntro::Update()
 		if (smallCircles[i]->body->GetContactList() != NULL) {
 			//circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(0, -10), true);
 		}
-	}
+	}*/
 
 	if (BC1 && BC2 && BC3) {
 		score += 50;
