@@ -181,9 +181,7 @@ update_status ModuleSceneIntro::Update()
 	circles.getLast()->data->GetPosition(ball.x, ball.y);
 
 	//reiniciar la bola sensor
-	//LOG("Ball cont: %d",ball_count)
 	if (sensor1->Contains(ball.x,ball.y) && ball_count >= 1) {//Limitador de bolas a 3
-		//LOG("uwu");
 		ball_count--;
 		circles.getLast()->data->body->GetWorld()->DestroyBody(circles.getLast()->data->body);
 		circles.clear();
@@ -226,7 +224,7 @@ update_status ModuleSceneIntro::Update()
 	if (sensorResetCont < 200) {
 		sensorResetCont++;
 	}
-	//LOG("Numero sensor tempo %d", sensorResetCont);
+
 	if (sensor3->Contains(ball.x, ball.y)) {
 		
 		//Codigo que para la pelota y la lanza despues de 1 segundo
@@ -244,7 +242,6 @@ update_status ModuleSceneIntro::Update()
 			stopBallCont = 0;
 			stopBall = false;
 			score += 17;
-			//LOG("Score: %d", score);
 		}
 		//circles.getLast()->data->body->ApplyForceToCenter(-2*circles.getLast()->data->body->GetLinearVelocity(), true); //CANVIAT
 	}
