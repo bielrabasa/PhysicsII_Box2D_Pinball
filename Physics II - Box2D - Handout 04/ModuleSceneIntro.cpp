@@ -189,6 +189,9 @@ update_status ModuleSceneIntro::Update()
 		circles.add(App->physics->CreateCircle(290, ballY, 7));
 		circles.getLast()->data->listener = this;
 		circles.getLast()->data->body->SetBullet(true);
+		BC1 = false;
+		BC2 = false;
+		BC3 = false;
 	}
 
 	//Cuando llega a esta a 0 el numero de pelotas restantes hace que no aparezcan mas pelotas en el mapa
@@ -369,8 +372,9 @@ update_status ModuleSceneIntro::Update()
 			max_score = score;
 		}
 		App->renderer->Blit(finishSprite, 0, 0);
-		FontDraw(score, 4, 185, 220, 30, 1);
-		FontDraw(max_score, 4, 185, 500, 30, 1);
+		FontDraw(score, 4, 185, 200, 30, 1);
+		FontDraw(max_score, 4, 185, 600, 30, 1);
+		FontDraw(prev_score, 4, 185, 400, 30, 1);
 	}
 
 
