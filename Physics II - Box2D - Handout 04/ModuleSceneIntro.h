@@ -27,6 +27,8 @@ public:
 	p2List<PhysBody*> boxes;
 	p2List<PhysBody*> ricks;
 	p2List<PhysBody*> ricks2;
+	p2List<PhysBody*> palasD;
+	p2List<PhysBody*> palasE;
 	p2List<PhysBody*> mapa;
 	p2List<PhysBody*> startL;
 	
@@ -41,6 +43,8 @@ public:
 	SDL_Texture* box;
 	SDL_Texture* rick;
 	SDL_Texture* rick2;
+	SDL_Texture* palaD;
+	SDL_Texture* palaE;
 	uint circulos_fx;
 	uint sables_fx;
 	p2Point<int> ray;

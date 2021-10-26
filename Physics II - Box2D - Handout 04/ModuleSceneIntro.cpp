@@ -15,7 +15,7 @@
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
-	circle = box = rick = NULL;
+	circle = box = rick = rick2 = palaD = palaE = NULL;
 	ray_on = false;
 	sensed = false;
 }
@@ -36,6 +36,8 @@ bool ModuleSceneIntro::Start()
 	box = App->textures->Load("pinball/Maqueta2.png");
 	rick = App->textures->Load("pinball/Start.png");
 	rick2 = App->textures->Load("pinball/lose.png");
+	palaD = App->textures->Load("pinball/palasFinalDreta.png");
+	palaE = App->textures->Load("pinball/palasFinalEsquerra.png");
 	circulos_fx = App->audio->LoadFx("pinball/minicercles.wav");
 	sables_fx = App->audio->LoadFx("pinball/sable.wav");
 
@@ -458,6 +460,26 @@ update_status ModuleSceneIntro::Update()
 		int x, y;
 		c->data->GetPosition(x, y);
 		App->renderer->Blit(rick2, x, y, NULL, 1.0f, c->data->GetRotation());
+		c = c->next;
+	}
+
+	c->next->data = App->physics->palanca2;
+
+	while(c != NULL)
+	{
+		int x, y;
+		c->data->GetPosition(x, y);
+		App->renderer->Blit(palaD, x, y, NULL, 1.0f, c->data->GetRotation());
+		c = c->next;
+	}
+		
+	c = palasE.getFirst();
+
+	while(c != NULL)
+	{
+		int x, y;
+		c->data->GetPosition(x, y);
+		App->renderer->Blit(palaE, x, y, NULL, 1.0f, c->data->GetRotation());
 		c = c->next;
 	}
 
