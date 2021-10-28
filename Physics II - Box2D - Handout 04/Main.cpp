@@ -36,8 +36,7 @@ int main(int argc, char ** argv)
 		double t = 0.0;
 		float dt = 16.0;
 
-		time_t tstart, tend;
-		//TIC()
+		//TIC
 		auto start = chrono::steady_clock::now();
 
 		switch (state)
@@ -96,12 +95,15 @@ int main(int argc, char ** argv)
 			break;
 
 		}
+		//TOC
 		auto end = chrono::steady_clock::now();
+		//Check en salida de la diferencia de temps
 		LOG("Elapsed time in milliseconds: %d", chrono::duration_cast<chrono::milliseconds>(end - start).count(), " ms");
 		auto telapsed = chrono::duration_cast<chrono::milliseconds>(end - start).count();
 		LOG("dt: %f", dt);
+		//Entra si hay diferencia de tiempo
 		if (dt - telapsed > 0.0f) 
-
+			//Para el programa el tiempo restante
 			Sleep(dt - telapsed);
 
 	}
