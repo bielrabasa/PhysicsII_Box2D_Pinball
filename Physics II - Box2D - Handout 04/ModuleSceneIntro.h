@@ -54,10 +54,13 @@ public:
 	SDL_Texture* palaE;
 	SDL_Texture* nombres;
 	uint circulos_fx;
+	uint blaster_fx;
 	uint sables_fx;
 	uint start_fx;
 	uint bolafora_fx;
 	uint xoc1_fx;
+	uint palancas_fx;
+	uint tunel_fx;
 	uint carga_fx;
 	p2Point<int> ray;
 	bool ray_on;

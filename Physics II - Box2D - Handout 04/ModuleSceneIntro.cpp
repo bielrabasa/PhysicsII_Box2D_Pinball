@@ -44,12 +44,16 @@ bool ModuleSceneIntro::Start()
 	smallBall = App->textures->Load("pinball/partsSeparadesDelMapa/SmallBalls.png");
 
 	
-	circulos_fx = App->audio->LoadFx("pinball/minicercles.wav");
-	sables_fx = App->audio->LoadFx("pinball/sable.wav");
-	start_fx = App->audio->LoadFx("pinball/inici.wav");
+	carga_fx = App->audio->LoadFx("pinball/tir.wav");
 	bolafora_fx = App->audio->LoadFx("pinball/bolafora.wav");
-	xoc1_fx = App->audio->LoadFx("pinball/xoc1.wav");
-	carga_fx = App->audio->LoadFx("pinball/tirador.wav");
+	start_fx = App->audio->LoadFx("pinball/inici.wav");
+	sables_fx = App->audio->LoadFx("pinball/bonk.wav");
+	circulos_fx = App->audio->LoadFx("pinball/minicercles.wav");
+	blaster_fx = App->audio->LoadFx("pinball/blaster.wav");
+	xoc1_fx = App->audio->LoadFx("pinball/bonk.wav");
+	palancas_fx = App->audio->LoadFx("pinball/flippers.wav");
+	tunel_fx = App->audio->LoadFx("pinball/tunel.wav");
+
 
 	//sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT, SCREEN_WIDTH, 50);
 
@@ -153,6 +157,7 @@ update_status ModuleSceneIntro::Update()
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
 	{
 		App->physics->palanca->body->ApplyForce(b2Vec2(0, -10), b2Vec2(10, 0), true);
+		App->audio->PlayFx(palancas_fx);
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_UP) {
 		App->physics->palanca->body->ApplyForce(b2Vec2(0, 10), b2Vec2(10, 0), true);
@@ -167,6 +172,7 @@ update_status ModuleSceneIntro::Update()
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
 	{
 		App->physics->palanca2->body->ApplyForce(b2Vec2(0, -10), b2Vec2(-10, 0), true);
+		App->audio->PlayFx(palancas_fx);
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_UP) {
 		App->physics->palanca2->body->ApplyForce(b2Vec2(0, 10), b2Vec2(-10, 0), true);
@@ -253,7 +259,7 @@ update_status ModuleSceneIntro::Update()
 	if (sensor3->Contains(ball.x, ball.y)) {
 		
 		//Codigo que para la pelota y la lanza despues de 1 segundo
-		
+
 		if (sensorResetCont >= 200) {
 			stopBall = true;
 			sensorResetCont = 0;
@@ -262,6 +268,10 @@ update_status ModuleSceneIntro::Update()
 			circles.getLast()->data->body->SetLinearVelocity(stopVelocityBall);
 			stopBallCont++;
 		}
+
+		if (stopBallCont == 30)
+			App->audio->PlayFx(blaster_fx);
+
 		if (stopBallCont == 60) {
 			circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(0, 50), true);
 			stopBallCont = 0;
@@ -297,6 +307,7 @@ update_status ModuleSceneIntro::Update()
 	if ((sensor4_1->Contains(ball.x, ball.y)) || (sensor4_2->Contains(ball.x, ball.y)) || (sensor4_3->Contains(ball.x, ball.y))) {
 		if (circles.getLast()->data->body->GetLinearVelocity().y > 0) {
 			circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(0, -15), true);
+			App->audio->PlayFx(tunel_fx);
 		}
 		else {
 			circles.getLast()->data->body->ApplyForceToCenter(circles.getLast()->data->body->GetLinearVelocity(), true);
@@ -667,6 +678,7 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(-7, -3), true);
 	}
 }
+
 
 void ModuleSceneIntro::FontDraw(int score, int n, int posX, int posY, int separacio, float scale) {
 	int initialPosX = posX;
