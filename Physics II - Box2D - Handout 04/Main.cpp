@@ -34,6 +34,7 @@ int main(int argc, char ** argv)
 			state = MAIN_START;
 			break;
 
+
 		case MAIN_START:
 
 			LOG("-------------- Application Init --------------");

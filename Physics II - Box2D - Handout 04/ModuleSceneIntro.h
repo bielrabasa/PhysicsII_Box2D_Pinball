@@ -40,6 +40,10 @@ public:
 
 	int ballPushForce = 0;
 
+
+	SDL_Texture* flechas;
+	SDL_Texture* circulosPequeños;
+
 	SDL_Texture* circle;
 	SDL_Texture* fonsSprite;
 	SDL_Texture* startSprite;
@@ -94,6 +98,9 @@ public:
 	int posicioVidesY = 30;
 
 	int ball_count = 0;
+
+	int time = 1;
+	bool timeSwitch = false;
 
 	bool lose = false;
 	bool start = true;

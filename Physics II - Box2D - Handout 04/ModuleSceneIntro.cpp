@@ -39,6 +39,8 @@ bool ModuleSceneIntro::Start()
 	palaD = App->textures->Load("pinball/palasFinalDreta.png");
 	palaE = App->textures->Load("pinball/palasFinalEsquerra.png");
 	nombres = App->textures->Load("pinball/numeros.png");
+	flechas = App->textures->Load("pinball/partsSeparadesDelMapa/FletxesPNG.png");
+
 	
 	circulos_fx = App->audio->LoadFx("pinball/minicercles.wav");
 	sables_fx = App->audio->LoadFx("pinball/sable.wav");
@@ -343,6 +345,60 @@ update_status ModuleSceneIntro::Update()
 	//Imprimir Fons
 	App->renderer->Blit(fonsSprite, 0, 0);
 
+	//Imprimir Fletxes
+	App->renderer->Blit(flechas,140,250,NULL);
+	
+	if (!timeSwitch) {
+		time ++;
+	}
+	else if (timeSwitch) {
+		time --;
+	}
+	if (time >= 135) {
+		timeSwitch = true;
+	}
+	if (time <= 0) {
+		timeSwitch = false;
+	}
+	if (time == 10) {
+		SDL_SetTextureAlphaMod(flechas, 30);
+	}
+	else if (time == 20) {
+		SDL_SetTextureAlphaMod(flechas, 40);
+	}
+	else if (time == 30) {
+		SDL_SetTextureAlphaMod(flechas, 60);
+	}
+	else if (time == 40) {
+		SDL_SetTextureAlphaMod(flechas, 80);
+	}
+	else if (time == 50) {
+		SDL_SetTextureAlphaMod(flechas, 100);
+	}
+	else if (time == 60) {
+		SDL_SetTextureAlphaMod(flechas, 120);
+	}
+	else if (time == 70) {
+		SDL_SetTextureAlphaMod(flechas, 140);
+	}
+	else if (time == 80) {
+		SDL_SetTextureAlphaMod(flechas, 160);
+	}
+	else if (time == 90) {
+		SDL_SetTextureAlphaMod(flechas, 180);
+	}
+	else if (time == 100) {
+		SDL_SetTextureAlphaMod(flechas, 200);
+	}
+	else if (time == 110) {
+		SDL_SetTextureAlphaMod(flechas, 220);
+	}
+	else if (time == 120) {
+		SDL_SetTextureAlphaMod(flechas, 240);
+	}
+	else if (time == 130) {
+		SDL_SetTextureAlphaMod(flechas, 255);
+	}
 	//Imprimir pales
 	if (esquerraPala) {
 		App->renderer->Blit(palaE, 80, 580, NULL, 0.25, -30);
@@ -381,6 +437,7 @@ update_status ModuleSceneIntro::Update()
 			max_score = score;
 		}
 		App->renderer->Blit(finishSprite, 0, 0);
+		App->renderer->Blit(startSprite, 50, 70, NULL, 0.7);
 		FontDraw(score, 4, 185, 200, 30, 1);
 		FontDraw(max_score, 4, 185, 600, 30, 1);
 		FontDraw(prev_score, 4, 185, 400, 30, 1);
@@ -418,7 +475,7 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 			}
 		}
 		circles.getLast()->data->GetPosition(x, y);
-		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(x - xs, y - ys), true);
+		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(x - (xs+27), y - (ys+27)), true);
 		//circles.getLast()->data->body->ApplyForceToCenter(circles.getLast()->data->body->GetLinearVelocity(), true);
 	}
 
