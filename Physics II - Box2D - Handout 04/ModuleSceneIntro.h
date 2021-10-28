@@ -74,13 +74,8 @@ public:
 	PhysBody* sensor8;
 	PhysBody* sensor9;
 
-	//joint
-	//b2RevoluteJointDef rjd1;
 	PhysBody* bigCirclesSensor[BIGCIRCLENUMBER];
-
 	PhysBody* SmallCirclesSensor[SMALLGCIRCLENUMBER];
-
-
 
 	PhysBody* bigCircles[BIGCIRCLENUMBER];
 	PhysBody* smallCircles[SMALLCIRCLENUMBER];

@@ -49,7 +49,7 @@ bool ModuleSceneIntro::Start()
 	start_fx = App->audio->LoadFx("pinball/inici.wav");
 	bolafora_fx = App->audio->LoadFx("pinball/bolafora.wav");
 	xoc1_fx = App->audio->LoadFx("pinball/xoc1.wav");
-	carga_fx = App->audio->LoadFx("pinball/charge.wav");
+	carga_fx = App->audio->LoadFx("pinball/tirador.wav");
 
 	//sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT, SCREEN_WIDTH, 50);
 
@@ -122,6 +122,16 @@ bool ModuleSceneIntro::CleanUp()
 // Update: draw background
 update_status ModuleSceneIntro::Update()
 {
+	b2Vec2 mousecoords = b2Vec2(PIXEL_TO_METERS(App->input->GetMouseX()), PIXEL_TO_METERS(App->input->GetMouseY()));
+	if (App->input->GetMouseButton(1) && (circles.getLast()->data->Contains(App->input->GetMouseX(), App->input->GetMouseY())) && (App->physics->mouse_joint == nullptr)) {
+		App->physics->CreateMouseJoint(circles.getLast()->data);
+	}
+	else if (App->input->GetMouseButton(1) && (App->physics->mouse_joint != nullptr)) {
+		App->physics->mouse_joint->SetTarget(mousecoords);
+	}
+	else if (!App->input->GetMouseButton(1) && (App->physics->mouse_joint != nullptr)) {
+		App->physics->DestroyMouseJoint();
+	}
 
 	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
