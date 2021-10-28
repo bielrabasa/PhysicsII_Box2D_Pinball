@@ -102,8 +102,12 @@ public:
 
 	int ball_count = 0;
 
-	Uint8 time = 21;
-	bool timeSwitch = false;
+	Uint8 timeFlecha = 21;
+	Uint8 timeBigBall = 21;
+	Uint8 timeSmallBall = 21;
+	bool timeSwitchFlecha = false;
+	bool timeSwitchBigBall = false;
+	bool timeSwitchSmallBall = false;
 
 	bool lose = false;
 	bool start = true;
