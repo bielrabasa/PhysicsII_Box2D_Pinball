@@ -49,7 +49,7 @@ bool ModuleSceneIntro::Start()
 	start_fx = App->audio->LoadFx("pinball/inici.wav");
 	bolafora_fx = App->audio->LoadFx("pinball/bolafora.wav");
 	xoc1_fx = App->audio->LoadFx("pinball/xoc1.wav");
-	carga_fx = App->audio->LoadFx("pinball/charge.wav");
+	carga_fx = App->audio->LoadFx("pinball/tirador.wav");
 
 	//sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT, SCREEN_WIDTH, 50);
 
