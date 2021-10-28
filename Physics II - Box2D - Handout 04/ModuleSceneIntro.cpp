@@ -42,6 +42,7 @@ bool ModuleSceneIntro::Start()
 	flechas = App->textures->Load("pinball/partsSeparadesDelMapa/FletxesPNG.png");
 	bigBall = App->textures->Load("pinball/partsSeparadesDelMapa/BigBalls.png");
 	smallBall = App->textures->Load("pinball/partsSeparadesDelMapa/SmallBalls.png");
+	canoAnimacio = App->textures->Load("pinball/Animacions/CanoAnimacio.png");
 
 	
 	carga_fx = App->audio->LoadFx("pinball/tir.wav");
@@ -110,6 +111,8 @@ bool ModuleSceneIntro::Start()
 	smallCircles[8] = App->physics->CreateCircle2(112, 429, 4);
 	smallCircles[9] = App->physics->CreateCircle2(161, 431, 4);
 	
+	canoAnimacioRect = { 200, 0, 45, 76 };
+
 	start = true;
 
 	return ret;
@@ -263,22 +266,33 @@ update_status ModuleSceneIntro::Update()
 		if (sensorResetCont >= 200) {
 			stopBall = true;
 			sensorResetCont = 0;
+			canoAnimacioEnum = A1;
 		}
 		if (stopBall) {
 			circles.getLast()->data->body->SetLinearVelocity(stopVelocityBall);
 			stopBallCont++;
 		}
 
-		if (stopBallCont == 30)
+		switch (stopBallCont) {
+		case 25:
+			canoAnimacioEnum = A2;
+			break;
+		case 30:
 			App->audio->PlayFx(blaster_fx);
-
-		if (stopBallCont == 60) {
+			break;
+		case 50:
+			canoAnimacioEnum = A3;
+			break;
+		case 60:
 			circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(0, 50), true);
 			stopBallCont = 0;
 			stopBall = false;
 			score += 17;
+			break;
 		}
-		//circles.getLast()->data->body->ApplyForceToCenter(-2*circles.getLast()->data->body->GetLinearVelocity(), true); //CANVIAT
+	}
+	else {
+		canoAnimacioEnum = AN;
 	}
 
 	if (sensor5->Contains(ball.x, ball.y)) {
@@ -542,6 +556,21 @@ update_status ModuleSceneIntro::Update()
 		break;
 	}
 
+	//Animació canó
+	switch (canoAnimacioEnum) {
+	case A1:
+		canoAnimacioRect.x = 0;
+		break;
+	case A2:
+		canoAnimacioRect.x = 58;
+		break;
+	case A3:
+		canoAnimacioRect.x = 110;
+		break;
+	case AN:
+		canoAnimacioRect.x = 200;
+	}
+	App->renderer->Blit(canoAnimacio, 25, 81, &canoAnimacioRect);
 
 
 	//Imprimir pales

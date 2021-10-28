@@ -52,7 +52,11 @@ public:
 	SDL_Texture* finishSprite;
 	SDL_Texture* palaD;
 	SDL_Texture* palaE;
-	SDL_Texture* nombres;
+	SDL_Texture* nombres; 
+	SDL_Texture* canoAnimacio;
+	SDL_Rect canoAnimacioRect;
+	enum {A1, A2, A3, AN}canoAnimacioEnum = AN;
+
 	uint circulos_fx;
 	uint blaster_fx;
 	uint sables_fx;
