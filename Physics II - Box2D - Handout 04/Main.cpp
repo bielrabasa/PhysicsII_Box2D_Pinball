@@ -2,7 +2,12 @@
 #include "Application.h"
 #include "Globals.h"
 #include <time.h>
-#include <ctime>
+
+#include <iostream>
+#include <chrono>
+#include <stack>
+using namespace std;
+
 
 #include "SDL/include/SDL.h"
 #pragma comment( lib, "SDL/libx86/SDL2.lib" )
@@ -28,8 +33,13 @@ int main(int argc, char ** argv)
 
 	while (state != MAIN_EXIT)
 	{
+		double t = 0.0;
+		float dt = 16.0;
+
 		time_t tstart, tend;
-		tstart = time(0)*1000;
+		//TIC()
+		auto start = chrono::steady_clock::now();
+
 		switch (state)
 		{
 		case MAIN_CREATION:
@@ -86,9 +96,13 @@ int main(int argc, char ** argv)
 			break;
 
 		}
-		tend = time(0)*1000;
-		difftime(tend, tstart);
-		LOG("timeeeeeeeeeeeeee %d", tend-tstart);
+		auto end = chrono::steady_clock::now();
+		LOG("Elapsed time in milliseconds: %d", chrono::duration_cast<chrono::milliseconds>(end - start).count(), " ms");
+		auto telapsed = chrono::duration_cast<chrono::milliseconds>(end - start).count();
+		LOG("dt: %f", dt);
+		if (dt - telapsed > 0.0f) 
+
+			Sleep(dt - telapsed);
 
 	}
 
