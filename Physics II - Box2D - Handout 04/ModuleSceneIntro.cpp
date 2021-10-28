@@ -44,9 +44,10 @@ bool ModuleSceneIntro::Start()
 	
 	circulos_fx = App->audio->LoadFx("pinball/minicercles.wav");
 	sables_fx = App->audio->LoadFx("pinball/sable.wav");
-	start_fx = App->audio->LoadFx("pinball/start.wav");
+	start_fx = App->audio->LoadFx("pinball/inici.wav");
 	bolafora_fx = App->audio->LoadFx("pinball/bolafora.wav");
 	xoc1_fx = App->audio->LoadFx("pinball/xoc1.wav");
+	carga_fx = App->audio->LoadFx("pinball/charge.wav");
 
 	//sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT, SCREEN_WIDTH, 50);
 
@@ -221,6 +222,7 @@ update_status ModuleSceneIntro::Update()
 		{
 			if (ballPushForce < 100) { //max 100 de potència
 				ballPushForce += 1;
+				App->audio->PlayFx(carga_fx);
 			}
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_UP)
@@ -360,45 +362,49 @@ update_status ModuleSceneIntro::Update()
 	if (time <= 0) {
 		timeSwitch = false;
 	}
-	if (time == 10) {
+
+	switch (time) {
+	case 10:
 		SDL_SetTextureAlphaMod(flechas, 30);
-	}
-	else if (time == 20) {
+		break;
+	case 20:
 		SDL_SetTextureAlphaMod(flechas, 40);
-	}
-	else if (time == 30) {
+		break;
+	case 30:
 		SDL_SetTextureAlphaMod(flechas, 60);
-	}
-	else if (time == 40) {
+		break;
+	case 40:
 		SDL_SetTextureAlphaMod(flechas, 80);
-	}
-	else if (time == 50) {
+		break;
+	case 50:
 		SDL_SetTextureAlphaMod(flechas, 100);
-	}
-	else if (time == 60) {
+		break;
+	case 60:
 		SDL_SetTextureAlphaMod(flechas, 120);
-	}
-	else if (time == 70) {
+		break;
+	case 70:
 		SDL_SetTextureAlphaMod(flechas, 140);
-	}
-	else if (time == 80) {
+		break;
+	case 80:
 		SDL_SetTextureAlphaMod(flechas, 160);
-	}
-	else if (time == 90) {
+		break;
+	case 90:
 		SDL_SetTextureAlphaMod(flechas, 180);
-	}
-	else if (time == 100) {
+		break;
+	case 100:
 		SDL_SetTextureAlphaMod(flechas, 200);
-	}
-	else if (time == 110) {
+		break;
+	case 110:
 		SDL_SetTextureAlphaMod(flechas, 220);
-	}
-	else if (time == 120) {
+		break;
+	case 120:
 		SDL_SetTextureAlphaMod(flechas, 240);
-	}
-	else if (time == 130) {
+		break;
+	case 130:
 		SDL_SetTextureAlphaMod(flechas, 255);
+		break;
 	}
+	
 	//Imprimir pales
 	if (esquerraPala) {
 		App->renderer->Blit(palaE, 80, 580, NULL, 0.25, -30);
