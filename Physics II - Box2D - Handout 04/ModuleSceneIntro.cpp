@@ -349,10 +349,10 @@ update_status ModuleSceneIntro::Update()
 	App->renderer->Blit(flechas,140,250,NULL);
 	
 	if (!timeSwitch) {
-		time ++;
+		time++;
 	}
 	else if (timeSwitch) {
-		time --;
+		time--;
 	}
 	if (time >= 135) {
 		timeSwitch = true;

@@ -99,7 +99,7 @@ public:
 
 	int ball_count = 0;
 
-	int time = 1;
+	Uint8 time = 21;
 	bool timeSwitch = false;
 
 	bool lose = false;
