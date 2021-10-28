@@ -161,6 +161,7 @@ bool ModuleAudio::PlayFx(unsigned int id, int repeat)
 	if(fx.at(id-1, chunk) == true)
 	{
 		Mix_PlayChannel(-1, chunk, repeat);
+		Mix_Volume(-1, 20);
 		ret = true;
 	}
 

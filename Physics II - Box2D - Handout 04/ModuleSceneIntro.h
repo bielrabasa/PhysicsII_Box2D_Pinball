@@ -42,6 +42,8 @@ public:
 
 
 	SDL_Texture* flechas;
+	SDL_Texture* bigBall;
+	SDL_Texture* smallBall;
 	SDL_Texture* circulosPequeños;
 
 	SDL_Texture* circle;
@@ -56,6 +58,7 @@ public:
 	uint start_fx;
 	uint bolafora_fx;
 	uint xoc1_fx;
+	uint carga_fx;
 	p2Point<int> ray;
 	bool ray_on;
 
