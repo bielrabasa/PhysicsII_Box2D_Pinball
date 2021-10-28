@@ -1,6 +1,8 @@
 #include <stdlib.h>
 #include "Application.h"
 #include "Globals.h"
+#include <time.h>
+#include <ctime>
 
 #include "SDL/include/SDL.h"
 #pragma comment( lib, "SDL/libx86/SDL2.lib" )
@@ -14,7 +16,6 @@ enum main_states
 	MAIN_FINISH,
 	MAIN_EXIT
 };
-
 int main(int argc, char ** argv)
 {
 	LOG("Starting game '%s'...", TITLE);
@@ -23,8 +24,12 @@ int main(int argc, char ** argv)
 	main_states state = MAIN_CREATION;
 	Application* App = NULL;
 
+
+
 	while (state != MAIN_EXIT)
 	{
+		time_t tstart, tend;
+		tstart = time(0)*1000;
 		switch (state)
 		{
 		case MAIN_CREATION:
@@ -81,6 +86,10 @@ int main(int argc, char ** argv)
 			break;
 
 		}
+		tend = time(0)*1000;
+		difftime(tend, tstart);
+		LOG("timeeeeeeeeeeeeee %d", tend-tstart);
+
 	}
 
 	delete App;
