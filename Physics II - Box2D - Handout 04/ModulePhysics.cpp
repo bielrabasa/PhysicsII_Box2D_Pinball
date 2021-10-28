@@ -242,6 +242,10 @@ bool ModulePhysics::Start()
 
 	ljpalanca2 = (b2RevoluteJoint*)world->CreateJoint(&revDev2);
 
+
+	//Mouse Joint
+	mousejointbody = CreateSuportPalanca(50, 50, 1, 1);
+	mouse_joint = nullptr;
 	return true;
 }
 
@@ -264,19 +268,21 @@ update_status ModulePhysics::PreUpdate()
 	return UPDATE_CONTINUE;
 }
 
-b2MouseJoint* ModulePhysics::CreateMouseJoint(PhysBody* b) {
+void ModulePhysics::CreateMouseJoint(PhysBody* b) {
 	b2MouseJointDef def;
-	int x, y;
-	b->GetPosition(x, y);
-	def.bodyA = CreateSuportPalanca(x, y, 1, 1)->body;
+	def.bodyA = mousejointbody->body;
 	def.bodyB = b->body;
-	def.target = b2Vec2(App->input->GetMouseX(), App->input->GetMouseY());
+	def.target = b2Vec2(PIXEL_TO_METERS(App->input->GetMouseX()), PIXEL_TO_METERS(App->input->GetMouseY()));
 	def.dampingRatio = 0.5f;
 	def.frequencyHz = 2.0f;
 	def.maxForce = 100.0f * b->body->GetMass();
 
 	mouse_joint = (b2MouseJoint*)world->CreateJoint(&def);
-	return mouse_joint;
+}
+
+void ModulePhysics::DestroyMouseJoint() {
+	world->DestroyJoint(mouse_joint);
+	mouse_joint = nullptr;
 }
 
 PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius)

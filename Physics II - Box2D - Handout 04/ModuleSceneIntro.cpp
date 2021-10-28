@@ -122,6 +122,16 @@ bool ModuleSceneIntro::CleanUp()
 // Update: draw background
 update_status ModuleSceneIntro::Update()
 {
+	b2Vec2 mousecoords = b2Vec2(PIXEL_TO_METERS(App->input->GetMouseX()), PIXEL_TO_METERS(App->input->GetMouseY()));
+	if (App->input->GetMouseButton(1) && (circles.getLast()->data->Contains(App->input->GetMouseX(), App->input->GetMouseY())) && (App->physics->mouse_joint == nullptr)) {
+		App->physics->CreateMouseJoint(circles.getLast()->data);
+	}
+	else if (App->input->GetMouseButton(1) && (App->physics->mouse_joint != nullptr)) {
+		App->physics->mouse_joint->SetTarget(mousecoords);
+	}
+	else if (!App->input->GetMouseButton(1) && (App->physics->mouse_joint != nullptr)) {
+		App->physics->DestroyMouseJoint();
+	}
 
 	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
