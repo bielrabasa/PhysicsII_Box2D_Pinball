@@ -52,6 +52,7 @@ public:
 	PhysBody* CreateChain(int x, int y, int* points, int size);
 	PhysBody* CreateChain2(int x, int y, int* points, int size);
 	PhysBody* CreateCircleSensor(int x, int y, int radius);
+	b2MouseJoint* CreateMouseJoint(PhysBody* b);
 
 	// b2ContactListener ---
 	void BeginContact(b2Contact* contact);

@@ -264,6 +264,21 @@ update_status ModulePhysics::PreUpdate()
 	return UPDATE_CONTINUE;
 }
 
+b2MouseJoint* ModulePhysics::CreateMouseJoint(PhysBody* b) {
+	b2MouseJointDef def;
+	int x, y;
+	b->GetPosition(x, y);
+	def.bodyA = CreateSuportPalanca(x, y, 1, 1)->body;
+	def.bodyB = b->body;
+	def.target = b2Vec2(App->input->GetMouseX(), App->input->GetMouseY());
+	def.dampingRatio = 0.5f;
+	def.frequencyHz = 2.0f;
+	def.maxForce = 100.0f * b->body->GetMass();
+
+	mouse_joint = (b2MouseJoint*)world->CreateJoint(&def);
+	return mouse_joint;
+}
+
 PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius)
 {
 	b2BodyDef body;
