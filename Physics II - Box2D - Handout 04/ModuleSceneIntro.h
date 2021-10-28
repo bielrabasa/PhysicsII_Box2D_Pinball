@@ -42,6 +42,8 @@ public:
 
 
 	SDL_Texture* flechas;
+	SDL_Texture* bigBall;
+	SDL_Texture* smallBall;
 	SDL_Texture* circulosPequeños;
 
 	SDL_Texture* circle;
