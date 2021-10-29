@@ -409,10 +409,10 @@ update_status ModuleSceneIntro::Update()
 	else if (timeSwitchBigBall) {
 		timeBigBall--;
 	}
-	if (timeBigBall >= 145) {
+	if (timeBigBall >= 70) {
 		timeSwitchBigBall = true;
 	}
-	if (timeBigBall <= 0) {
+	if (timeBigBall <= 25) {
 		timeSwitchBigBall = false;
 	}
 
@@ -422,7 +422,7 @@ update_status ModuleSceneIntro::Update()
 	else if (timeSwitchSmallBall) {
 		timeSmallBall--;
 	}
-	if (timeSmallBall >= 135) {
+	if (timeSmallBall >= 110) {
 		timeSwitchSmallBall = true;
 	}
 	if (timeSmallBall <= 0) {
@@ -447,7 +447,6 @@ update_status ModuleSceneIntro::Update()
 		break;
 	case 60:
 		SDL_SetTextureAlphaMod(flechas, 120);
-		SDL_SetTextureAlphaMod(smallBall, 120);
 		break;
 	case 70:
 		SDL_SetTextureAlphaMod(flechas, 140);
@@ -473,85 +472,46 @@ update_status ModuleSceneIntro::Update()
 	}
 
 	switch (timeBigBall) {
-	case 10:
-		SDL_SetTextureAlphaMod(bigBall, 30);
-		break;
-	case 20:
-		SDL_SetTextureAlphaMod(bigBall, 40);
-		break;
 	case 30:
-		SDL_SetTextureAlphaMod(bigBall, 60);
-		break;
-	case 40:
-		SDL_SetTextureAlphaMod(bigBall, 80);
-		break;
-	case 50:
-		SDL_SetTextureAlphaMod(bigBall, 100);
-		break;
-	case 60:
 		SDL_SetTextureAlphaMod(bigBall, 120);
 		break;
-	case 70:
+	case 35:
 		SDL_SetTextureAlphaMod(bigBall, 140);
 		break;
-	case 80:
+	case 40:
 		SDL_SetTextureAlphaMod(bigBall, 160);
 		break;
-	case 90:
+	case 45:
 		SDL_SetTextureAlphaMod(bigBall, 180);
 		break;
-	case 100:
+	case 50:
 		SDL_SetTextureAlphaMod(bigBall, 200);
 		break;
-	case 110:
+	case 55:
 		SDL_SetTextureAlphaMod(bigBall, 220);
 		break;
-	case 120:
+	case 60:
 		SDL_SetTextureAlphaMod(bigBall, 240);
 		break;
-	case 130:
+	case 65:
 		SDL_SetTextureAlphaMod(bigBall, 255);
 		break;
 	}
 	
 	switch (timeSmallBall) {
-	case 10:
-		SDL_SetTextureAlphaMod(smallBall, 30);
-		break;
 	case 20:
-		SDL_SetTextureAlphaMod(smallBall, 40);
-		break;
-	case 30:
-		SDL_SetTextureAlphaMod(smallBall, 60);
+		SDL_SetTextureAlphaMod(smallBall, 55);
 		break;
 	case 40:
-		SDL_SetTextureAlphaMod(smallBall, 80);
-		break;
-	case 50:
-		SDL_SetTextureAlphaMod(smallBall, 100);
+		SDL_SetTextureAlphaMod(smallBall, 105);
 		break;
 	case 60:
-		SDL_SetTextureAlphaMod(smallBall, 120);
-		break;
-	case 70:
-		SDL_SetTextureAlphaMod(smallBall, 140);
+		SDL_SetTextureAlphaMod(smallBall, 155);
 		break;
 	case 80:
-		SDL_SetTextureAlphaMod(smallBall, 160);
-		break;
-	case 90:
-		SDL_SetTextureAlphaMod(smallBall, 180);
+		SDL_SetTextureAlphaMod(smallBall, 205);
 		break;
 	case 100:
-		SDL_SetTextureAlphaMod(smallBall, 200);
-		break;
-	case 110:
-		SDL_SetTextureAlphaMod(smallBall, 220);
-		break;
-	case 120:
-		SDL_SetTextureAlphaMod(smallBall, 240);
-		break;
-	case 130:
 		SDL_SetTextureAlphaMod(smallBall, 255);
 		break;
 	}
