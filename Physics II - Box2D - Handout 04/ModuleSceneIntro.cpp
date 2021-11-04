@@ -43,6 +43,7 @@ bool ModuleSceneIntro::Start()
 	bigBall = App->textures->Load("pinball/partsSeparadesDelMapa/BigBalls.png");
 	smallBall = App->textures->Load("pinball/partsSeparadesDelMapa/SmallBalls.png");
 	canoAnimacio = App->textures->Load("pinball/Animacions/CanoAnimacio.png");
+	barra_carga = App->textures->Load("pinball/carga.png");
 
 	
 	carga_fx = App->audio->LoadFx("pinball/tir.wav");
@@ -390,6 +391,20 @@ update_status ModuleSceneIntro::Update()
 	App->renderer->Blit(smallBall,47,261,NULL);
 	App->renderer->Blit(smallBall,47,261,NULL);
 	
+	if (sensor2->Contains(ball.x, ball.y)) {
+		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT){
+			App->renderer->Blit(barra_carga, 0, 0, NULL);
+			App->renderer->DrawQuad({278,599,21,cargablack }, 0, 0, 0);
+			if(cargablack > 0)
+				cargablack-= 2	;
+		}
+		else
+		{
+			if(cargablack < 50)
+				cargablack+= 2;
+		}
+	}
+
 	if (!timeSwitchFlecha) {
 		timeFlecha++;
 	}

@@ -39,6 +39,7 @@ public:
 	bool sensed;
 
 	int ballPushForce = 0;
+	int cargablack = 50;
 
 
 	SDL_Texture* flechas;
@@ -54,6 +55,7 @@ public:
 	SDL_Texture* palaE;
 	SDL_Texture* nombres; 
 	SDL_Texture* canoAnimacio;
+	SDL_Texture* barra_carga;
 	SDL_Rect canoAnimacioRect;
 	enum {A1, A2, A3, AN}canoAnimacioEnum = AN;
 
