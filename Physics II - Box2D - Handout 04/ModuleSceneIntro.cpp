@@ -396,7 +396,7 @@ update_status ModuleSceneIntro::Update()
 			App->renderer->Blit(barra_carga, 0, 0, NULL);
 			App->renderer->DrawQuad({278,599,21,cargablack }, 0, 0, 0);
 			if(cargablack > 0)
-				cargablack-= 2	;
+				cargablack-= 2		;
 		}
 		else
 		{
