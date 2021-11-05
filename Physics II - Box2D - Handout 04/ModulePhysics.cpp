@@ -241,7 +241,6 @@ bool ModulePhysics::Start()
 	return true;
 }
 
-// 
 update_status ModulePhysics::PreUpdate()
 {
 	world->Step(1.0f / 60.0f, 6, 2);
@@ -526,7 +525,6 @@ PhysBody* ModulePhysics::CreateChain2(int x, int y, int* points, int size)
 	return pbody;
 }
 
-// 
 update_status ModulePhysics::PostUpdate()
 {
 	if(App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)

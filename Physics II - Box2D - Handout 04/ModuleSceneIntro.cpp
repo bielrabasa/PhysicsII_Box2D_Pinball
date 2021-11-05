@@ -52,18 +52,12 @@ bool ModuleSceneIntro::Start()
 	sables_fx = App->audio->LoadFx("pinball/bonk.wav");
 	circulos_fx = App->audio->LoadFx("pinball/minicercles.wav");
 	blaster_fx = App->audio->LoadFx("pinball/blaster.wav");
-	xoc1_fx = App->audio->LoadFx("pinball/bonk.wav");
 	palancas_fx = App->audio->LoadFx("pinball/flippers.wav");
 	tunel_fx = App->audio->LoadFx("pinball/tunel.wav");
-
-
-	//sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT, SCREEN_WIDTH, 50);
 
 	circles.add(App->physics->CreateCircle(890, ballY, 7));
 	circles.getLast()->data->listener = this;
 	circles.getLast()->data->body->SetBullet(true);
-
-	//App->renderer->Blit(box, 50, 25, (310, 660));
 
 	sensor1 = App->physics->CreateRectangleSensor(140, 640, 85, 20, 0);
 	sensor2 = App->physics->CreateRectangleSensor(290, 573, 20, 40, 0);
@@ -76,8 +70,6 @@ bool ModuleSceneIntro::Start()
 	//fets
 	sensor5 = App->physics->CreateRectangleSensor(27, 404, 50, 10, 20.09);
 	sensor8 = App->physics->CreateRectangleSensor(78, 524, 80, 10, -1.9);
-
-	//fuym
 	sensor7 = App->physics->CreateRectangleSensor(190, 522, 80, 10, 1.9);
 	sensor6 = App->physics->CreateRectangleSensor(255, 228, 70, 10, 1.71);
 	sensor9 = App->physics->CreateRectangleSensor(210, 370, 50, 10, 2.1);
@@ -194,8 +186,7 @@ update_status ModuleSceneIntro::Update()
 		circles.add(App->physics->CreateCircle(290, ballY, 7));
 		circles.getLast()->data->listener = this;
 		circles.getLast()->data->body->SetBullet(true);
-		
-		//
+
 		App->audio->PlayFx(start_fx);
 		//Borra el PRESS R TO START
 		start = false;

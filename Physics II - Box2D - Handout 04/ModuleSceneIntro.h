@@ -45,8 +45,6 @@ public:
 	SDL_Texture* flechas;
 	SDL_Texture* bigBall;
 	SDL_Texture* smallBall;
-	SDL_Texture* circulosPequeños;
-
 	SDL_Texture* circle;
 	SDL_Texture* fonsSprite;
 	SDL_Texture* startSprite;
@@ -56,6 +54,7 @@ public:
 	SDL_Texture* nombres; 
 	SDL_Texture* canoAnimacio;
 	SDL_Texture* barra_carga;
+
 	SDL_Rect canoAnimacioRect;
 	enum {A1, A2, A3, AN}canoAnimacioEnum = AN;
 
@@ -64,10 +63,10 @@ public:
 	uint sables_fx;
 	uint start_fx;
 	uint bolafora_fx;
-	uint xoc1_fx;
 	uint palancas_fx;
 	uint tunel_fx;
 	uint carga_fx;
+
 	p2Point<int> ray;
 	bool ray_on;
 
