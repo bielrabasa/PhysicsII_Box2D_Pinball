@@ -329,38 +329,6 @@ update_status ModuleSceneIntro::Update()
 		}
 	}
 
-	//Big circles sensor
-	/*
-		if (bigCirclesSensor[0]->Contains(ball.x, ball.y)) {
-			//circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(0, -30), true);
-			circles.getLast()->data->body->ApplyForceToCenter(-30 * circles.getLast()->data->body->GetLinearVelocity(), true); //CANVIAR
-
-		}
-		if (bigCirclesSensor[1]->Contains(ball.x, ball.y)) {
-			circles.getLast()->data->body->ApplyForceToCenter(-30 * circles.getLast()->data->body->GetLinearVelocity(), true); //CANVIAR
-			//circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(0, -30), true);
-		}
-		if (bigCirclesSensor[2]->Contains(ball.x, ball.y)) {
-			circles.getLast()->data->body->ApplyForceToCenter(-30 * circles.getLast()->data->body->GetLinearVelocity(), true); //CANVIAR
-			//circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(0, -30), true);
-		}
-	*/
-
-	//Big Circles
-	/*
-	for (int i = 0; i < BIGCIRCLENUMBER; i++) {
-		if (bigCircles[i]->body->GetContactList() != NULL) {
-			circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(0, -10), true);
-		}
-	}
-	*/
-	//Small Circles
-	/*
-	for (int i = 0; i < SMALLCIRCLENUMBER; i++) {
-		if (smallCircles[i]->body->GetContactList() != NULL) {
-			App->audio->PlayFx(xoc1_fx);
-		}
-	}*/
 
 	if (BC1 && BC2 && BC3) {
 		score += 69;
@@ -625,7 +593,7 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		}
 		circles.getLast()->data->GetPosition(x, y);
 		circles.getLast()->data->body->ApplyForceToCenter(b2Vec2(x - (xs+27), y - (ys+27)), true);
-		//circles.getLast()->data->body->ApplyForceToCenter(circles.getLast()->data->body->GetLinearVelocity(), true);
+		
 	}
 
 	if (bodyA == circles.getLast()->data && bodyB == bigCirclesSensor[0])

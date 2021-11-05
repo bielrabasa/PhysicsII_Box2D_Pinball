@@ -36,10 +36,6 @@ bool ModulePhysics::Start()
 	b2BodyDef bd;
 	ground = world->CreateBody(&bd);
 
-	// big static circle as "ground" in the middle of the screen
-	//int x = SCREEN_WIDTH / 2;
-	//int y = SCREEN_HEIGHT / 1.5f;
-	//int diameter = SCREEN_WIDTH / 2;
 
 	b2BodyDef body;
 	body.type = b2_staticBody;
@@ -48,7 +44,7 @@ bool ModulePhysics::Start()
 	b2Body* big_ball = world->CreateBody(&body);
 
 	b2CircleShape shape;
-	//shape.m_radius = PIXEL_TO_METERS(diameter) * 0.5f;
+	
 
 	b2FixtureDef fixture;
 	fixture.shape = &shape;
@@ -195,7 +191,7 @@ bool ModulePhysics::Start()
 		87, 596,
 		83, 602
 	};
-	//App->scene_intro->mapa.add(App->physics->CreateChain(1, 0, palanca_esquerra, 12));
+	
 
 	int palanca_dreta[12] = {
 		196, 602,
@@ -205,11 +201,7 @@ bool ModulePhysics::Start()
 		152, 619,
 		155, 619
 	};
-	//App->scene_intro->mapa.add(App->physics->CreateChain(0, 0, palanca_dreta, 12));
-
-	//JOINT
-	//joint per la palanca esquerra
-	//palanca = App->physics->CreateChain(0, 0, palanca_esquerra, 12);
+	
 
 	palanca = App->physics->CreatePalanca(100, 600, 40, 10);
 	jointPalanca = App->physics->CreateSuportPalanca(85, 600, 10, 10);
@@ -347,7 +339,7 @@ PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height)
 
 	b2FixtureDef fixture;
 	fixture.shape = &box;
-	//fixture.density = 1.0f;
+	
 
 	b->CreateFixture(&fixture);
 
@@ -399,7 +391,7 @@ PhysBody* ModulePhysics::CreateSuportPalanca(int x, int y, int width, int height
 
 	b2FixtureDef fixture;
 	fixture.shape = &box;
-	//fixture.density = 1.0f;
+
 
 	b->CreateFixture(&fixture);
 
@@ -613,22 +605,11 @@ update_status ModulePhysics::PostUpdate()
 				break;
 			}
 
-			// TODO 1: If mouse button 1 is pressed ...
-			// App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN
-			// test if the current body contains mouse position
+			
 		}
 	}
 
-	// If a body was selected we will attach a mouse joint to it
-	// so we can pull it around
-	// TODO 2: If a body was selected, create a mouse joint
-	// using mouse_joint class property
 
-
-	// TODO 3: If the player keeps pressing the mouse button, update
-	// target position and draw a red line between both anchor points
-
-	// TODO 4: If the player releases the mouse button, destroy the joint
 
 	return UPDATE_CONTINUE;
 }
@@ -690,7 +671,7 @@ int PhysBody::RayCast(int x1, int y1, int x2, int y2, float& normal_x, float& no
 	{
 		if(fixture->GetShape()->RayCast(&output, input, body->GetTransform(), 0) == true)
 		{
-			// do we want the normal ?
+			
 
 			float fx = x2 - x1;
 			float fy = y2 - y1;
