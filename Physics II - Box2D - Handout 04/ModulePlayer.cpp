@@ -24,21 +24,13 @@ bool ModulePlayer::Start()
 	bodyR.type = b2_dynamicBody;
 	bodyR.position.Set(PIXEL_TO_METERS(283), PIXEL_TO_METERS(600));
 
-	//b2Body* bR = world->CreateBody(&bodyR);
+	
 	b2PolygonShape boxP;
 	boxP.SetAsBox(PIXEL_TO_METERS(20) * 0.5f, PIXEL_TO_METERS(10) * 0.5f);
 
 	b2FixtureDef fixtureR;
 	fixtureR.shape = &boxP;
 	fixtureR.density = 1.0f;
-
-	//bR->CreateFixture(&fixtureR);
-
-	/*PhysBody* pbodyR = new PhysBody();
-	pbodyR->body = bR;
-	bR->SetUserData(pbodyR);
-	pbodyR->width = 20 * 0.5f;
-	pbodyR->height = 10* 0.5f;*/
 
 	return true;
 }

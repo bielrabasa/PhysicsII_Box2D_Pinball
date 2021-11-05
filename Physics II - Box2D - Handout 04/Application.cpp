@@ -24,10 +24,6 @@ Application::Application()
 	scene_intro = new ModuleSceneIntro(this);
 	physics = new ModulePhysics(this);
 
-	// The order of calls is very important!
-	// Modules will Init() Start() and Update in this order
-	// They will CleanUp() in reverse order
-
 	// Main Modules
 	AddModule(window);
 	AddModule(physics);
