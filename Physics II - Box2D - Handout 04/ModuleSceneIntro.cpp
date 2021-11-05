@@ -70,8 +70,6 @@ bool ModuleSceneIntro::Start()
 	//fets
 	sensor5 = App->physics->CreateRectangleSensor(27, 404, 50, 10, 20.09);
 	sensor8 = App->physics->CreateRectangleSensor(78, 524, 80, 10, -1.9);
-
-	//fuym
 	sensor7 = App->physics->CreateRectangleSensor(190, 522, 80, 10, 1.9);
 	sensor6 = App->physics->CreateRectangleSensor(255, 228, 70, 10, 1.71);
 	sensor9 = App->physics->CreateRectangleSensor(210, 370, 50, 10, 2.1);
