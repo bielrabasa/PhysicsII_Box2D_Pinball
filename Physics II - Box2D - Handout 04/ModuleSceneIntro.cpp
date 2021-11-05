@@ -55,14 +55,9 @@ bool ModuleSceneIntro::Start()
 	palancas_fx = App->audio->LoadFx("pinball/flippers.wav");
 	tunel_fx = App->audio->LoadFx("pinball/tunel.wav");
 
-
-	//sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT, SCREEN_WIDTH, 50);
-
 	circles.add(App->physics->CreateCircle(890, ballY, 7));
 	circles.getLast()->data->listener = this;
 	circles.getLast()->data->body->SetBullet(true);
-
-	//App->renderer->Blit(box, 50, 25, (310, 660));
 
 	sensor1 = App->physics->CreateRectangleSensor(140, 640, 85, 20, 0);
 	sensor2 = App->physics->CreateRectangleSensor(290, 573, 20, 40, 0);
