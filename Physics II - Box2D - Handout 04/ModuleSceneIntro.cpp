@@ -52,7 +52,6 @@ bool ModuleSceneIntro::Start()
 	sables_fx = App->audio->LoadFx("pinball/bonk.wav");
 	circulos_fx = App->audio->LoadFx("pinball/minicercles.wav");
 	blaster_fx = App->audio->LoadFx("pinball/blaster.wav");
-	xoc1_fx = App->audio->LoadFx("pinball/bonk.wav");
 	palancas_fx = App->audio->LoadFx("pinball/flippers.wav");
 	tunel_fx = App->audio->LoadFx("pinball/tunel.wav");
 
