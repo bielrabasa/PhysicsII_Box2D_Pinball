@@ -188,8 +188,7 @@ update_status ModuleSceneIntro::Update()
 		circles.add(App->physics->CreateCircle(290, ballY, 7));
 		circles.getLast()->data->listener = this;
 		circles.getLast()->data->body->SetBullet(true);
-		
-		//
+
 		App->audio->PlayFx(start_fx);
 		//Borra el PRESS R TO START
 		start = false;
