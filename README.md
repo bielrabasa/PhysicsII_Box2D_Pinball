@@ -55,14 +55,14 @@ The mouse joint was very difficult to make as we figured out we had to update th
 # Development
 
 During the development of the game we have made sensors that make you bounce in a way that emulates bumpers. There are 5 of them distributed around the entire map.
-Besides that there is a cannon that propels you the ball after a while. In the right zone we decided to make a tunnel to accelerate the ball when it pass through it.
-To fill the map and make it more like reality, we place 3 large balls on top that make you bounce. If you touch the 3 active balls you activate a combo to give you an additional life.
+Besides that, there is a cannon that propels the ball after a second. In the right zone we decided to make a tunnel to accelerate the ball when it passes through.
+To fill the map and make it more reality look-like, we placed 3 large balls on top that make you bounce. If you touch the 3 active balls you activate a combo to give you an additional life.
 Just below the large balls we decided to place a large number of small balls with a much lower bounce in order to reduce the speed of the ball as it passed through the middle of the map.
-At the bottom are the 2 levers that we manage to work extremely well and without any type of bug or problem. Under the levers we place a sensor which destroys the ball and spawns you another in the starting area.
+At the bottom there are the 2 flippers that we managed to make work extremely well without any type of bug or problem. Under the levers we place a sensor which destroys the ball and spawns another in the starting area.
 To finish, we have the exit zone which gives a push to the ball according to the time you keep the key pressed. If you are lucky you can re-enter this area to help you make the combo easier.
 
 # GitHub Link
-https://github.com/kramtron/SwampJump
+https://github.com/bielrabasa/PhysicsII_Box2D_Pinball
 
 
 # Members
